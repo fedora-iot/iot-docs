@@ -1,0 +1,8 @@
+= Applying updates
+
+There's nightly image builds for x86\_64 and aarch64 available https://download.fedoraproject.org/pub/alt/iot/[here]. The OSTree update deltas are available on CDN using the following command:
+
+----
+sudo rpm-ostree upgrade
+----
+

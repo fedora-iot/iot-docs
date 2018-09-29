@@ -1,0 +1,62 @@
+= Setting up a Physical Device
+
+You will need either a serial console or HDMI monitor with USB keyboard to get started with the initial set.
+
+Create a mSD card for either of the above devices with the following command:
+
+== Scripted
+
+To install using arm-image-installer:
+
+----
+$ sudo dnf install -y fedora-arm-installer
+----
+
+To write the image out use the following:
+
+----
+$ sudo arm-image-installer
+
+Usage: arm-image-installer &lt;options&gt;
+
+   --image=IMAGE - xz compressed image file name
+   --target=TARGET - target board
+   --media=DEVICE - media device file (/dev/[sdX|mmcblkX])
+   --selinux=ON/OFF - Turn SELinux off/on as needed
+   --norootpass - Remove the root password
+   -y - Assumes yes, will not wait for confirmation
+   --version - Display version and exit
+   --resizefs - Resize root filesystem to fill media device
+   --addconsole - Add system console to extlinux.conf
+   --addkey= - /path/to/ssh-public-key
+
+Example: arm-image-installer --image=Fedora-Rawhide.xz --target=Bananapi --media=/dev/mmcblk0
+
+For list of supported boards please check SUPPORTED-BOARDS file.
+----
+
+For the Raspberry Pi Model 3 B/B+ use:
+
+----
+--target=rpi3
+----
+
+For the Dragonboard410c use:
+
+----
+--target=dragonboard410c
+----
+
+== Manual
+
+Replace `XXX` with the location of your media. It will be `sdX` or `mmcblkX` depending on hardware.
+
+----
+xzcat Fedora-IoT-28-<BUILD ID>.aarch64.raw.xz | sudo dd status=progress bs=4M of=/dev/XXX 
+----
+
+== Serial Console
+
+If you wish to use a serial console you'll need to configure it. 
+Details for the https://fedoraproject.org/wiki/Architectures/ARM/Raspberry_Pi?rd=Raspberry_Pi#How_do_I_use_a_serial_console.3F[Raspberry PI are here].
+

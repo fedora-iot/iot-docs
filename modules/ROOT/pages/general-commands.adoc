@@ -1,0 +1,25 @@
+= General commands
+
+Display the status of the currently running deployment
+
+----
+rpm-ostree status
+----
+
+Add a layered package
+
+----
+rpm-ostree install &lt;pkg-name&gt;
+----
+
+Upgrade to the latest
+
+----
+rpm-ostree upgrade
+----
+
+Rollback to the previous tree
+
+----
+rpm-ostree rollback
+----

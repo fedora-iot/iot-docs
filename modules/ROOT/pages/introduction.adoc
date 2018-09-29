@@ -1,0 +1,19 @@
+= Introduction
+
+Welcome to the getting started guide for Fedora IoT, both this guide and Fedora IoT images are in the very early stages so please report any issues to the mailing list.
+
+== Reference Platforms
+
+We currently support the x86\_64 and aarch64 architectures, the components to support ARMv7 are being worked upon and will be added shortly.
+
+The currently tested reference devices are as follows:
+
+* x86\_64 and aarch64 VMs
+* Raspberry Pi 3 Model B and Raspberry Pi 3 Model B+
+* Dragonboard 410c
+
+Other devices should work but aren't being actively tested in the context of IoT. The list of supported reference devices will expand with time.
+
+== Required resources
+
+The images being created are currently 4 Gb in size. The current memory used for testing is 1 Gb of RAM although Fedora IoT base image should run with less but of course this limits the amount of container applications can be run on top of the Base OS.

@@ -1,0 +1,18 @@
+= Setting up a Virtual Machine
+
+The images generated are compressed raw disk images. They can be utilised both on physical devices and used as disks on a virtualisation platform. The images work without change on qemu/KVM.
+
+On qemu/KVM the tools that can be used to run the image in a VM include http://virt-manager.org/[Virtual Machine Manager], GNOME Boxes or virsh cli. These tools are available in most Linux distributions. Decompress the image as below and then create a new virtual machine and when asked for storage point the tool at the existing disk image.
+
+----
+$ xz -d [filename].raw.xz
+----
+
+== Use with VirtualBox
+
+The images we produce need to be converted to be used with VirtalBox. This can be done with the qemu-img command found in the qemu-img package.
+
+----
+$ xz -d [filename].raw.xz
+$ qemu-img convert -f raw [filename].raw -O vdi [filename].vdi
+----
