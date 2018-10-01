@@ -1,10 +1,11 @@
-= Introduction
+= Internet Of Things - Getting Started
 
-Welcome to the getting started guide for Fedora IoT, both this guide and Fedora IoT images are in the very early stages so please report any issues to the mailing list.
+
+Welcome to the getting started guide for Fedora IoT, both this guide and Fedora IoT images are in the very early stages so please report any issues to https://lists.fedoraproject.org/admin/lists/iot.lists.fedoraproject.org/[the mailing list].
 
 == Reference Platforms
 
-We currently support the x86\_64 and aarch64 architectures, the components to support ARMv7 are being worked upon and will be added shortly.
+For the moment Fedora supports the x86\_64 and aarch64 architectures, the components to support ARMv7 are being worked upon and will be added shortly.
 
 The currently tested reference devices are as follows:
 

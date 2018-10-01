@@ -1,5 +1,6 @@
 site: 
-  title: Internet Of Things, Getting Started
+  title: Local Preview
+  start_page: fedora:iot-pages:index
 content:
   sources:
    - url: .
