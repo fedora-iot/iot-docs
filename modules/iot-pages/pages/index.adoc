@@ -3,6 +3,8 @@
 
 Welcome to the getting started guide for Fedora IoT, both this guide and Fedora IoT images are in the very early stages so please report any issues to https://lists.fedoraproject.org/admin/lists/iot.lists.fedoraproject.org/[the mailing list].
 
+image::iot-fedora.svg[SoC board]
+
 == Reference Platforms
 
 For the moment Fedora supports the x86\_64 and aarch64 architectures, the components to support ARMv7 are being worked upon and will be added shortly.
