@@ -3,7 +3,7 @@
 This is the build repository for the Fedora IoT Documentation Website. The latest
 published version of the site can be found at [Fedora IoT Docs](https://docs.fedoraproject.org/en_US/iot/).
 
-Please report general Issues and submit Pull Requests for **Publishing Fixes** here.
+Please report issues with IoT related docs and submit Pull Requests for **IoT Documentation Ehancements and Fixes** here.
 
 The IoT documentatin is built using [Antora](https://antora.org). General details for
 getting started can be found on the main docs.fp.o [repository](https://pagure.io/fedora-docs/docs-fp-o/tree/master).
