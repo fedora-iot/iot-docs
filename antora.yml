@@ -13,4 +13,4 @@ version: master
 
 # This lists all the menu definitions of your component.
 nav:
-- modules/iot-pages/nav.adoc
+- modules/ROOT/nav.adoc
