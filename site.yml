@@ -1,6 +1,6 @@
 site: 
   title: Local Preview
-  start_page: fedora:iot-pages:index
+  start_page: iot:ROOT:index
 content:
   sources:
    - url: .
