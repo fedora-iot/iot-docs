@@ -9,7 +9,7 @@ rpm-ostree status
 Add a layered package
 
 ----
-rpm-ostree install &lt;pkg-name&gt;
+rpm-ostree install <pkg-name>
 ----
 
 Upgrade to the latest
