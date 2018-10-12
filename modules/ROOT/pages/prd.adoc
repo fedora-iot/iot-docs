@@ -1,0 +1,130 @@
+= IoT Product Requirement Document
+== Document Purpose and Overview
+
+== What this document describes
+
+This is the http://en.wikipedia.org/wiki/Product_requirements_document[Product Requirements Document] for Fedora IoT. It:
+
+* Provides a high-level market overview of the IoT market as it pertains to Fedora IoT; this includes items which may not be within our actual scope/ability to accomplish at the current time.
+* Provides deeper understanding of the types of users who could use Fedora for their IoT needs. This includes describing their main day-to-day tasks, common problems, etc. The perspective here is not necessarily limited to system administrators, or developers, but a combination of many types of users and roles.
+* Ties common issues and needs of potential users/consumers of Fedora IoT to high-level product needs, from a "functional" standpoint.
+
+This document does not dictate implementation details. The goals in this document will drive the continued implementation of this Edition.
+
+=== Fedora IoT Vision Statement
+
+Fedora is the default platform in the IoT space. Anyone starting an IoT project, from cute embedded hacks all the way up to a multi-million device deployment will start with Fedora.
+
+=== Fedora IoT Mission Statement
+
+Fedora IoT makes Fedora the default for open source innovation on IoT hardware, endpoint, edge, middleware, cloud, and backend platforms.
+
+== Market Opportunity
+
+The IoT market is relatively immature and rapidly expanding. https://www.forbes.com/sites/louiscolumbus/2017/12/10/2017-roundup-of-internet-of-things-forecasts/#5af4bc1b1480[Analysts predict] the global market will grow to $457B in 2020, representing an annualized growth rate of nearly 30%. Fedora IoT has opportunity for adoption as the market expands to in number and innovation.
+
+IoT uses span from trivial toy projects to home automation to industrial control to autonomous driving. IoT devices present several challenges compared to general-purpose computing:
+
+* Resource-constrained devices
+* Security risks due to default passwords and short maintenance lifecycles
+* Data management and AI requirements at the edge
+
+== Edition Objectives
+
+=== Primary Objective
+
+The initial Fedora IoT Objective consists of a base edition released on a regular monthly cycle that can be used for running IoT devices:
+
+* Endpoint
+* Edge
+* Middleware
+* Gateway
+* Network, storage and other appliances
+
+The base edition will support multiple architectures, initially including x86_64, aarch64 and ARMv7, and include the ability to produce supported containers across all architectures for various IoT use-cases and verticals. These containers will be capable of running on the Fedora IoT base edition, and subsequently also running on Kubernetes platforms such as OpenShift to provide end to end IoT platforms.
+
+Demos for a number of use cases will be provided including orchestration to deploy demos, container recipe example to create IoT application stacks to run on Fedora IoT.
+
+Future plans for the IoT Objective include complex End to end IoT use cases including end points, messaging, data lakes and analysis, including appropriate orchestration.
+
+=== Secondary Objectives
+
+Aside from the adoption and development of applications on top of the Fedora IoT platform, we have a few secondary goals that should be helped by wider adoption:
+
+* Encourage engagement in the Fedora ecosystem from the wider IoT audience, including hardware vendors, other open source projects, hobbyists, and students
+* Positive press coverage from general media and IoT-specific media
+* Improvements to projects and technologies used by the Fedora IoT objective that can benefit the upstream projects and Fedora as a whole
+
+== User Profiles, Primary Use Cases and Goals
+=== Personas
+
+We will use a set of personasto describe our target users and their respective needs. This document will list the personas in their simplified forms, with detailed explanations of each one available on their respective wiki pages.
+
+* IoT hobbyist and systems administrator
+** Uses IoT devices to experiment with technology. This could be a home user using platforms such as Mozilla Web of Things Gateway or Home Assistant to do home automation or a systems administrator experimenting with IoT technologies.
+* Makers and hobbyists
+** Uses SBCs such as the Raspberry Pi to experiment with robotics, control of devices or to retrofit and improve other technologies.
+* Partners
+** Companies that wish to support Fedora IoT on their devices to provide options for their customers when building IoT platforms and products
+* Companies
+** Companies that wish to use Fedora IoT as a basis for their IoT product or platform
+* Security and Data Protection
+** Security and data protection officers.
+** End to end traceability and demonstrable security at every level
+** Security researchers
+
+=== Use Cases
+
+There's a lot of possible use-cases that Fedora IoT will need to address. IoT is a vast array of verticals and it's impossible to address all of them with a small community. The aim for Fedora IoT is to provide a good and generic base for which to build any IoT platform.
+Fedora IoT will need to address the following use-cases:
+
+* Base platform
+** Extremely thin profile
+** Use CoreOS/ostree technologies to provide thin update deltas with roll back capability to provide as close to a non brickable platform as possible.
+** Uses the latest linux technologies to tighten the security as possible
+** Provides low resource industry standard container platform
+** Supports a wide variety of hardware including reference platforms, wired and wireless interfaces, and other hardware interfaces such as FPGA and cameras
+** pluggable system to detect success/failure of upgrades and to role back to ensure system is always working
+* Home gateway
+** Mozilla Web of Things Gateway
+** Home assistant
+* Industrial Gateway
+** Numerous options available.
+** EdgeX
+** OPC UA open62541
+* Data storage and representation
+** Open Source data lake for IoT ingestion
+** Open alternatives to some of the cloud providers
+** Messaging support such as MQTT and AMQP
+** Data analytics
+
+== Logistical Concerns
+
+=== Delivery Mechanisms
+
+Fedora IoT will produce a rolling release with monthly snapshots using Fedora Core OS. The working group will coordinate with Fedora Release Engineering to ensure monthly snapshots are produced and distributed in a supportable manner.
+
+=== Documentation
+
+The IoT working group will work with the Documentation team to produce IoT-specific documentation for users and developers.
+
+==== Where to obtain
+Users will be able to obtain these images from the Fedora Project website and mirror networks.
+
+=== Measuring Success
+
+In order to measure success we will monitor (somewhat arbitrary) numbers over time. The list of metrics we take in account will be adapted over time to measure specific efforts within the framework of the Server Working Group goals.
+
+The initial basic set of metrics will be:
+
+* At least one large hardware vendor uses Fedora IoT as the basis for their platform.
+
+== About this Document
+
+=== Authors
+Contributors to this document include:
+
+* bcotton
+* mattdm
+* pbrobinson
+

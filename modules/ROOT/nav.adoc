@@ -10,3 +10,4 @@
 * xref:general-commands.adoc[General commands]
 * xref:container-support.adoc[Container support]
 * xref:release-criteria.adoc[Release Criteria]
+* xref:prd.adoc[Product Requirement Doc]
