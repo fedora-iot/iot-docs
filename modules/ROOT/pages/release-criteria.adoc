@@ -1,0 +1,32 @@
+== Fedora IoT Release Criteria
+
+=== Installation
+The Fedora IoT Installation ISO must work and the resulting installation must boot in their supported configurations.
+The IoT images must boot on supported hardware.
+
+==== Supported Platforms
+===== AArch64
+* Raspberry Pi 3 Model B and Raspberry Pi 3 Model B+
+* Dragonboard 410c
+* Virtualization
+
+===== x86_64
+* Virtualization
+
+=== Initial-Setup Service
+The initial-setup service must run on all images and allow users to create a privileged user (administrator)  account.
+
+=== Upgrade
+When a new ostree is composed and made available, it must be possible to upgrade an existing host using *rpm-ostree upgrade*.
+
+=== Rollback 
+After upgrading to the latest ostree, it must be possible to rollback to an older version using the *rpm-ostree rollback* command.
+
+=== Layered Package Installation
+It must be possible to install additional software with *rpm-ostree install* command. Software installation must also include dependencies where necessary and installed software should provide the intended functionality.
+
+=== Rebase
+It must be possible to rebase to a different IoT release by using the *rpm-ostree rebase* command.
+
+=== Container Runtime
+The Podman container runtime must be present on all images and installed by default when using the ISO installer. It must be possible to deploy a container image.
