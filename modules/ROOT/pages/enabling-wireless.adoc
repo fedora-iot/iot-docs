@@ -4,11 +4,7 @@ Both WiFi and Bluetooth support on either the 96boards DragonBoard 410c or the R
 
 *Raspberry Pi*:
 
-----
-$ sudo curl https://fedora.roving-it.com/wireless.repo -o /etc/yum.repos.d/wireless.repo
-$ sudo rpm-ostree install brcm-firmware
-$ sudo systemctl reboot
-----
+In recent Fedora 29 and later builds the Raspberry Pi WiFi is supported in the base image so no further work is required.
 
 *Dragonboard*:
 
