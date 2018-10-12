@@ -9,3 +9,4 @@
 * xref:enabling-wireless.adoc[Enabling wireless support on the DB410c and Raspberry Pi]
 * xref:general-commands.adoc[General commands]
 * xref:container-support.adoc[Container support]
+* xref:release-criteria.adoc[Release Criteria]
