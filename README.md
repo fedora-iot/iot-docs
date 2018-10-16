@@ -1,7 +1,7 @@
 # Fedora IoT Objective documentation
 
 This is the build repository for the Fedora IoT Documentation Website. The latest
-published version of the site can be found at [Fedora IoT Docs](https://docs.fedoraproject.org/en_US/iot/).
+published version of the site can be found at [Fedora IoT Docs](https://docs.fedoraproject.org/en-US/iot/).
 
 Please report issues with IoT related docs and submit Pull Requests for **IoT Documentation Ehancements and Fixes** here.
 
