@@ -1,6 +1,6 @@
-= Initial Setup once the VM or Phyical device is running
+= Initial Setup once the VM or Physical device is running
 
-There is currently a few issues with the initial-setup. It currently only allows you to create a standard user. Create a user and ensture to set the "Administrator" checkbox which will configure sudo access.
+There is currently a few issues with the initial-setup. It currently only allows you to create a standard user. Create a user and ensure to set the "Administrator" checkbox which will configure sudo access.
 
 Once the initial setup dialog has completed you can login as the new user and sudo to root. If you wish to at this time you can set a root password, otherwise the root account remains locked (this is fine).
 
