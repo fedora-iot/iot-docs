@@ -5,17 +5,13 @@ Welcome to the getting started guide for Fedora IoT, both this guide and Fedora 
 
 image::iot-fedora.svg[SoC board]
 
-== Reference Platforms
+== Supported Platforms
 
-For the moment Fedora supports the x86\_64 and aarch64 architectures, the components to support ARMv7 are being worked upon and will be added shortly.
+For the moment Fedora supports the x86_64 and aarch64 architectures, the components to support ARMv7 are being worked upon and will be added shortly.
 
-The currently tested reference devices are as follows:
+We have a page covering the currently tested xref:reference-platforms.adoc[Reference Platforms]. Other devices supported by Fedora on either x86_64 or aarch64 should work just fine but haven't been widely tested in the IoT context so your milage may vary.
 
-* x86\_64 and aarch64 VMs
-* Raspberry Pi 3 Model B and Raspberry Pi 3 Model B+
-* Dragonboard 410c
-
-Other devices should work but aren't being actively tested in the context of IoT. The list of supported reference devices will expand with time.
+The list of supported reference devices will expand with time. If you're a hardware vendor and would like to have a device become a reference platform by actively participating and testing Fedora IoT please reach out to Peter Robinson the Fedora IoT Lead.
 
 == Required resources
 
