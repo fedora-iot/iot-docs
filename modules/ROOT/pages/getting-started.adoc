@@ -1,18 +1,23 @@
 = Getting Started
 
 
-Welcome to the getting started guide for Fedora IoT, both this guide and Fedora IoT images are in the very early stages so please report any issues to https://lists.fedoraproject.org/admin/lists/iot.lists.fedoraproject.org/[the mailing list].
+Welcome to the getting started guide for Fedora IoT. B
+oth this guide and Fedora IoT images are in the very early stages so please report any issues to https://lists.fedoraproject.org/admin/lists/iot.lists.fedoraproject.org/[the mailing list].
 
 image::iot-fedora.svg[SoC board]
 
 == Supported Platforms
 
-For the moment Fedora supports the x86_64 and aarch64 architectures, the components to support ARMv7 are being worked upon and will be added shortly.
+For the moment Fedora IoT supports the x86_64 and aarch64 architectures.
+he components to support ARMv7 are being worked upon and will be added shortly.
 
-We have a page covering the currently tested xref:reference-platforms.adoc[Reference Platforms]. Other devices supported by Fedora on either x86_64 or aarch64 should work just fine but haven't been widely tested in the IoT context so your milage may vary.
+We have a page covering the currently tested xref:reference-platforms.adoc[Reference Platforms].
+Other devices supported by Fedora on either x86_64 or aarch64 should work just fine but haven't been widely tested in the IoT context so your milage may vary.
 
-The list of supported reference devices will expand with time. If you're a hardware vendor and would like to have a device become a reference platform by actively participating and testing Fedora IoT please reach out to Peter Robinson the Fedora IoT Lead.
+The list of supported reference devices will expand with time.
+If you're a hardware vendor and would like to have a device become a reference platform by actively participating and testing Fedora IoT please reach out to Peter Robinson the Fedora IoT Lead.
 
 == Required resources
 
-The images being created are currently 4 Gb in size. The current memory used for testing is 1 Gb of RAM although Fedora IoT base image should run with less but of course this limits the amount of container applications can be run on top of the Base OS.
+The images being created are currently 4 Gb in size.
+The current memory used for testing is 1 Gb of RAM although Fedora IoT base image should run with less but of course this limits the amount of container applications can be run on top of the Base OS.
