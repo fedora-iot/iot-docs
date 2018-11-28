@@ -1,6 +1,7 @@
 = Reference Platforms
 
-For the moment Fedora supports the x86_64 and aarch64 architectures, the components to support ARMv7 are being worked upon and will be added shortly.
+For the moment Fedora supports the x86_64 and aarch64 architectures.
+The components to support ARMv7 are being worked upon and will be added shortly.
 
 The currently tested reference devices are as follows:
 
@@ -9,8 +10,12 @@ The currently tested reference devices are as follows:
 * 96boads Dragonboard 410c
 * 96boards Rock960 Consumer Edition
 
-Other devices should work but aren't being actively tested in the context of IoT. The list of supported reference devices will expand with time.
+Other devices should work, but aren't being actively tested in the context of IoT.
+The list of supported reference devices will expand with time.
 
 == Required resources
 
-The images being created are currently 4 Gb in size. The current memory used for testing is 1 Gb of RAM although Fedora IoT base image should run with less but of course this limits the amount of container applications can be run on top of the Base OS.
+The images being created are currently 4GB in size.
+The current memory used for testing is 1GB of RAM.
+The Fedora IoT base image should run with less,
+but of course this limits the amount of container applications can be run on top of the base OS.
