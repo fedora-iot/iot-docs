@@ -1,0 +1,26 @@
+= User Guide
+
+
+Welcome to the user guide for Fedora IoT.
+Both this guide and Fedora IoT images are in the very early stages, so please report any issues to https://lists.fedoraproject.org/admin/lists/iot.lists.fedoraproject.org/[the mailing list].
+
+image::iot-fedora.svg[SoC board]
+
+== Supported Platforms
+
+For the moment Fedora IoT supports the x86_64 and aarch64 architectures.
+The components to support ARMv7 are being worked upon and will be added shortly.
+
+We have a page covering the currently tested xref:reference-platforms.adoc[Reference Platforms].
+Other devices supported by Fedora on either x86_64 or aarch64 should work just fine but haven't been widely tested in the IoT context so your milage may vary.
+
+The list of supported reference devices will expand with time.
+If you're a hardware vendor and would like to have a device become a reference platform by actively participating and testing Fedora IoT, 
+please reach out to https://fedoraproject.org/wiki/User:Pbrobinson[Peter Robinson], the Fedora IoT Lead.
+
+== Required resources
+
+The images being created are currently 4GB in size.
+The current memory used for testing is 1GB of RAM.
+The Fedora IoT base image should run with less,
+but of course this limits the amount of container applications can be run on top of the base OS.

@@ -1,0 +1,30 @@
+= Upgrades and Rollbacks
+
+There are nightly image builds for x86\_64 and aarch64 available https://download.fedoraproject.org/pub/alt/iot/[here]. 
+
+Upgrade to the latest
+---------------------
+The OSTree update deltas are available on CDN using the following command:
+
+----
+rpm-ostree upgrade
+----
+
+If this command is run as a non-privilaged user, there will be a prompt for authentication.
+
+Rollback to the previous tree
+-----------------------------
+
+----
+rpm-ostree rollback
+----
+
+If this command is run as a non-privilaged user, there will be a prompt for authentication.
+
+Display the status of the currently running deployment
+------------------------------------------------------
+
+----
+rpm-ostree status
+----
+

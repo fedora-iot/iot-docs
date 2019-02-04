@@ -12,14 +12,3 @@ Add a layered package
 rpm-ostree install <pkg-name>
 ----
 
-Upgrade to the latest
-
-----
-rpm-ostree upgrade
-----
-
-Rollback to the previous tree
-
-----
-rpm-ostree rollback
-----
