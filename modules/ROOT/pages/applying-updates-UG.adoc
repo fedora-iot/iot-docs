@@ -10,7 +10,7 @@ The OSTree update deltas are available on CDN using the following command:
 rpm-ostree upgrade
 ----
 
-If this command is run as a non-privilaged user, there will be a prompt for authentication.
+If this command is run as a non-privileged user, there will be a prompt for authentication.
 
 Rollback to the previous tree
 -----------------------------
@@ -19,7 +19,7 @@ Rollback to the previous tree
 rpm-ostree rollback
 ----
 
-If this command is run as a non-privilaged user, there will be a prompt for authentication.
+If this command is run as a non-privileged user, there will be a prompt for authentication.
 
 Display the status of the currently running deployment
 ------------------------------------------------------
