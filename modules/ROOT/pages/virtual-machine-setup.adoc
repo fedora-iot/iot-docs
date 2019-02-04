@@ -1,18 +1,76 @@
 = Setting up a Virtual Machine
+:toc:
 
-The images generated are compressed raw disk images. They can be utilised both on physical devices and used as disks on a virtualisation platform. The images work without change on qemu/KVM.
+== Setup with QEMU/KVM Tools
+The images generated are compressed raw disk images. They can be utilized both on physical devices and used as disks on a virtualization platform. The images work without change on QEMU/KVM.
 
-On qemu/KVM the tools that can be used to run the image in a VM include http://virt-manager.org/[Virtual Machine Manager], GNOME Boxes or virsh cli. These tools are available in most Linux distributions. Decompress the image as below and then create a new virtual machine and when asked for storage point the tool at the existing disk image.
+On QEMU/KVM the tools that can be used to run the image in a VM include http://virt-manager.org/[Virtual Machine Manager^, role="ext-link"] or `virsh` command line utility. These tools are available in most Linux distributions. 
 
-----
-$ xz -d [filename].raw.xz
-----
-
-== Use with VirtualBox
-
-The images we produce need to be converted to be used with VirtalBox. This can be done with the qemu-img command found in the qemu-img package.
+Decompress the image as below and then create a new virtual machine. 
 
 ----
-$ xz -d [filename].raw.xz
-$ qemu-img convert -f raw [filename].raw -O vdi [filename].vdi
+$ xz -d Fedora-IoT-[version].raw.xz
 ----
+
+When asked for an installation source or storage location, point the tool at the existing disk image.
+
+image::virt-manager-create_new-20190204.png[virt-manager create new dialog]
+
+When your image begins booting, continue with the xref:initial-setup.adoc[Initial Setup] instructions.
+
+To learn more about the libvirt family of tools used in Fedora, visit the https://docs.fedoraproject.org/en-US/quick-docs/getting-started-with-virtualization/[Getting started with virtualization] section of the Fedora Documentation.
+
+QEMU (on Linux hosts only) also supports user mode emulation. In this mode, QEMU can launch Linux processes compiled for one CPU on another CPU. Learn more in the https://docs.fedoraproject.org/en-US/quick-docs/qemu/[How to use QEMU] section of the Fedora Documentation.
+
+== Setup with GNOME Boxes
+
+While GNOME Boxes is based on `libvirt`, it does not support all of the features and it does not recognize the raw image format. The images we produce need to be converted to to a QCOW2 format. This can be done with the `qemu-img` command found in the `qemu-img` package. 
+
+Decompress and convert the image as below and then create a new virtual machine.
+
+----
+$ xz -d Fedora-IoT-[version].raw.xz
+$ qemu-img convert -f raw Fedora-IoT-[version].raw -O qcow2 Fedora-IoT-[version].qcow2
+----
+
+When asked for an installation source or storage location, point the tool at the existing disk image.
+
+image::new-box-dialog-20190204.png[GNOME Boxes create new dialog]
+////
+Image should be modified with an outline around the "Select a file" option
+////
+
+When your image begins booting, continue with the xref:initial-setup.adoc[Initial Setup] instructions.
+
+Alternately, you can install a new box from the ISO image.
+////
+Link to new (still to be created) page to show ISO install. 
+SilverBlue has an example with lots of screenshots for the F28 Anaconda install.
+It probably has a lot more on manual partitioning than is needed here. 
+Their intro NOTE is nice in pointing out that it is written in detail, assuming previous Fedora experience.
+////
+
+More information on using GNOME Boxes can be found in the https://help.gnome.org/users/gnome-boxes/stable/index.html.en[GNOME HELP^, role="ext-link"] pages.
+
+== Setup with VirtualBox
+
+The images we produce need to be converted to be used with VirtualBox. This can be done with the `qemu-img` command found in the `qemu-img` package.
+
+Decompress and convert the image as below and then create a new virtual machine.
+
+----
+$ xz -d Fedora-IoT-[version].raw.xz
+$ qemu-img convert -f raw Fedora-IoT-[version].raw -O vdi Fedora-IoT-[version].vdi
+----
+
+When asked for an installation source or storage location, point the tool at the existing disk image.
+
+image::virtualbox-new-dialog-20190204.png[VirtualBox create new hard disk dialog]
+////
+Image should be modified with an outline around the "Use an existing"  option
+////
+
+When your image begins booting, continue with the xref:initial-setup.adoc[Initial Setup] instructions.
+
+More information for using Virtual Box can be found at https://www.virtualbox.org/[VirtualBox.org^, role="ext-link"]
+
