@@ -1,5 +1,6 @@
 * xref:index.adoc[Welcome]
 * xref:getting-started.adoc[Getting Started]
+** xref:obtaining-images.adoc[Obtaining images]
 ** xref:virtual-machine-setup.adoc[Setting up a Virtual Machine]
 ** xref:physical-device-setup.adoc[Setting up a Physical Device]
 ** xref:initial-setup.adoc[Initial Setup once the VM or Phyical device is running]
