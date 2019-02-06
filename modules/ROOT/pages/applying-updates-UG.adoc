@@ -1,30 +1,50 @@
 = Upgrades and Rollbacks
 
-There are nightly image builds for x86\_64 and aarch64 available https://download.fedoraproject.org/pub/alt/iot/[here]. 
+NOTE: The latest image builds for x86_64 and aarch64 are available at https://download.fedoraproject.org/pub/alt/iot/[here]. 
 
-Upgrade to the latest
----------------------
+== Upgrade to the Latest Image
+
+Display the status of the currently running deployment:
+
+----
+$ rpm-ostree status
+----
+
+Check for available updates:
+
+----
+$ sudo rpm-ostree upgrade --check
+----
+
 The OSTree update deltas are available on CDN using the following command:
 
 ----
-rpm-ostree upgrade
+$ sudo rpm-ostree upgrade
 ----
 
-If this command is run as a non-privileged user, there will be a prompt for authentication.
-
-Rollback to the previous tree
------------------------------
+Due to the atomic nature of the OS, you will have to reboot into the new image to have the updates take effect:
 
 ----
-rpm-ostree rollback
+$ systemctl reboot
 ----
 
-If this command is run as a non-privileged user, there will be a prompt for authentication.
+== Rollback to a previous tree
 
-Display the status of the currently running deployment
-------------------------------------------------------
+The `rpm-ostree` utility keeps two deployments available. 
+Both have an entry in the bootloader menu. 
+The new updated entry with be the default. 
+If necessary, you can choose the other entry to boot into the previous deployment.
+
+TIP: The timeout for GRUB2 to display the menu is very short at only one second. Pressing the space bar or an arrow key when the menu appears will interrupt the timeout and allow you to choose another entry. The ENTER key will boot the selected image. 
+
+To permanently switch back to the previous deployment:
 
 ----
-rpm-ostree status
+$ sudo rpm-ostree rollback
 ----
+
+NOTE: More information about https://docs.fedoraproject.org/en-US/quick-docs/bootloading-with-grub2/[Bootloading with GRUB2] can be found in the Fedora Quick Docs.
+
+NOTE: More information about the `rpm-ostree` command can be found in the upstream https://rpm-ostree.readthedocs.io/en/latest/manual/administrator-handbook/[Adminstrator Handbook^, role="ext-link"]
+
 

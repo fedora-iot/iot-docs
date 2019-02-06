@@ -1,8 +1,35 @@
 = Applying updates
 
-The latest image builds for x86\_64 and aarch64 are available at https://download.fedoraproject.org/pub/alt/iot/[here]. The OSTree update deltas are available on CDN using the following command:
+NOTE: The latest image builds for x86_64 and aarch64 are available at https://download.fedoraproject.org/pub/alt/iot/[here]. 
+
+Display the status of the currently running deployment:
 
 ----
-sudo rpm-ostree upgrade
+$ rpm-ostree status
 ----
 
+Check for available updates:
+
+----
+$ sudo rpm-ostree upgrade --check
+----
+
+The OSTree update deltas are available on CDN using the following command:
+
+----
+$ sudo rpm-ostree upgrade
+----
+
+Due to the atomic nature of the OS, you will have to reboot into the new image to have the updates take effect:
+
+----
+$ systemctl reboot
+----
+
+The `rpm-ostree` utility keeps two deployments available. 
+Both have an entry in the bootloader menu and the new updated entry with be the default. 
+If necessary, you can choose the other entry to boot into the previous deployment.
+
+TIP: The timeout for GRUB2 to display the menu is very short at only one second. Pressing the space bar or an arrow key when the menu appears will interrupt the timeout and allow you to choose another entry. The ENTER key will boot the selected image. 
+
+NOTE: More information on managing upgrades and rollbacks can be found in the User Guide. [link needed]
