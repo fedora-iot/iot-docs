@@ -8,7 +8,8 @@ There are currently a few issues with the initial-setup. It currently only allow
 
 == Create a User
 
-The provided image has a locked root account. No password has been set and logging into the system, locally or remotely, with the root account is not allowed.
+The provided image has a locked root account. 
+No password has been set and logging into the system, locally or remotely, with the root account is not allowed.
 
 The first time the image is booted, an initial setup screen will appear.
 
@@ -18,11 +19,14 @@ Follow the prompts on the screen to create a standard user.
 
 image::initial-setup-2_20190205.png[Initial Setup prompt to create user]
 
-Continue selecting options to set a user name. When you select 'Use password' a new menu option will appear to set the password.
+Continue selecting options to set a user name. 
+When you select 'Use password' a new menu option will appear to set the password.
 
 image::initial-setup-3_20190205.png[Initial Setup prompt not yet admin]
 
-Ensure that the user will have root privileges by selecting the 'Administrator' check-box. This will add the user to the wheel group. Members of the wheel group can use `sudo` with any command by default.
+Ensure that the user will have root privileges by selecting the 'Administrator' option. 
+This will add the user to the wheel group. 
+Members of the wheel group can use `sudo` with any command by default.
 
 image::initial-setup-4_20190205.png[Initial Setup prompt with admin checked]
 
@@ -38,7 +42,10 @@ Once the initial setup dialog has completed, login as the new user and use `sudo
 [testuser@localhost ~]$ sudo -i
 ----
 
-A prompt for the user password will appear. If the user was added to the wheel group, the correct user password will result in an interactive root shell. Be sure to `exit` when the root privilege is no longer needed.
+A prompt for the user password will appear. 
+If the user was added to the wheel group, the correct user password will result in an interactive root shell. 
+Be sure to `exit` when the root privilege is no longer needed.
 
-If you wish to, you can set a root password, otherwise the root account remains locked and all access must be initiated by a standard user. Unless you have a specific need for direct root access, leaving the root account locked is recommended.
+If you wish to, you can set a root password, otherwise the root account remains locked and all access must be initiated by a standard user. 
+Unless you have a specific need for direct root access, leaving the root account locked is recommended.
 
