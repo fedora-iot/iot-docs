@@ -1,0 +1,58 @@
+= Rebasing to New Versions
+
+WARNING: This page is work in progress
+
+== Rebase to a New Major Version
+
+Import any new keys as needed.
+
+----
+Usage:
+ ostree remote gpg-import [OPTIONS...] NAME [KEY-ID...]
+----
+
+Provide the reference path for the new version in the rebase command:
+
+----
+$ sudo rpm-ostree rebase VERSION
+----
+
+The process is very similar to a system update.
+The new OS is downloaded and installed in the background.
+Once ready, reboot the system to use the new image:
+
+----
+$ systemctl reboot
+----
+
+Just like system updates, rebases can be reversed.
+The previous deployment is still available, and you can boot back into it if there are any problems with the new OS.
+
+
+== Moving between Stable and Development Nightly Build Trees
+
+Currently the stable (Fedora 29) and development (Rawhide) branches are using the same release key. 
+////
+Update the release key to the version you wish to move to:
+
+----
+sudo vi /etc/ostree/remotes.d/fedora-iot.conf
+----
+
+////
+You need to specify the architecture as part of the branch option. 
+At the moment the options are aarch64 or x86_64.
+
+To rebase to stable:
+
+----
+sudo rpm-ostree rebase -b fedora/stable/<ARCH>/iot
+----
+
+To rebase to devel:
+
+----
+sudo rpm-ostree rebase -b fedora/devel/<ARCH>/iot
+----
+
+

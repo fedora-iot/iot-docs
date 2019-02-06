@@ -1,0 +1,12 @@
+= Updating Applications
+
+WARNING: This is a placeholder page for work in progress
+
+== Updating Layered Packages
+
+stuff goes here
+
+== Updating Containers
+
+more stuff here
+
