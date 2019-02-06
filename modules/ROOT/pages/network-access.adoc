@@ -1,7 +1,7 @@
 = Network Access
 
 Before removing the serial console or HDMI monitor and USB keyboard, verify network connectivity. 
-The provided images defaults to obtaining network settings from a DHCP server.
+The provided images default to obtaining network settings from a DHCP server.
 
 == Verify Network Configuration
 
