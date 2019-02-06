@@ -1,13 +1,14 @@
 = Network Access
 
-Before removing the serial console or HDMI monitor and USB keyboard, verify network connectivity. The provided images default to obtaining network settings from a DHCP server.
+Before removing the serial console or HDMI monitor and USB keyboard, verify network connectivity. 
+The provided images defaults to obtaining network settings from a DHCP server.
 
 == Verify Network Configuration
 
 Determine your IP address:
 
 ----
-$ ip a
+$ ip addr
 ----
 
 Check that you have a default gateway:
@@ -22,7 +23,8 @@ Ping a known host:
 $ ping -c3 iot.fedoraproject.org
 ----
 
-NOTE: The sample above requires name resolution and a route to the internet. If your device is located on an isolated network, ping another host on your network.
+NOTE: The sample above requires name resolution and a route to the internet. 
+If your device is located on an isolated network, ping another host on your network.
 
 Verify that `sshd` is running:
 
@@ -36,12 +38,50 @@ View the default firewall configuration:
 $ sudo firewall-cmd --list-all
 ----
 
+NOTE: Information on adding support for specific devices can be found in the User Guide. [link needed]
+// Need to add xref once the layout is better established.
+
 == Configure Remote Access
 
-Once the initial setup is complete, the serial console or HDMI monitor and USB keyboard are no longer required to access the device. The device can be left in a headless state and accessed remotely.
+Once the initial setup is complete, the serial console or HDMI monitor and USB keyboard are no longer required to access the device. 
+The device can be left in a headless state and accessed remotely.
 
-The released images are configured to run an SSH server and accept outside connections. The default configuration allows root login if a password is set. This is a good reason to leave the root account locked. The default configuration also allows standard users to login and the user can then sudo if they were made an administrator as a member of the wheel group.
+The released images are configured to run an SSH server and accept outside connections. 
+The default configuration allows root login if a password is set. 
+This is a good reason to leave the root account locked. 
+The default configuration also allows standard users to login and the user can then sudo if they were made an administrator as a member of the wheel group.
 
-WARNING: Remote access section is work in progress. Questions: Where to put info on changing config (disabling root login for compliance) and what about adding ssh keys to an authorized key file? These seem beyond "getting started". We can add a link to other guides here though. Configuring static network settings or setting a hostname may also be of interest to some users (small projects since that does not scale!) What about virtual machines that default to NAT for network configuration?
+----
+$ ssh testuser@11.22.33.44
+----
 
+.Authentication Failures
+[TIP]
+====
+If receive a "Too many authentication failures" message such as: 
 
+----
+Received disconnect from 11.22.33.44 port 22:2: Too many authentication failures
+----
+
+you may have too many different ssh keys in your personal ssh configuration directory.
+Since the image does not have your key, try connecting with a password first using:
+
+----
+$ ssh -o PreferredAuthentications=password testuser@11.22.33.44
+----
+
+If this works, you can customize your ssh configuration to specify either this option or options to use a specific key once you have added your keys.
+====
+
+NOTE: More information on managing accounts, keys, and remote access can be found in the User Guide. [link needed]
+// Need to add xref once the layout is better established.
+
+////
+Other topics to include in User Guide:
+Disabling root ssh access for security compliance.
+Adding ssh keys to user or host authorized keys file.
+(Rare in IoT?) setting a hostname and/or any /etc/hosts settings
+(Rare, developer only?) Static networking options
+(consider) Any comments on how virt platforms tend to default to NAT network that might make remote access a bit more challenging.
+////
