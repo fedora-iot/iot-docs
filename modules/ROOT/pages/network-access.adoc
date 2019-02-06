@@ -1,0 +1,47 @@
+= Network Access
+
+Before removing the serial console or HDMI monitor and USB keyboard, verify network connectivity. The provided images default to obtaining network settings from a DHCP server.
+
+== Verify Network Configuration
+
+Determine your IP address:
+
+----
+$ ip a
+----
+
+Check that you have a default gateway:
+
+----
+$ ip route 
+----
+
+Ping a known host: 
+
+----
+$ ping -c3 iot.fedoraproject.org
+----
+
+NOTE: The sample above requires name resolution and a route to the internet. If your device is located on an isolated network, ping another host on your network.
+
+Verify that `sshd` is running:
+
+----
+$ systemctl is-active sshd
+----
+
+View the default firewall configuration:
+
+----
+$ sudo firewall-cmd --list-all
+----
+
+== Configure Remote Access
+
+Once the initial setup is complete, the serial console or HDMI monitor and USB keyboard are no longer required to access the device. The device can be left in a headless state and accessed remotely.
+
+The released images are configured to run an SSH server and accept outside connections. The default configuration allows root login if a password is set. This is a good reason to leave the root account locked. The default configuration also allows standard users to login and the user can then sudo if they were made an administrator as a member of the wheel group.
+
+WARNING: Remote access section is work in progress. Questions: Where to put info on changing config (disabling root login for compliance) and what about adding ssh keys to an authorized key file? These seem beyond "getting started". We can add a link to other guides here though. Configuring static network settings or setting a hostname may also be of interest to some users (small projects since that does not scale!) What about virtual machines that default to NAT for network configuration?
+
+
