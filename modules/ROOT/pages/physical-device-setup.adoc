@@ -1,38 +1,101 @@
 = Setting up a Physical Device
+:toc:
 
-You will need either a serial console or HDMI monitor with USB keyboard to get started with the initial set.
+WARNING: This page is a work in progress.
 
-Create a mSD card for either of the above devices with the following command:
+== Gather the Physical Components
 
-== Scripted
+A list of currently tested devices is maintained in the xref:reference-platforms.adoc[Reference Platforms] page.
 
-To install using arm-image-installer:
+Always reference the documentation of the board you have selected for assembly instructions and requirements. At a minimum you will need the board, a power source, and a microSD card. 
+
+=== Console for the initial setup
+For the xref:initial-setup.adoc[initial setup] of the Fedora IoT images, you will also need either a serial console or HDMI monitor with USB keyboard. Once the initial setup has been completed during the first boot, the device can be changed to a headless state or be left with attached console access. 
+
+=== Network connection
+If support for your wireless network devices are not available in the Fedora image, it will have to be added after installation. 
+You will need a wired connection to complete the install of the xref:enabling-wireless.adoc[layered package].
+
+For the Fedora 29 images:
+
+* The Raspberry Pi WiFi is supported in the base image.
+* The `wcn36xx-firmware` for the Dragonboard will need to be added later. 
+
+=== SD Card
+The Fedora IoT image is currently 4GB in size.
+The best speed class depends on the usage. 
+A faster speed class is better for writes but the trade off is slower read speed.
+
+Documentation for your board may also recommend specific SD Card choices as well as required physical sizes for each device.
+
+* Raspberry Pi discusses card size and speed class in their https://www.raspberrypi.org/documentation/installation/sd-cards.md[SD Card Documentation].
+* The 96Boards specification is simply that all boards have a microSDHC socket present.
+
+WARNING: The following procedures will overwrite everything on the micro SD card. Be sure to backup any data before continuing!
+
+== Create a Bootable SD Card
+If you have not already xref:obtaining-images.adoc[downloaded the image], do so now and make a note of the download location and filename.
+
+=== Determine the SD Card Device name
+
+There are several options for determining the media device name.
+
+* Run the `lsblk` command before and after inserting the card.
+The new device that appears on the list is the device for the media.
+If your microSD card has partitions, locate the name from the line that is type 'disk'.
+In this example the device name is `mmcblk0` and will be referenced later as `/dev/mmcblk0`:
+----
+$ lsblk
+NAME            MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
+mmcblk0         179:0    0  14.9G  0 disk 
+├─mmcblk0p1     179:1    0   142M  0 part /run/media/user/22DA-CAE8
+├─mmcblk0p2     179:2    0     1G  0 part /run/media/user/8b87a5af-12c7-4990-940e-5b457336b11f
+└─mmcblk0p3     179:3    0   2.9G  0 part /run/media/user/cce2e189-9aee-4b3e-b031-aac9bdc632c9
+...output omitted...
+----
+* If you have the `udisks2` package installed you may find the `udisksctl` command helpful in determining the media device name. It will show the model and only the device name without the extra partition information. In this example, a 16GB SanDisk Ultra shows as 'SL16G':
+----
+$ udisksctl status 
+MODEL                     REVISION  SERIAL               DEVICE
+  ----------------------------------------------------
+SAMSUNG MZSLW1T0HMLH-000L1           S308NAAH501124       nvme0n1 
+SL16G                               0x51821336           mmcblk0 
+----
+* Finally, the kernel messages will show the addition of a device. In a terminal window before inserting the device run:
+----
+dmesg -w
+----
+
+=== Scripted image transfer with `arm-image-installer` 
+
+Install the `arm-image-installer` package:
 
 ----
-$ sudo dnf install -y fedora-arm-installer
+$ sudo dnf install fedora-arm-installer
 ----
 
-To write the image out use the following:
+Display the usage for the utility. 
+This will display an example command: 
 
 ----
 $ sudo arm-image-installer
 
-Usage: arm-image-installer &lt;options&gt;
+Usage: arm-image-installer <options>
 
-   --image=IMAGE - xz compressed image file name
-   --target=TARGET - target board
-   --media=DEVICE - media device file (/dev/[sdX|mmcblkX])
-   --selinux=ON/OFF - Turn SELinux off/on as needed
-   --norootpass - Remove the root password
-   -y - Assumes yes, will not wait for confirmation
-   --version - Display version and exit
-   --resizefs - Resize root filesystem to fill media device
-   --addconsole - Add system console to extlinux.conf
-   --addkey= - /path/to/ssh-public-key
+	--addconsole    - Add system console to extlinux.conf
+	--addkey=       - /path/to/ssh-public-key
+	--image=IMAGE	- xz compressed image file name
+	--media=DEVICE	- media device file (/dev/[sdX|mmcblkX])
+	--norootpass	- Remove the root password
+	--resizefs	- Resize root filesystem to fill media device
+	--supported	- List of supported hardware
+	--target=TARGET	- target board
+	--relabel       - SELinux relabel root filesystem
+	--args		- kernel commandline addition
+	--version	- Display version and exit
+	-y		- Assumes yes, will not wait for confirmation
 
 Example: arm-image-installer --image=Fedora-Rawhide.xz --target=Bananapi --media=/dev/mmcblk0
-
-For list of supported boards please check SUPPORTED-BOARDS file.
 ----
 
 For the Raspberry Pi Model 3 B/B+ use:
@@ -47,16 +110,30 @@ For the Dragonboard410c use:
 --target=dragonboard410c
 ----
 
-== Manual
+Provide the correct path for the downloaded image and the microSD media.
+Replace `XXX` with the location of your media. It will be `sdX` or `mmcblkX` depending on hardware:
+
+----
+$ sudo arm-image-installer --image=Fedora-IoT-29-20181206.0.aarch64.raw.xz --target=dragonboard410c --media=/dev/XXX
+----
+
+Other options of interest:
+
+* The `--addkey=` option will place a specified ssh public key into the `/root/authorized_keys` file.
+* The `--resizefs` options will expand the `/sysroot` partition to use all remaining space on the microSD card.
+* TODO: figure out the --addconsole option - it does not appear to work since we do not appear to have a extlinux/extlinux.conf to edit. This also means the manual instructions below need to be modified.
+
+=== Manual Image Transfer with `dd`
 
 Replace `XXX` with the location of your media. It will be `sdX` or `mmcblkX` depending on hardware.
 
 ----
-xzcat Fedora-IoT-28-<BUILD ID>.aarch64.raw.xz | sudo dd status=progress bs=4M of=/dev/XXX 
+xzcat Fedora-IoT-29-<BUILD ID>.aarch64.raw.xz | sudo dd status=progress bs=4M of=/dev/XXX 
 ----
 
-== Serial Console
+== Configure a Serial Console (Optional)
 
 If you wish to use a serial console you'll need to configure it. 
 Details for the https://fedoraproject.org/wiki/Architectures/ARM/Raspberry_Pi?rd=Raspberry_Pi#How_do_I_use_a_serial_console.3F[Raspberry PI are here].
 
+IMPORTANT: There must be either a serial console or HDMI monitor with USB keyboard connected to the device to complete the initial setup.
