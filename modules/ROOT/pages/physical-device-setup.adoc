@@ -1,8 +1,6 @@
 = Setting up a Physical Device
 :toc:
 
-WARNING: This page is a work in progress.
-
 == Gather the Physical Components
 
 A list of currently tested devices is maintained in the xref:reference-platforms.adoc[Reference Platforms] page.
@@ -63,7 +61,7 @@ SL16G                               0x51821336           mmcblk0
 ----
 * Finally, the kernel messages will show the addition of a device. In a terminal window before inserting the device run:
 ----
-dmesg -w
+$ dmesg -w
 ----
 
 === Scripted image transfer with `arm-image-installer` 
@@ -121,7 +119,13 @@ Other options of interest:
 
 * The `--addkey=` option will place a specified ssh public key into the `/root/authorized_keys` file.
 * The `--resizefs` options will expand the `/sysroot` partition to use all remaining space on the microSD card.
-* TODO: figure out the --addconsole option - it does not appear to work since we do not appear to have a extlinux/extlinux.conf to edit. This also means the manual instructions below need to be modified.
+
+////
+* the `--addconsole` option with the `--target=rpi3` will modify the config.txt to set enable_uart=1 but there is no extlinux.conf to edit as the help indicates
+However, the config.txt also has a comment that:
+"u-boot will auto detect serial and pass corrent options to kernel if enabled"
+I dont have a setup to test on hand.
+////
 
 === Manual Image Transfer with `dd`
 

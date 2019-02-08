@@ -32,4 +32,4 @@ If necessary, you can choose the other entry to boot into the previous deploymen
 
 TIP: The timeout for GRUB2 to display the menu is very short at only one second. Pressing the space bar or an arrow key when the menu appears will interrupt the timeout and allow you to choose another entry. The ENTER key will boot the selected image. 
 
-NOTE: More information on managing upgrades and rollbacks can be found in the User Guide. [link needed]
+NOTE: More information on managing upgrades and rollbacks can be found in the xref:user-guide.adoc[User Guide]. 

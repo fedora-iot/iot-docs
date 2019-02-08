@@ -38,8 +38,7 @@ View the default firewall configuration:
 $ sudo firewall-cmd --list-all
 ----
 
-NOTE: Information on adding support for specific devices can be found in the User Guide. [link needed]
-// Need to add xref once the layout is better established.
+NOTE: Information on adding support for specific devices can be found in the xref:user-guide.adoc[User Guide]. 
 
 == Configure Remote Access
 
@@ -74,8 +73,7 @@ $ ssh -o PreferredAuthentications=password testuser@11.22.33.44
 If this works, you can customize your ssh configuration to specify either this option or options to use a specific key once you have added your keys.
 ====
 
-NOTE: More information on managing accounts, keys, and remote access can be found in the User Guide. [link needed]
-// Need to add xref once the layout is better established.
+NOTE: More information on managing accounts, keys, and remote access can be found in the xref:user-guide.adoc[User Guide].
 
 ////
 Other topics to include in User Guide:
