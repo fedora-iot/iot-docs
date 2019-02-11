@@ -2,6 +2,27 @@
 
 Available images for download are described on the IoT https://iot.deforaproject.org[landing page].
 
-There are image builds and checksum files for x86_64 and aarch64 available https://download.fedoraproject.org/pub/alt/iot/[here]. 
+There are image builds and checksum files for x86_64 and aarch64 available https://download.fedoraproject.org/pub/alt/iot/[here] or at one of the https://ostree.fedoraproject.org/iot/mirrorlist[mirror sites]. 
+
+== Why the Fedora IoT Image
+
+The use of https://ostree.readthedocs.io/en/latest/[OSTree] brings fully atomic upgrades, easy rollbacks and workflows that are familiar from immutable, image based servers.
+An OS image that is composed on the server side allows for testing the exact bits before they reach client systems, leading to more reliable updates. 
+The GPG signed image based deployments also scale well to very large numbers of clients.
+
+The Fedora IoT images work with https://rpm-ostree.readthedocs.io/en/latest/[rpm-ostree] which is a hybrid image/package system. 
+It supports package layering, which allows installation of RPMs for additional hardware support or applications.
+
+The Fedora IoT images also have excellent support for container-focused workflows.
+Containers allow you to separate core OS updates from application updates as well as test and deploy different versions of applications. 
+The https://podman.io/[podman] daemon is light weight and ready for you to download or create containers for your home assistant, industrial gateways, or data storage and analytics.
+
+== Pick the Right Tool for the Job
+
+If you are looking for a graphical desktop environment based on OSTree and designed for developers, look at https://silverblue.fedoraproject.org/[Fedora Silverblue].
+
+If you are looking for a traditional dnf based operating system for your ARM device, look at https://arm.fedoraproject.org/[Fedora ARM]
+
+If you are looking for a lightweight yet powerful and scalable core OS for your Internet of Things project, you came to the right place! https://iot.stg.fedoraproject.org/[Download the images now]!
 
 
