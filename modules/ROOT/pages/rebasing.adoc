@@ -1,8 +1,159 @@
 = Rebasing to New Versions
+:toc:
 
-WARNING: This page is work in progress
+The `rpm-ostree rebase` command allows you to switch between multiple branches.
+The `ostree remote` command allows you to view and change repository options.
 
-== Rebase to a New Major Version
+
+== Listing Remote Repositories
+
+The `ostree remote` command has several options:
+
+----
+$ ostree remote --help
+Usage:
+  ostree remote [OPTION…] COMMAND
+
+Remote commands that may involve internet access
+
+Builtin "remote" Commands:
+  add               Add a remote repository
+  delete            Delete a remote repository
+  show-url          Show remote repository URL
+  list              List remote repository names
+  gpg-import        Import GPG keys
+  add-cookie        Add a cookie to remote
+  delete-cookie     Remove one cookie from remote
+  list-cookies      Show remote repository cookies
+  refs              List remote refs
+  summary           Show remote summary
+
+Help Options:
+  -h, --help        Show help options
+
+Application Options:
+  -v, --verbose     Print debug information during command processing
+  --version         Print version information and exit
+----
+
+List remote repository names:
+
+----
+$ ostreee remote list
+fedora-iot
+----
+
+Show the remote URL:
+
+----
+$ ostreee remote show-url fedora-iot
+https://ostree.fedoraproject.org/iot
+----
+
+List the remote reference branches:
+
+----
+$ ostree remote refs fedora-iot
+fedora-iot:fedora/28/aarch64/iot
+fedora-iot:fedora/28/x86_64/iot
+fedora-iot:fedora/29/aarch64/iot
+fedora-iot:fedora/29/armhfp/iot
+fedora-iot:fedora/29/x86_64/iot
+fedora-iot:fedora/30/aarch64/iot
+fedora-iot:fedora/30/armhfp/iot
+fedora-iot:fedora/30/x86_64/iot
+fedora-iot:fedora/devel/aarch64/iot
+fedora-iot:fedora/devel/armhfp/iot
+fedora-iot:fedora/devel/x86_64/iot
+fedora-iot:fedora/stable/aarch64/iot
+fedora-iot:fedora/stable/armhfp/iot
+fedora-iot:fedora/stable/x86_64/iot
+----
+
+== Adding and Removing Remote Repositories
+
+The ostree remote repository configuration files are located in the `/etc/ostree/remotes.d` directory.
+
+----
+$ cat /etc/ostree/remotes.d/fedora-iot.conf 
+[remote "fedora-iot"]
+url=https://ostree.fedoraproject.org/iot
+gpg-verify=true
+gpgkeypath=/etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-iot-2019
+contenturl=mirrorlist=https://ostree.fedoraproject.org/iot/mirrorlist
+----
+
+The first line specifies the name of the remote that will be shown with `ostree remote list`. The additional lines are in the format of 'KEY=VALUE'.
+
+To add a remote repository use the `ostree remote add` command:
+
+----
+$ ostree remote add --help
+Usage:
+  ostree remote add [OPTION…] NAME [metalink=|mirrorlist=]URL [BRANCH...]
+
+Add a remote repository
+
+Help Options:
+  -h, --help                        Show help options
+
+Application Options:
+  --set=KEY=VALUE                   Set config option KEY=VALUE for remote
+  --no-gpg-verify                   Disable GPG verification
+  --if-not-exists                   Do nothing if the provided remote exists
+  --gpg-import=FILE                 Import GPG key from FILE
+  --contenturl=URL                  Use URL when fetching content
+  --collection-id=COLLECTION-ID     Globally unique ID for this repository as an collection of refs for redistribution to other repositories
+  --repo=PATH                       Path to OSTree repository (defaults to /sysroot/ostree/repo)
+  --sysroot=PATH                    Use sysroot at PATH (overrides --repo)
+  -v, --verbose                     Print debug information during command processing
+  --version                         Print version information and exit
+----
+
+The `--set` option can be used multiple times to configure any KEY=VALUE pair. Some of the more common or required keys have their own options.
+For example, the following two commands result in identical configuration files. They differ only in how the contenturl is specified:
+
+----
+$ sudo ostree remote add --set=contenturl=mirrorlist=https://ostree.fedoraproject.org/iot/mirrorlist --set=gpgkeypath=/etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-iot-2019 fedora-iot 'https://ostree.fedoraproject.org/iot'
+----
+
+----
+$ sudo ostree remote add --contenturl=mirrorlist=https://ostree.fedoraproject.org/iot/mirrorlist --set=gpgkeypath=/etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-iot-2019 fedora-iot 'https://ostree.fedoraproject.org/iot'
+----
+
+To delete a remote repository use:
+
+----
+$ sudo ostree remote delete fedora-iot
+----
+
+
+== Moving between Stable and Development Nightly Build Trees
+
+Currently the stable (Fedora 29) and development (Rawhide) branches are using the same release key. 
+
+You need to specify the architecture as part of the branch option. 
+At the moment the options are aarch64 or x86_64.
+
+To rebase to stable:
+
+----
+sudo rpm-ostree rebase -b fedora/stable/<ARCH>/iot
+----
+
+To rebase to devel:
+
+----
+sudo rpm-ostree rebase -b fedora/devel/<ARCH>/iot
+----
+
+Once ready, reboot the system to use the new image:
+
+----
+$ systemctl reboot
+----
+
+== Rebase to any New Version
 
 Import any new keys as needed.
 
@@ -28,31 +179,6 @@ $ systemctl reboot
 Just like system updates, rebases can be reversed.
 The previous deployment is still available, and you can boot back into it if there are any problems with the new OS.
 
-
-== Moving between Stable and Development Nightly Build Trees
-
-Currently the stable (Fedora 29) and development (Rawhide) branches are using the same release key. 
-////
-Update the release key to the version you wish to move to:
-
-----
-sudo vi /etc/ostree/remotes.d/fedora-iot.conf
-----
-
-////
-You need to specify the architecture as part of the branch option. 
-At the moment the options are aarch64 or x86_64.
-
-To rebase to stable:
-
-----
-sudo rpm-ostree rebase -b fedora/stable/<ARCH>/iot
-----
-
-To rebase to devel:
-
-----
-sudo rpm-ostree rebase -b fedora/devel/<ARCH>/iot
-----
+NOTE: More information is available in the upstream documentation for https://ostree.readthedocs.io[libostree] and https://rpm-ostree.readthedocs.io[rpm-ostree].
 
 

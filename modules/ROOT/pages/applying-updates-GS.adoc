@@ -14,7 +14,7 @@ Check for available updates:
 $ sudo rpm-ostree upgrade --check
 ----
 
-The OSTree update deltas are available on CDN using the following command:
+Apply the available updates:
 
 ----
 $ sudo rpm-ostree upgrade
