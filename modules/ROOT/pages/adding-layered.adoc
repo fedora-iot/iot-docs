@@ -1,4 +1,32 @@
-= Adding layered packages
+= Layered Packages
 
-This page needs to be written
+The Fedora IoT images utilize `rpm-ostree` which is a hybrid image/package system.
+This allows layering a package on an existing image which produces a new versioned deployment. 
+Similarly, removing a layered package creates a new versioned image.
+The rpm-ostree utility keeps two deployments available so a rollback procedure can be used to revert to a previous deployment.
+
+Display the status of the currently running deployment:
+
+----
+$ rpm-ostree status
+State: idle
+AutomaticUpdates: disabled
+Deployments:
+● ostree://fedora-iot:fedora/stable/x86_64/iot <1>
+                   Version: 29.20190211.0 (2019-02-11T13:18:27Z)
+                BaseCommit: 5eb0553c02a8035a02f030c7fb8d5c6727d1ecb2700dade4b767363acfcab8e4
+              GPGSignature: Valid signature by C2A3FA9DC67F68B98BB543F47BB90722DBBDCF7C
+           LayeredPackages: asciiquarium tree  <2>
+
+  ostree://fedora-iot:fedora/stable/x86_64/iot <3>
+                   Version: 29.20190211.0 (2019-02-11T13:18:27Z)
+                    Commit: 5eb0553c02a8035a02f030c7fb8d5c6727d1ecb2700dade4b767363acfcab8e4
+              GPGSignature: Valid signature by C2A3FA9DC67F68B98BB543F47BB90722DBBDCF7C
+----
+
+<1> The currently running deployment is marked with a ●.
+<2> The layered packages are listed in the description.
+<3> The previous deployment is also available in the boot menu or for a rollback procedure.
+
+
 
