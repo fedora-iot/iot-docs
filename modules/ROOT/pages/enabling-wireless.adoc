@@ -1,4 +1,4 @@
-= Enabling Wireless Support on the DB410c and Raspberry Pi
+= Enabling Wireless Support on the DB410c
 
 *Dragonboard*:
 
@@ -25,8 +25,4 @@ Reboot the system:
 ----
 $ sudo systemctl reboot
 ----
-
-*Raspberry Pi*:
-
-In recent Fedora 29 and later builds the Raspberry Pi WiFi is supported in the base image so no further work is required.
 
