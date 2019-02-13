@@ -1,6 +1,6 @@
 = Obtaining Images
 
-Available images for download are described on the IoT https://iot.deforaproject.org[landing page].
+Available images for download are described on the IoT https://iot.fedoraproject.org[landing page].
 
 There are image builds and checksum files for x86_64 and aarch64 available https://download.fedoraproject.org/pub/alt/iot/[here] or at one of the https://ostree.fedoraproject.org/iot/mirrorlist[mirror sites]. 
 
