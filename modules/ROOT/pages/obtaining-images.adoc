@@ -2,13 +2,17 @@
 
 Available images for download are described on the IoT https://iot.fedoraproject.org[landing page].
 
-There are image builds and checksum files for x86_64 and aarch64 available https://download.fedoraproject.org/pub/alt/iot/[here] or at one of the https://ostree.fedoraproject.org/iot/mirrorlist[mirror sites]. 
+// once the landing page actually exists, decide what if anything to include for direct links
+There are image builds and checksum files for x86_64 and aarch64 available https://download.fedoraproject.org/pub/alt/iot/[here].
+// or at one of the https://ostree.fedoraproject.org/iot/mirrorlist[mirror sites]. 
 
 == Why the Fedora IoT Image
 
-The use of https://ostree.readthedocs.io/en/latest/[OSTree] brings fully atomic upgrades, easy rollbacks and workflows that are familiar from immutable, image based servers.
+The use of https://ostree.readthedocs.io/en/latest/[OSTree] brings fully atomic upgrades, easy rollbacks and workflows that are familiar to users of immutable, image based servers.
+
 An OS image that is composed on the server side allows for testing the exact bits before they reach client systems, leading to more reliable updates. 
-The GPG signed image based deployments also scale well to very large numbers of clients.
+The GPG signed image based deployments scale well to very large numbers of clients.
+Updates are atomic so nothing changes until the device is rebooted and the rollback capability makes it easy to recover remotely if there is a failure during upgrade.
 
 The Fedora IoT images work with https://rpm-ostree.readthedocs.io/en/latest/[rpm-ostree] which is a hybrid image/package system. 
 It supports package layering, which allows installation of RPMs for additional hardware support or applications.
