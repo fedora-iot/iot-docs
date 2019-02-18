@@ -12,15 +12,15 @@ $ rpm-ostree status
 State: idle
 AutomaticUpdates: disabled
 Deployments:
-● ostree://fedora-iot:fedora/stable/x86_64/iot <1>
-                   Version: 29.20190211.0 (2019-02-11T13:18:27Z)
-                BaseCommit: 5eb0553c02a8035a02f030c7fb8d5c6727d1ecb2700dade4b767363acfcab8e4
+● ostree://fedora-iot:fedora/stable/x86_64/iot  <1>
+                   Version: 29.20190214.0 (2019-02-14T18:11:32Z)
+                BaseCommit: 007f24873c04fea4ee96024f6ebb6e56a29f634ab2a9e9218b15444666dd719c
               GPGSignature: Valid signature by C2A3FA9DC67F68B98BB543F47BB90722DBBDCF7C
-           LayeredPackages: asciiquarium tree  <2>
+           LayeredPackages: asciiquarium git  <2>
 
-  ostree://fedora-iot:fedora/stable/x86_64/iot <3>
-                   Version: 29.20190211.0 (2019-02-11T13:18:27Z)
-                    Commit: 5eb0553c02a8035a02f030c7fb8d5c6727d1ecb2700dade4b767363acfcab8e4
+  ostree://fedora-iot:fedora/stable/x86_64/iot  <3>
+                   Version: 29.20190214.0 (2019-02-14T18:11:32Z)
+                    Commit: 007f24873c04fea4ee96024f6ebb6e56a29f634ab2a9e9218b15444666dd719c
               GPGSignature: Valid signature by C2A3FA9DC67F68B98BB543F47BB90722DBBDCF7C
 ----
 

@@ -34,7 +34,7 @@ To create less images, consider grouping compatable packages into a single comma
 This will create a single new layered image.
 
 ----
-$ sudo rpm-ostree install tree asciiquarium
+$ sudo rpm-ostree install git asciiquarium
 ----
 
 Alternately, consider xref:container-support.adoc[using containers] for your applications.
@@ -43,11 +43,11 @@ A container workflow can be managed separately from the OS update cycle.
 == Be sure to Reboot
 
 At this point a new layer is available but not yet active. 
-For example, the tree command installed above is not yet found.
+For example, the git command installed above is not yet found.
 
 ----
-$ tree 
-bash: tree: command not found
+$ git --version
+bash: git: command not found
 ----
 
 Display the current status of the images:
@@ -58,20 +58,20 @@ State: idle
 AutomaticUpdates: disabled
 Deployments:
   ostree://fedora-iot:fedora/stable/x86_64/iot
-                   Version: 29.20190211.0 (2019-02-11T13:18:27Z)
-                BaseCommit: 5eb0553c02a8035a02f030c7fb8d5c6727d1ecb2700dade4b767363acfcab8e4
+                   Version: 29.20190214.0 (2019-02-14T18:11:32Z)
+                BaseCommit: 007f24873c04fea4ee96024f6ebb6e56a29f634ab2a9e9218b15444666dd719c
               GPGSignature: Valid signature by C2A3FA9DC67F68B98BB543F47BB90722DBBDCF7C
-           LayeredPackages: asciiquarium tree   <1>
+           LayeredPackages: asciiquarium git <1>
 
 ● ostree://fedora-iot:fedora/stable/x86_64/iot  <2>
-                   Version: 29.20190211.0 (2019-02-11T13:18:27Z)
-                    Commit: 5eb0553c02a8035a02f030c7fb8d5c6727d1ecb2700dade4b767363acfcab8e4
+                   Version: 29.20190214.0 (2019-02-14T18:11:32Z)
+                    Commit: 007f24873c04fea4ee96024f6ebb6e56a29f634ab2a9e9218b15444666dd719c
               GPGSignature: Valid signature by C2A3FA9DC67F68B98BB543F47BB90722DBBDCF7C
 
-  ostree://fedora-iot:fedora/stable/x86_64/iot  <3>
-                   Version: 29.20190207.0 (2019-02-07T17:55:35Z)
-                    Commit: 26a3bb07a98402bbc3f39f7c1d07ec9ad05158e084141fdfba0b8c18e3cf0b5e
-              GPGSignature: Valid signature by C2A3FA9DC67F68B98BB543F47BB90722DBBDCF7C
+  ostree://fedora-iot:fedora/29/x86_64/iot  <3>
+                   Version: 29.20181128.1 (2018-11-28T09:16:42Z)
+                    Commit: f40b0a24b9c11ee859d4cb323222d0b979873d8d11f63fcb848cba6ab8a2515e
+              GPGSignature: Can't check signature: public key A20AA56B429476B4 not found
 ----
 
 <1> The new image indicates layered packages.
@@ -82,7 +82,7 @@ Deployments:
 Due to the atomic nature of the OS, you will have to reboot into the new image to have the layered image take effect:
 
 ----
-$ systemctl reboot
+$ sudo systemctl reboot
 ----
 
 Display the status of the images:
@@ -93,35 +93,21 @@ State: idle
 AutomaticUpdates: disabled
 Deployments:
 ● ostree://fedora-iot:fedora/stable/x86_64/iot
-                   Version: 29.20190211.0 (2019-02-11T13:18:27Z)
-                BaseCommit: 5eb0553c02a8035a02f030c7fb8d5c6727d1ecb2700dade4b767363acfcab8e4
+                   Version: 29.20190214.0 (2019-02-14T18:11:32Z)
+                BaseCommit: 007f24873c04fea4ee96024f6ebb6e56a29f634ab2a9e9218b15444666dd719c
               GPGSignature: Valid signature by C2A3FA9DC67F68B98BB543F47BB90722DBBDCF7C
-           LayeredPackages: asciiquarium tree
+           LayeredPackages: asciiquarium git
 
   ostree://fedora-iot:fedora/stable/x86_64/iot
-                   Version: 29.20190211.0 (2019-02-11T13:18:27Z)
-                    Commit: 5eb0553c02a8035a02f030c7fb8d5c6727d1ecb2700dade4b767363acfcab8e4
+                   Version: 29.20190214.0 (2019-02-14T18:11:32Z)
+                    Commit: 007f24873c04fea4ee96024f6ebb6e56a29f634ab2a9e9218b15444666dd719c
               GPGSignature: Valid signature by C2A3FA9DC67F68B98BB543F47BB90722DBBDCF7C
 ----
 
-After the reboot, the tree command will be available:
+After the reboot, the git command will be available:
 
 ----
-$ tree /boot
-/boot
-├── grub2 [error opening dir]
-├── loader -> loader.0
-├── loader.0
-│   ├── entries
-│   │   ├── ostree-1-fedora-iot.conf
-│   │   └── ostree-2-fedora-iot.conf
-│   └── grub.cfg
-├── lost+found [error opening dir]
-└── ostree
-    └── fedora-iot-91791ece38e982e98b40305668d499f6ccfca08696fd769e43349316293f3e4f
-        ├── initramfs-4.20.7-200.fc29.x86_64.img
-        └── vmlinuz-4.20.7-200.fc29.x86_64
-
-7 directories, 5 files
+$ git --version
+git version 2.20.1
 ----
 
