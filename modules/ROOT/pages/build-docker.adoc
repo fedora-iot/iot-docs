@@ -1,0 +1,29 @@
+= Build a Container with a Dockerfile
+
+WARNING: This is a placeholder for work in progress
+
+* Dockerfile very common.
+* FROM is the starting container, such as a latest Fedora image
+* Creates layers with each RUN command. 
+** minimize layers with single lines using && between commands
+** include cleanup commands like dnf clean all
+* make sure ports are listening with EXPOSE 
+* start your application 
+** CMD can be over written with podman run command
+** ENTRYPOINT often base command and default options. Can be coupled with CMD for additional options.
+
+
+Example for container with General Purpose Input Output (GPIO) support.
+https://fedoramagazine.org/turnon-led-fedora-iot/
+Written with F28
+
+Another option is a container for http://lightshowpi.org/
+Silva give an update on his cana kit experience here too: https://opensource.com/article/18/12/lightshowpi-raspberry-pi
+
+Also consider pritunl
+This article compiles from source since there are not any aarch64 packages.
+https://opensource.com/article/19/1/pritunl-vpn-raspberry-pi
+
+The pritunl.com site has install instructions for CentOS https://docs.pritunl.com/docs/installation[here] and http://repo.pritunl.com/stable/yum/fedora/29 exists but only has x86_64
+
+

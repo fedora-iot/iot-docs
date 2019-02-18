@@ -1,0 +1,184 @@
+= Images and Containers
+:toc:
+
+== Finding Images
+
+Search for images with a keyword:
+
+----
+$ podman search fedora
+$ podman search homeassistant
+----
+
+The registries which will be searched are configured in the /etc/containers/registry.conf file.
+
+The resulting name will include both the registry location and the name of the image.
+
+* The registry name may include a port number.
+* The image name consists of USER/REPO. The user can be an individual, team, or company that uploads the images to the registry.
+* The image repository contains tagged images and hidden layers. Most repositories contain and image with the tag of 'latest'.
+* When downloading an image with pull, run, or build commands, you may specify a specific tag image. The default is to pull the image tagged 'latest'.
+
+// Add reminder on naming conventions.
+
+The https://github.com/containers/skopeo[`skopeo`^, role="ext-link"] command is a utility to work with images in many different container environments. 
+It was created to view information in remote registries and is now a command and library for copying images with different transports.
+It is used to manage container images and image storage remotely and locally and all without requiring root.
+It can also pass authentication credentials when required by the repository.
+// Source post: https://www.quora.com/What-is-skopeo-and-why-it-is-used-in-containers/answer/Daniel-Walsh-156
+
+View creation dates, architectures, labels, tags, and layer checksums of a remote image repository:
+
+----
+$ skopeo inspect docker://registry.fedoraproject.org/fedora-minimal
+----
+
+== Manage Local Images
+
+When you run a container, the image is first downloaded to the local system. 
+It can be helpful to go ahead and download an image as a separate command.
+
+The default is to pull the latest image from the default registry:
+
+----
+$ podman pull fedora
+----
+
+You can also specify the registry, user, tag, or, as in the following example, some combination:
+
+----
+$ podman pull registry.fedoraproject.org/fedora-minimal:rawhide
+----
+
+List the local images:
+
+----
+$ podman images
+REPOSITORY                                           TAG       IMAGE ID       CREATED       SIZE
+registry.fedoraproject.org/fedora-minimal            rawhide   8ecda3b9bc0d   2 days ago    164MB
+docker.io/homeassistant/raspberrypi3-homeassistant   latest    3c74046ca2a7   3 days ago    1.05GB
+docker.io/library/fedora                             latest    8b38e3af7237   4 weeks ago   315MB
+----
+
+The same output is show with `podman image ls`. 
+Note the singular 'image' command before the additional 'ls' command.
+If you have a lot of images, you may want to specify filters or sort by a value other than the creation date. 
+
+As a user, the local images will be stored under the `~/.local/share/containers/` directory.
+Each user has their own namespace so these are separate from containers run as root. 
+Listing the images available to root displays a different or empty list:
+
+----
+$ sudo podman images
+----
+
+Like remote images, local images can also be inspected:
+
+----
+$ podman inspect fedora
+----
+
+To inspect an image with a tag other than 'latest', include the tag:
+
+----
+$ podman inspect fedora-minimal:rawhide
+----
+
+== Running Containers
+
+To launch the container use:
+
+----
+$ podman run fedora
+----
+
+With the fedora image, the container will start and then it exits since there is nothing left running. Some images are configured to run an application in the foreground and the container will not terminate until the application terminates.
+
+To list the running containers use:
+
+----
+$ podman container ls
+----
+
+To see all containers, including those that have exited:
+
+----
+$ podman container ls -a
+CONTAINER ID   IMAGE                             COMMAND     CREATED              STATUS                      PORTS   NAMES            IS INFRA
+7835aaadd2d1   docker.io/library/fedora:latest   /bin/bash   About a minute ago   Exited (0) 14 seconds ago           hopeful_beaver   false
+----
+
+The exited containers are kept so that any data, including logs, can be investigated before they are lost. You can start an exited container but a typical workflow normally deletes used containers, launching new containers when needed.
+
+Options on the run command can change the behavior of launching a container:
+
+----
+$ podman run -it \ <1> 
+> --name demo \ <2>
+> --rm \ <3> 
+> fedora /bin/bash <4>
+bash-4.4#  <5>
+----
+<1> The -it options enable interactive mode and allocates a pseudo-TTY.
+<2> You can name your container. Without this option, a random name will be generated.
+<3> The --rm option causes the container to be deleted when it is terminated. This preserves space and allows a new container to be started with the same name. 
+<4> The command to run. The command must be in the image. Not all images include bash.
+<5> The /bin/bash process is running in the foreground. When you exit the shell, the container will terminate.
+
+== Publishing Ports
+
+If your application listens on the network, you will need to map the container port to a local port on your device.
+Add the `-p` option when you launch the container. 
+
+----
+$ podman run -p 127.0.0.1:8080:80 --name demo mydemohttp:latest
+----
+
+You can then connect to your application via 127.0.0.1:8080
+
+The format is `ip:hostPort:containerPort | ip::containerPort | hostPort:containerPort | containerPort`. 
+
+Other options for publishing ports and many other run options are available and well documentation in the podman-run man page.
+
+== Connect to a Running Container
+
+You can also connect to a running container. Specify the container name or ID and the command to execute:
+
+----
+$ podman exec -it demo /bin/bash
+----
+
+You can also view container logs directly with podman:
+
+----
+$ podman logs demo
+----
+
+Both the `exec` and `logs` commands are also part of the `podman container` command.
+
+== Removing Containers and Images
+
+List the containers to see the 'Container ID' and 'name' of each container.
+Remove a container by specifying either the container ID or name:
+
+----
+$ podman container rm demo
+----
+
+Removing a container happens automatically when a container terminates if the container was started with the `--rm` option.
+
+Removing a container does not remove the image.
+List the local images with `podman images` or `podman image ls`.
+Remove the image using either the 'IMAGE ID' or the repository name and tag:
+
+----
+$ podman rmi registry.fedoraproject.org/fedora-minimal:rawhide
+----
+
+You can also remove an image with the `image` command:
+
+----
+$ podman image rm registry.fedoraproject.org/fedora-minimal:rawhide
+----
+
+

@@ -13,6 +13,8 @@
 *** xref:remove-layered.adoc[Removing Layered Packages]
 *** xref:enabling-wireless.adoc[Example: Enabling Wireless Support on the DB410c]
 ** xref:container-support.adoc[Using Containers]
+*** xref:run-container.adoc[Images and Containers]
+*** xref:build-docker.adoc[Build from Dockerfile]
 ** xref:update-applications.adoc[Updating Applications]
 ** xref:rebasing.adoc[Rebasing to New Versions]
 * xref:reference-platforms.adoc[Reference Platforms]
