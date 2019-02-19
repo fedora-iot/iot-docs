@@ -72,6 +72,11 @@ Listing the images available to root displays a different or empty list:
 $ sudo podman images
 ----
 
+Some actions can not be done with rootless containers. 
+Some devices and volumes will require that pull and run containers in the root namespace. 
+The current podman v1.0 also requires root for port publishing. 
+The next version will allow rootless port publishing.
+
 Like remote images, local images can also be inspected:
 
 ----
@@ -127,11 +132,13 @@ bash-4.4#  <5>
 
 == Publishing Ports
 
-If your application listens on the network, you will need to map the container port to a local port on your device.
-Add the `-p` option when you launch the container. 
+If your application listens on the network, you will need to map the container port to a local port on your device. 
+In the current version, publishing ports requires root so the image must be available in the root namespace.
+
+Add the `-p` option when you launch the container:
 
 ----
-$ podman run -p 127.0.0.1:8080:80 --name demo mydemohttp:latest
+$ sudo podman run -p 127.0.0.1:8080:80 --name demo mydemohttp:latest
 ----
 
 You can then connect to your application via 127.0.0.1:8080
@@ -139,6 +146,31 @@ You can then connect to your application via 127.0.0.1:8080
 The format is `ip:hostPort:containerPort | ip::containerPort | hostPort:containerPort | containerPort`. 
 
 Other options for publishing ports and many other run options are available and well documentation in the podman-run man page.
+
+== Mapping a local directory
+
+You may want to have your application write logs or collect data to a directory on the host.
+Some containers expect that customized configuration files are on the host device. 
+In both cases, you can create a bind mount with the `--volume` option.
+Specify the host directory, the mount point inside the container, and any mount options.
+
+For example, https://www.home-assistant.io/docs/installation/docker/[Home Assistant] expects the configuration files to be on the host device:
+
+----
+$ podman run -d --name="home-assistant" -v /home/pi/homeassistant:/config -v /etc/localtime:/etc/localtime:ro --net=host homeassistant/raspberrypi3-homeassistant
+----
+
+== Mapping a local device
+
+The `--device` option will add a host device to the container. 
+Specify the host device name and optionally, the device name on the container and any permissions.
+Some devices, like the GPIO device, will require root.
+
+To access the host GPIO device from the container:
+
+----
+$ sudo podman run -it --rm --name demo-gpio --device=/dev/gpiochip0 fedora:latest /bin/bash
+----
 
 == Connect to a Running Container
 

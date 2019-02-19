@@ -1,29 +1,254 @@
 = Build a Container with a Dockerfile
+:toc:
 
-WARNING: This is a placeholder for work in progress
+== Creating the Dockerfile
+If a container does not already exist for your application, one can be built for your device. 
 
-* Dockerfile very common.
-* FROM is the starting container, such as a latest Fedora image
+It is common to create images from a working directory which holds the Dockerfile and any supporting files. This may be a version controlled directory to facilitate sharing.
+
+----
+$ mkdir demo-docker && cd demo-docker
+----
+
+There are many examples of building containers using a Dockerfile.
+A simple Dockerfile will contain some of the following elements:
+
+* The FROM line indicates is the starting container, such as a latest Fedora image. 
+This image will be pulled if it is not already available locally. 
+Specify details for which image the same as you would with a `podman pull` command.
 * Creates layers with each RUN command. 
-** minimize layers with single lines using && between commands
-** include cleanup commands like dnf clean all
-* make sure ports are listening with EXPOSE 
-* start your application 
+Try to minimize the number of layers with multiple commands on the same line using && between commands.
+Also include any cleanup commands such as `dnf clean all` to reduce the final image size.
+* Copy content from the working directory into the container.
+* Specify any ports to listen on with EXPOSE 
+* Start your application
 ** CMD can be over written with podman run command
 ** ENTRYPOINT often base command and default options. Can be coupled with CMD for additional options.
 
+== Example: Web application
 
-Example for container with General Purpose Input Output (GPIO) support.
-https://fedoramagazine.org/turnon-led-fedora-iot/
-Written with F28
+Create a working directory with some content for a web server:
 
-Another option is a container for http://lightshowpi.org/
-Silva give an update on his cana kit experience here too: https://opensource.com/article/18/12/lightshowpi-raspberry-pi
+----
+$ mkdir demo-httpd && cd demo-httpd && echo 'sample container' > index.html
+----
 
-Also consider pritunl
-This article compiles from source since there are not any aarch64 packages.
-https://opensource.com/article/19/1/pritunl-vpn-raspberry-pi
+Start the Dockerfile with a FROM command to indicate the base image:
 
-The pritunl.com site has install instructions for CentOS https://docs.pritunl.com/docs/installation[here] and http://repo.pritunl.com/stable/yum/fedora/29 exists but only has x86_64
+----
+$ echo 'FROM fedora:latest' >> Dockerfile
+----
+
+Add a RUN command to update the image and add any application and utilities:
+
+----
+$ echo 'RUN dnf -y update && dnf -y install httpd git  && dnf clean all' >> Dockerfile
+----
+
+The above example installs git.
+If your web content is hosted in a version control system, you can add a RUN statement to clone that data to the container.
+If your content is available in the build working directory, you can use the COPY command to add it to the container.
+
+Copy to the sample index.html file into the container:
+
+----
+$ echo 'COPY index.html /var/www/html/index.html' >> Dockerfile
+----
+
+The EXPOSE line specifies that the container listens on specified network ports. 
+It use used by the `--publish-all` option on the `podman run` command.
+
+Document what ports are available to publish:
+
+----
+$ echo 'EXPOSE 80' >> Dockerfile
+----
+
+Specify the command to run when the container starts:
+
+----
+$ echo 'ENTRYPOINT /usr/sbin/httpd -DFOREGROUND' >> Dockerfile
+----
+
+NOTE: Port bindings are not yet supported by rootless containers.
+If your container needs to be available on the network, build it in the root namespace. 
+Port bindings for rootless containers is available in upstream testing for podman 1.1.0 with slirp4netns v0.3.0.
+// https://github.com/containers/libpod/issues/2081
+
+Build the image with a descriptive tag:
+
+----
+$ sudo podman build --tag fedora:myhttpd -f ./Dockerfile
+----
+
+The image will appear in the local registry:
+
+----
+$ sudo podman images
+REPOSITORY                 TAG       IMAGE ID       CREATED         SIZE
+localhost/fedora           myhttpd   223534b48a9c   3 minutes ago   474MB
+docker.io/library/fedora   latest    8b38e3af7237   4 weeks ago     315MB
+----
+
+To make the application port available to the host device use the `--publish` or `-p` option with `hostPort:containerPort` numbers. 
+An IP can also be specified as well as ranges of ports. See the https://github.com/containers/libpod/blob/master/docs/podman-run.1.md[man page] for more options.
+
+Run the container and publish the port:
+
+----
+$ sudo podman run -p 8080:80 --name myhttpd --rm fedora:myhttpd
+----
+
+View the port information:
+
+----
+$ sudo podman port myhttpd
+80/tcp -> 0.0.0.0:8080
+----
+
+Access the web page from the host device:
+
+----
+$ curl localhost:8080
+----
+
+Access the web page from a remote location using the IP address of the host device and the published port number. 
+
+Open firewall ports, services, or sources as needed.
+The Fedora IoT image defaults to allowing any source on the same network through the interfaces option:
+
+----
+$ sudo firewall-cmd --list-all
+public (active)
+  target: default
+  icmp-block-inversion: no
+  interfaces: eth0
+  sources: 
+  services: dhcpv6-client mdns ssh
+  ports: 
+  protocols: 
+  masquerade: no
+  forward-ports: 
+  source-ports: 
+  icmp-blocks: 
+  rich rules: 
+----
+
+Add a port with:
+
+----
+$ sudo firewall-cmd --add-port 8080/tcp
+----
+
+More information on the `firewall-cmd` command can be found at https://firewalld.org/documentation/man-pages/firewall-cmd.html[firewalld.org^, role="ext-link"].
+
+== Example: Interaction with GPIO interface
+
+The Fedora IoT image includes utilities for interacting with any GPIO interfaces:
+
+----
+$ sudo gpiodetect
+----
+
+Since the command requires privilege, create a container for an application that works with the GPIO interface in the root namespace.
+
+Start the Dockerfile with a FROM command to indicate the base image:
+
+----
+$ echo 'FROM fedora:latest' >> Dockerfile
+----
+
+Add a RUN command to update the image and add any application and utilities:
+
+----
+$ echo 'RUN dnf -y update && dnf -y install git libgpiod-utils python3-libgpiod && dnf clean all' >> Dockerfile
+----
+
+The fedora:latest image includes bash so we can go ahead and build the container without any specific applications to start or ports to expose. The command can be specified when we run the container.
+
+Build the image with a descriptive tag:
+
+----
+$ sudo podman build --tag fedora:gpio -f ./Dockerfile
+----
+
+The image will appear in the localhost registry for the root namespace:
+
+----
+$ sudo podman images
+REPOSITORY                 TAG      IMAGE ID       CREATED         SIZE
+localhost/fedora           gpio     655abf78e6b9   4 minutes ago   542MB
+docker.io/library/fedora   latest   8b38e3af7237   4 weeks ago     315MB
+----
+
+To access the host GPIO device from the container, use the `--device` option when you start the container:
+
+----
+$ sudo podman run -it --name demo-gpio --device=/dev/gpiochip0 localhost/fedora:gpio /bin/bash
+----
+
+Verify you can see the GPIO device:
+
+----
+[root@167f31750fdb /]# gpiodetect 
+gpiochip0 [pinctrl-bcm2835] (54 lines)
+----
+
+Now that the device is available from the container, continue to use the installed tools or add addition applications.
+
+Examples for using `gpioset` can be found in a 2018 Fedora Magazine article:  
+https://fedoramagazine.org/turnon-led-fedora-iot/[How to turn on an LED with Fedora IoT]
+
+Automate additional steps by modifying the Dockerfile and building a new container. 
+
+The images do not have to be built from a Fedora container. 
+This Dockerfile uses a raspbian image and clones the http://lightshowpi.org/[lightshowpi] project: 
+
+----
+$ cat Dockerfile
+FROM raspbian/stretch:latest
+RUN apt-get -y update && apt-get -y install git-core && apt-get -y clean
+WORKDIR /
+RUN git clone https://togiles@bitbucket.org/togiles/lightshowpi.git && \
+  cd lightshowpi && git fetch && git checkout stable
+----
+
+The Docker documentation includes https://docs.docker.com/develop/develop-images/dockerfile_best-practices/[Dockerfile best practices].
+
+== Reusing and Sharing the Containers
+
+Once the container image is created it can be deployed to multiple devices by uploading it to a registry.
+
+Most registries require a naming convention of the 'useraccount/description:tag' and the default for most pull commands is to look for a container with a tag of 'latest'.
+An image can have multiple tags and these tags are used to help identify architecture compatibility and version control.
+
+To rename or add a tag to a local image:
+
+----
+$ podman tag fedora:myhttpd testuser/fedora-myhttpd:latest
+$ podman tag fedora:myhttpd quay.io/testuser/fedora-myhttpd:latest
+----
+
+Both names will appear in the list of images but the image ID will be the same for each:
+
+----
+$ podman images
+REPOSITORY                               TAG       IMAGE ID       CREATED        SIZE
+localhost/fedora                         myhttpd   d52cbe4136e8   24 hours ago   428 MB
+localhost/testuser/fedora-myhttpd        latest    d52cbe4136e8   24 hours ago   428 MB
+quay.io/testuser/fedora-myhttpd          latest    d52cbe4136e8   24 hours ago   428 MB
+docker.io/library/fedora                 latest    26ffec5b4a8a   4 weeks ago    283 MB
+----
+
+You can then push an image to a registry with `podman push imageID destination`.
+
+To extract the image to a local directory in a docker format:
+
+----
+$ podman push quay.io/testuser/fedora-myhttpd dir:/tmp/fedora-myhttpd
+----
+
+For more exporting options, see the https://github.com/containers/libpod/blob/master/docs/podman-push.1.md[podman-push] man page.
+
 
 
