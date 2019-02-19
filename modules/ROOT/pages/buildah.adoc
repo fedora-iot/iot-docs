@@ -1,0 +1,87 @@
+= Using buildah
+
+Buildah is a tool that facilitates building OCI container images. 
+You can build images from scratch, from a container pulled from a registry, or using a Dockerfile. 
+
+To use buildah in the Fedora IoT you will need to install the layered packages:
+
+----
+$ sudo rpm-ostree install buildah
+----
+
+More commonly buildah is used in a developer environment and the resulting containers are then uploaded to a registry for use on any device.
+
+The commands for building a container from a base image are similar to the lines in a Dockerfile. The first step is to pull the base images and create the working container:
+
+----
+$ buildah from fedora
+fedora-working-container
+----
+
+Add packages to the working container:
+
+----
+$ buildah run fedora-working-container dnf install httpd -y
+----
+
+Copy local files into the working container:
+
+----
+$ buildah copy fedora-working-container index.html /var/www/html/index.html
+----
+
+Define the container entrypoint to start the application:
+
+----
+$ buildah config --entrypoint "/usr/sbin/httpd -DFOREGROUND" fedora-working-container
+----
+
+Once configured, save the image:
+
+----
+$ buildah commit fedora-working-container fedora-myhttpd
+----
+
+You can list the local images:
+
+----
+$ buildah images
+----
+
+The buildah images are the same as the podman images.
+You can run now the container locally with podman:
+
+----
+$ podman run fedora-myhttpd
+----
+
+To make the image available on other devices, push the image to a registry. 
+The default image has a tag of 'latest'. 
+Use `buildah tag` to add additional tags to the image before pushing to a repository.
+
+To push the image to a local Docker registry:
+
+----
+$ buildah push --tls-verify=false fedora-myhttpd docker://localhost:5000/testuser/fedora-myhttpd:latest
+----
+
+To push to a remote registry provide the correct URL and any required credentials:
+
+----
+$ buildah push --creds testuser:5bbb9990-1234-1234-1234-aaa80066887c fedora-myhttpd docker://testuser/fedora-myhttpd
+----
+
+Skopeo can be used to inspect the results:
+
+----
+$ skopeo inspect --tls-verify=false docker://localhost:5000/testuser/fedora-myhttpd:latest
+----
+
+Test the portability of the container with `docker pull` or `podman pull` or `buildah from` commands.
+
+Learn more about using buildah from:
+
+* Fedora Magazine: https://fedoramagazine.org/daemon-less-container-management-buildah/[How to build container images with Buildah (2018)^, role="ext-link"]
+* buildah.io: https://github.com/containers/buildah/tree/master/docs/tutorials[Tutorials^, role="ext-link"]
+
+

@@ -15,6 +15,7 @@
 ** xref:container-support.adoc[Using Containers]
 *** xref:run-container.adoc[Images and Containers]
 *** xref:build-docker.adoc[Build from Dockerfile]
+*** xref:buildah.adoc[Using buildah]
 ** xref:update-applications.adoc[Updating Applications]
 ** xref:rebasing.adoc[Rebasing to New Versions]
 * xref:reference-platforms.adoc[Reference Platforms]
