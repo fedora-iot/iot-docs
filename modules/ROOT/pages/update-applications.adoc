@@ -1,12 +1,59 @@
 = Updating Applications
 
-WARNING: This is a placeholder page for work in progress
-
 == Updating Layered Packages
 
-stuff goes here
+Packages added to the Fedora IoT image with `rpm-ostree install` will be updated along with the base operating system when `rpm-ostree upgrade` is run as described in xref:applying-updates-UG.adoc[Updates and Rollbacks].
+
+The `rpm-ostree` utility uses repositories configured in the /etc/yum.repos.d directory. 
+The Fedora IoT image is configured to check for packages from several Fedora repositories including the fedora-updates and fedora-updates-modular repositories. 
+
+In Fedora, before updates are generally available, they are tested in the fedora-updates-testing and fedora-updates-testing-modular repositories.
+The configuration files and gpg keys for these repositories are included in the Fedora IoT image but are not enabled by default.
+
+// the rpm-ostree utility does not include a --enablerepo options like dnf
+To enable the testing repos, edit the configuration files in /etc/yum.repos.d and for each desired repository, change the enabled= line to `enabled=1`
+
+----
+$ cat /etc/yum.repos.d/fedora-updates-testing-modular.repo 
+[updates-testing-modular] <1>
+name=Fedora Modular $releasever - $basearch - Test Updates
+failovermethod=priority
+#baseurl=http://download.fedoraproject.org/pub/fedora/linux/updates/testing/$releasever/Modular/$basearch/
+metalink=https://mirrors.fedoraproject.org/metalink?repo=updates-testing-modular-f$releasever&arch=$basearch
+enabled=1  <2>
+repo_gpgcheck=0
+type=rpm
+gpgcheck=1
+metadata_expire=6h
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch
+skip_if_unavailable=False
+
+[updates-testing-modular-debuginfo]  <3>
+name=Fedora Modular $releasever - $basearch - Test Updates Debug
+failovermethod=priority
+
+... Output Truncated ...
+----
+<1> Each repository has a name in square brackets
+<2> The enabled parameter takes a boolean value
+<3> A configuration file can contain multiple repository configurations.
+
+You can xref:add-repos.adoc[add additional repository] configuration files to enable other update, testing, or development repositories.
 
 == Updating Containers
 
-more stuff here
+By placing applications in containers, the host operating system can be updated quickly without changing versions inside the container. 
+But what about when the fix needs to be applied to packages that are a part of the container?
+
+Containers are supposed to be lightweight, interchangeable, and ephemeral.
+When they are stopped or in need of an update, they are removed and a new container is deployed or built and deployed.
+
+If your containers are built from another base image, it is your responsibility to monitor that base image for updates and to build your containers using the updated image.
+
+The industry has a variety of services available to assist with vulnerability scanning, update notifications, build systems, and other CD/CI tools for containers.
+
+Patching inside of a container does not scale well. 
+Instead, build a new container and then deploy that container to many devices. 
+A container available in a shared registry and tagged as 'latest' will be used the next time podman run requests that image.
+
 

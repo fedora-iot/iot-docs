@@ -1,0 +1,39 @@
+= Configuring Package Repositories
+
+The `rpm-ostree` utility uses repositories configured in the `/etc/yum.repos.d` directory. 
+
+// the rpm-ostree utility does not include a --enablerepo options like dnf
+To enable a specific repository, edit the configuration files in /etc/yum.repos.d and for each desired repository, change the enabled= line to `enabled=1`
+
+You can add additional repository configuration files to enable third party or local package repositories.
+
+Some repositories provide an RPM package to assist in the configuration. 
+For example, to enable the RPM Fusion Free repository you can use:
+
+----
+$ sudo rpm-ostree install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
+----
+
+This method of configuration will require a reboot to enable the new image.
+
+----
+$ rpm-ostree status
+State: idle
+AutomaticUpdates: check; rpm-ostreed-automatic.timer: no runs since boot
+Deployments:
+● ostree://fedora-iot:fedora/stable/aarch64/iot
+                   Version: 29.20190214.0 (2019-02-14T18:18:52Z)
+                BaseCommit: 68b1f6c99a678f45e3de04f1252b271cce687a246c0004e45858b343d3637556
+              GPGSignature: Valid signature by C2A3FA9DC67F68B98BB543F47BB90722DBBDCF7C
+           LayeredPackages: git
+             LocalPackages: rpmfusion-free-release-29-1.noarch <1>
+----
+<1> The package installed from a URL instead of a configured repository will appear with 'LocalPackages'
+
+Additional resources:
+
+* Fedora Quick Docs includes a description of https://docs.fedoraproject.org/en-US/quick-docs/repositories/[Fedora Repositories].
+* Fedora Quick Docs describes third party repositories for https://docs.fedoraproject.org/en-US/quick-docs/assembly_installing-plugins-for-playing-movies-and-music/[Installing plugins for playing movies and music]. Replace the `dnf install` commands with `rpm-ostree install` for enabling on Fedora IoT images.
+* The https://linux.die.net/man/5/yum.conf[yum.conf(5)] man page describes options for creating your own file in the [repository] OPTIONS section.
+
+

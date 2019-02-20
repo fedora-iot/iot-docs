@@ -11,6 +11,7 @@
 ** xref:adding-layered.adoc[Layered Packages]
 *** xref:add-layered.adoc[Adding Layered Packages]
 *** xref:remove-layered.adoc[Removing Layered Packages]
+*** xref:add-repos.adoc[Adding Package Repositories]
 *** xref:enabling-wireless.adoc[Example: Enabling Wireless Support on the DB410c]
 ** xref:container-support.adoc[Using Containers]
 *** xref:run-container.adoc[Images and Containers]
