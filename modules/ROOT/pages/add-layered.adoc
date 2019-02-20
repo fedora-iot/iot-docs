@@ -1,0 +1,113 @@
+= Adding Layered Packages 
+
+Add a layered package with the `rpm-ostree install` command:
+
+----
+$ rpm-ostree install --help
+Usage:
+  rpm-ostree install [OPTION…] PACKAGE [PACKAGE...]
+
+Overlay additional packages
+
+Help Options:
+  -h, --help              Show help options
+
+Application Options:
+  --uninstall=PKG         Remove overlayed additional package
+  -C, --cache-only        Do not download latest ostree and RPM data
+  --download-only         Just download latest ostree and RPM data, don't deploy
+  --os=OSNAME             Operate on provided OSNAME
+  -r, --reboot            Initiate a reboot after operation is complete
+  -n, --dry-run           Exit after printing the transaction
+  --allow-inactive        Allow inactive package requests
+  --idempotent            Do nothing if package already (un)installed
+  --unchanged-exit-77     If no overlays were changed, exit 77
+  --sysroot=SYSROOT       Use system root SYSROOT (default: /)
+  --peer                  Force a peer-to-peer connection instead of using the system message bus
+  --version               Print version information and exit
+----
+
+== Install multiple packages
+
+This command accepts multiple package names. 
+To create less images, consider grouping compatable packages into a single command.
+This will create a single new layered image.
+
+----
+$ sudo rpm-ostree install git asciiquarium
+----
+
+Alternately, consider xref:container-support.adoc[using containers] for your applications.
+A container workflow can be managed separately from the OS update cycle.
+
+== Be sure to Reboot
+
+At this point a new layer is available but not yet active. 
+For example, the git command installed above is not yet found.
+
+----
+$ git --version
+bash: git: command not found
+----
+
+Display the current status of the images:
+
+----
+$ rpm-ostree status
+State: idle
+AutomaticUpdates: disabled
+Deployments:
+  ostree://fedora-iot:fedora/stable/x86_64/iot
+                   Version: 29.20190214.0 (2019-02-14T18:11:32Z)
+                BaseCommit: 007f24873c04fea4ee96024f6ebb6e56a29f634ab2a9e9218b15444666dd719c
+              GPGSignature: Valid signature by C2A3FA9DC67F68B98BB543F47BB90722DBBDCF7C
+           LayeredPackages: asciiquarium git <1>
+
+● ostree://fedora-iot:fedora/stable/x86_64/iot  <2>
+                   Version: 29.20190214.0 (2019-02-14T18:11:32Z)
+                    Commit: 007f24873c04fea4ee96024f6ebb6e56a29f634ab2a9e9218b15444666dd719c
+              GPGSignature: Valid signature by C2A3FA9DC67F68B98BB543F47BB90722DBBDCF7C
+
+  ostree://fedora-iot:fedora/29/x86_64/iot  <3>
+                   Version: 29.20181128.1 (2018-11-28T09:16:42Z)
+                    Commit: f40b0a24b9c11ee859d4cb323222d0b979873d8d11f63fcb848cba6ab8a2515e
+              GPGSignature: Can't check signature: public key A20AA56B429476B4 not found
+----
+
+<1> The new image indicates layered packages.
+<2> The second image listed is the active image as indicated by the ●.
+<3> Any older images will be removed when the system is rebooted.
+
+
+Due to the atomic nature of the OS, you will have to reboot into the new image to have the layered image take effect:
+
+----
+$ sudo systemctl reboot
+----
+
+Display the status of the images:
+
+----
+$ rpm-ostree status
+State: idle
+AutomaticUpdates: disabled
+Deployments:
+● ostree://fedora-iot:fedora/stable/x86_64/iot
+                   Version: 29.20190214.0 (2019-02-14T18:11:32Z)
+                BaseCommit: 007f24873c04fea4ee96024f6ebb6e56a29f634ab2a9e9218b15444666dd719c
+              GPGSignature: Valid signature by C2A3FA9DC67F68B98BB543F47BB90722DBBDCF7C
+           LayeredPackages: asciiquarium git
+
+  ostree://fedora-iot:fedora/stable/x86_64/iot
+                   Version: 29.20190214.0 (2019-02-14T18:11:32Z)
+                    Commit: 007f24873c04fea4ee96024f6ebb6e56a29f634ab2a9e9218b15444666dd719c
+              GPGSignature: Valid signature by C2A3FA9DC67F68B98BB543F47BB90722DBBDCF7C
+----
+
+After the reboot, the git command will be available:
+
+----
+$ git --version
+git version 2.20.1
+----
+

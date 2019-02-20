@@ -1,0 +1,40 @@
+= Removing Layered Packages 
+
+== Revert All Changes with a Rollback
+
+If the entire image needs to be reverted to a pristine or known state, you can rollback to the previous version.
+
+----
+$ sudo rpm-ostree rollback --reboot
+----
+
+== Remove Select Layered Packages
+
+The `rpm-ostree` utility also has an uninstall option to remove individual layered packages:
+
+----
+$ rpm-ostree uninstall --help
+Usage:
+  rpm-ostree uninstall [OPTION…] PACKAGE [PACKAGE...]
+
+Remove overlayed additional packages
+
+Help Options:
+  -h, --help              Show help options
+
+Application Options:
+  --install=PKG           Overlay additional package
+  --all                   Remove all overlayed additional packages
+  --os=OSNAME             Operate on provided OSNAME
+  -r, --reboot            Initiate a reboot after operation is complete
+  -n, --dry-run           Exit after printing the transaction
+  --allow-inactive        Allow inactive package requests
+  --idempotent            Do nothing if package already (un)installed
+  --unchanged-exit-77     If no overlays were changed, exit 77
+  --sysroot=SYSROOT       Use system root SYSROOT (default: /)
+  --peer                  Force a peer-to-peer connection instead of using the system message bus
+  --version               Print version information and exit
+----
+
+Like the install or rollback, a system reboot will be required to activate the new image.
+

@@ -3,20 +3,67 @@
 NOTE: The latest image builds for x86_64 and aarch64 are available at https://download.fedoraproject.org/pub/alt/iot/[here]. 
 
 == Upgrade to the Latest Image
-
 Display the status of the currently running deployment:
 
 ----
 $ rpm-ostree status
 ----
 
+The `rpm-ostree` command is used to manage the atomic system tree used by the Fedora IoT images. The `update` command is an alias for the `upgrade` command. 
+
+View the options with:
+
+----
+$ rpm-ostree upgrade --help
+Usage:
+  rpm-ostree upgrade [OPTION…] 
+
+Perform a system upgrade
+
+Help Options:
+  -h, --help                      Show help options
+
+Application Options:
+  --os=OSNAME                     Operate on provided OSNAME
+  -r, --reboot                    Initiate a reboot after operation is complete
+  --allow-downgrade               Permit deployment of chronologically older trees
+  --preview                       Just preview package differences
+  --check                         Just check if an upgrade is available
+  -C, --cache-only                Do not download latest ostree and RPM data
+  --download-only                 Just download latest ostree and RPM data, don't deploy
+  --upgrade-unchanged-exit-77     If no upgrade is available, exit 77
+  --sysroot=SYSROOT               Use system root SYSROOT (default: /)
+  --peer                          Force a peer-to-peer connection instead of using the system message bus
+  --install=PKG                   Overlay additional package
+  --uninstall=PKG                 Remove overlayed additional package
+  --version                       Print version information and exit
+----
+
 Check for available updates:
 
 ----
 $ sudo rpm-ostree upgrade --check
+Receiving metadata objects: 0/(estimating) -/s 0 bytes... done
+AvailableUpdate:
+        Version: 29.20190211.0 (2019-02-11T13:18:27Z)
+         Commit: 5eb0553c02a8035a02f030c7fb8d5c6727d1ecb2700dade4b767363acfcab8e4
+   GPGSignature: Valid signature by C2A3FA9DC67F68B98BB543F47BB90722DBBDCF7C
+           Diff: 25 upgraded
 ----
 
-The OSTree update deltas are available on CDN using the following command:
+Preview the package differences:
+
+----
+$ sudo rpm-ostree upgrade --preview
+----
+
+If you wish, you can download the packages only and not deploy them with:
+
+----
+$ sudo rpm-ostree upgrade --download-only
+----
+
+To apply the OSTree update deltas available on CDN use the following command:
 
 ----
 $ sudo rpm-ostree upgrade
@@ -41,6 +88,12 @@ To permanently switch back to the previous deployment:
 
 ----
 $ sudo rpm-ostree rollback
+----
+
+Like with the upgrade, a system reboot will be required. You can use the `systemctl reboot` command or you can include the `--reboot` option when you issue the rollback command:
+
+----
+$ sudo rpm-ostree rollback --reboot
 ----
 
 NOTE: More information about https://docs.fedoraproject.org/en-US/quick-docs/bootloading-with-grub2/[Bootloading with GRUB2] can be found in the Fedora Quick Docs.

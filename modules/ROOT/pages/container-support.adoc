@@ -1,17 +1,58 @@
-= Container support
+= Container Support
 
-We currently ship the podman daemon as it's quite light weight and doesn't use a lot of resources. The commands are very similar to that of docker. Some sample commands are:
+The Fedora IoT images have excellent support for container-focused workflows. 
+Containers allow you to separate core OS updates from application updates as well as test and deploy different versions of applications. 
+The `podman` daemon is light weight and ready for you to download or create containers for your home assistant, industrial gateways, or data storage and analytics.
+
+With `podman`, images and containers can be managed and used by a non-privileged user.
+Commands are very similar to those used with `docker`.
+
+Show the version of podman and other configuration settings:
 
 ----
-podman pull fedora
-
-podman images
-
-podman run -it --rm fedora /bin/bash
+$ podman info
 ----
 
-Podman has a lot of well written documentation and articles you can find a number of them at the following links:
+Run as a user, the storage location is under the `~/.local/share/containers` directory.
+You can customize podman with files in the  `~/.config/containers` directory.
+// storage.conf is one. verify which config file or dir is needed.
 
-* https://github.com/projectatomic/libpod/blob/master/docs/tutorials/podman_tutorial.md[getting started tutorial]
-* https://github.com/projectatomic/libpod/blob/master/transfer.md[docker to podman command mapping]
-* https://medium.com/cri-o[Podman news and releases]
+Run as root, the storage location is defined in the '/etc/containers/storage.conf' file and defaults to '/var/run/containers/storage'.
+
+----
+$ sudo podman info
+----
+
+Any of the `podman` commands have help available for several levels of commands.
+
+Show all the commands available:
+
+----
+$ podman --help
+----
+
+Show the options for the pull command:
+
+----
+$ podman pull --help
+----
+
+Some commands have other sub commands. 
+Show the options for the image command:
+
+----
+$ podman image --help
+----
+
+To show more specific options, keep adding commands before the help request.
+Show the options for listing images:
+
+----
+$ podman image ls --help
+----
+
+https://podman.io/[Podman^, role="ext-link"] has a lot of well written documentation and articles you can find a number of them at the following links:
+
+* https://github.com/projectatomic/libpod/blob/master/docs/tutorials/podman_tutorial.md[getting started tutorial^, role="ext-link"]
+* https://github.com/projectatomic/libpod/blob/master/transfer.md[docker to podman command mapping^, role="ext-link"]
+* https://medium.com/cri-o[Podman news and releases^, role="ext-link"]

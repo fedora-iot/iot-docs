@@ -1,15 +1,28 @@
-= Enabling wireless support on the DB410c and Raspberry Pi
-
-Both WiFi and Bluetooth support on either the 96boards DragonBoard 410c or the Raspberry Pi 3 Model B or B+ need support files for either the WiFi or Bluetooth to work well. To install the files run the following commands, `brcm-firmware` for Raspberry Pi or `wcn36xx-firmware` for the Dragonboard and reboot which will enable the various wireless support:
-
-*Raspberry Pi*:
-
-In recent Fedora 29 and later builds the Raspberry Pi WiFi is supported in the base image so no further work is required.
+= Enabling Wireless Support on the DB410c
 
 *Dragonboard*:
 
+Both WiFi and Bluetooth support on the 96boards DragonBoard 410c need support files for either the WiFi or Bluetooth to work well. 
+
+The required packages are currently in a testing repository. 
+These packages are not yet tested, signed, supported, or included in the Fedora repositories.
+Feedback and bug reports for this package can be directed to the Fedora IoT working group.
+
+Download the RPM repository file:
+
 ----
 $ sudo curl https://fedora.roving-it.com/wireless.repo -o /etc/yum.repos.d/wireless.repo
+----
+
+Install the required package:
+
+----
 $ sudo rpm-ostree install wcn36xx-firmware
+----
+
+Reboot the system:
+
+----
 $ sudo systemctl reboot
 ----
+
