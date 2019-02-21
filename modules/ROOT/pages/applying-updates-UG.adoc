@@ -123,5 +123,5 @@ AutomaticUpdatePolicy=check
 ----
 
 The rpm-ostreed-automatic.service and rpm-ostreed-automatic.timer control frequency of checks and upgrades.
-More information is available in the man pages or this https://miabbott.github.io/2018/06/13/rpm-ostree-automatic-updates.html[blog post^, role="ext-link"]
+More information is available in the man pages or this https://miabbott.github.io/2018/06/13/rpm-ostree-automatic-updates.html[blog post]
 
