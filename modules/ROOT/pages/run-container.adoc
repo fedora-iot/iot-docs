@@ -21,7 +21,7 @@ The resulting name will include both the registry location and the name of the i
 
 // Add reminder on naming conventions.
 
-The https://github.com/containers/skopeo[`skopeo`^, role="ext-link"] command is a utility to work with images in many different container environments. 
+The https://github.com/containers/skopeo[`skopeo`] command is a utility to work with images in many different container environments. 
 It was created to view information in remote registries and is now a command and library for copying images with different transports.
 It is used to manage container images and image storage remotely and locally and all without requiring root.
 It can also pass authentication credentials when required by the repository.

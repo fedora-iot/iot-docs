@@ -140,7 +140,7 @@ Add a port with:
 $ sudo firewall-cmd --add-port 8080/tcp
 ----
 
-More information on the `firewall-cmd` command can be found at https://firewalld.org/documentation/man-pages/firewall-cmd.html[firewalld.org^, role="ext-link"].
+More information on the `firewall-cmd` command can be found at https://firewalld.org/documentation/man-pages/firewall-cmd.html[firewalld.org].
 
 == Example: Interaction with GPIO interface
 
