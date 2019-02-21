@@ -1,0 +1,197 @@
+= Administration Tasks
+:toc:
+
+Additional tasks mimic any other Linux administration tasks and use available utilities included in the Fedora distribution.
+Some tasks are described below with specific links to other Fedora Documentation or upstream documentation.
+
+General Resources:
+
+* https://docs.fedoraproject.org/en-US/fedora/f29/system-administrators-guide/[Fedora 29 System Administrator’s Guide]
+* https://docs.fedoraproject.org/en-US/quick-docs/[Fedora Quick Docs]
+* Man pages
+
+== User Management
+
+The initial image includes a root account without a password and the user configured during the xref:initial-setup.adoc[initial setup].
+If the initial user was made an Administrator then that user was placed in the wheel group:
+
+----
+$ id testuser
+uid=1000(testuser) gid=1000(testuser) groups=1000(testuser),10(wheel)
+$ getent passwd testuser
+testuser:x:1000:1000::/home/testuser:/bin/bash
+----
+
+Package installation may add additional users to own files and processes on the system.
+For example the httpd package installation scripts will create a user apache if one does not already exist.
+
+----
+$ id apache
+uid=48(apache) gid=48(apache) groups=48(apache)
+$ getent passwd apache
+apache:x:48:48:Apache:/usr/share/httpd:/sbin/nologin
+----
+
+This account is typically a system account with a UID below 1000, no password, and a shell of `/sbin/nologin`. 
+Accounts with a nologin shell cannot be used interactively.
+These accounts also do not have a home directory created in `/home`
+
+To manually create a system account for your application use the useradd command:
+
+----
+$ sudo useradd -r -s /sbin/nologin appuser
+$ getent passwd appuser
+appuser:x:992:981::/var/home/appuser:/sbin/nologin
+----
+
+* Fedora 29 Administration Guide: 
+https://docs.fedoraproject.org/en-US/fedora/f29/system-administrators-guide/basic-system-configuration/Managing_Users_and_Groups/[Managing Users and Groups]
+
+User accounts which are members of the wheel group automatically have full privileges with the `sudo` command.
+This is from the following lines in the sudo configuration file:
+
+----
+$ sudo grep wheel /etc/sudoers
+## Allows people in group wheel to run all commands
+%wheel	ALL=(ALL)	ALL
+# %wheel	ALL=(ALL)	NOPASSWD: ALL
+----
+
+Edits to this configuration file should be made with the `visudo` command so that syntax is checked on exit.
+Instead of editing the main configuration file, grant other users the ability to issue specific commands as a different user by adding a configuration file to the `/etc/sudoers.d/` directory.
+
+* Fedora 29 Administration Guide: 
+https://docs.fedoraproject.org/en-US/fedora/f29/system-administrators-guide/basic-system-configuration/Gaining_Privileges/[Gaining Privileges]
+
+Use `ssh-keygen` to generate an ssh key pair then add the public key to the user account on your Fedora IoT device:
+
+----
+$ ssh-copy-id testuser@10.11.12.13
+----
+
+Replace the username and IP address with that of your device. 
+Use the `-i` option to specify a key file other than the default of the most recently modified `~/.ssh/id_*pub` file.
+
+* Fedora 29 Administration Guide: 
+https://docs.fedoraproject.org/en-US/fedora/f29/system-administrators-guide/infrastructure-services/OpenSSH/#s3-ssh-configuration-keypairs-generating[Generating Key Pairs]
+
+== Network Configuration
+
+// sample for a static setting instead of dhcp.  Also adding wireless passwords.
+
+* Fedora Quick Docs:
+https://docs.fedoraproject.org/en-US/quick-docs/configuring-ip-networking-with-nmcli/[Configuring ip networking with nmcli]
+
+== Securing remote access
+
+The root account is locked by default with no password set. 
+The SSH daemon is configured to allow root access so if the image was created with an ssh key added, root can still access the system remotely.
+
+Disable remote ssh access for root by editing the `/etc/ssh/sshd_config` file:
+
+----
+PermitRootLogin no
+----
+
+* Fedora 29 Administration Guide: 
+https://docs.fedoraproject.org/en-US/fedora/f29/system-administrators-guide/infrastructure-services/OpenSSH/[OpenSSH]
+
+View the default firewall configuration:
+
+----
+$ sudo firewall-cmd --list-all
+----
+
+// --info-service --add-service --add-port --permanent
+// I see that the default config allows all from local interface. May not want that.
+// intro zones? upstream or blog links?
+
+* Fedora Quick Docs:
+https://docs.fedoraproject.org/en-US/quick-docs/firewalld/[Using firewalld]
+
+== Service Management
+
+Services are managed by `systemd` and they can be started and enabled with `systemctl`.
+
+The Fedora IoT image boots to a multi-user target by default.
+----
+$ systemctl get-default
+multi-user.target
+----
+
+A small number of services are enabled:
+
+----
+$ systemctl list-unit-files  --state enabled
+----
+
+Package installation does not usually start or enable a service:
+
+----
+$ systemctl status httpd
+● httpd.service - The Apache HTTP Server
+   Loaded: loaded (/usr/lib/systemd/system/httpd.service; disabled; vendor preset: disabl>
+   Active: inactive (dead)
+     Docs: man:httpd.service(8)
+----
+
+The `--now` option allows you to start a service on the enable command:
+
+----
+$ sudo systemctl enable httpd --now
+Created symlink /etc/systemd/system/multi-user.target.wants/httpd.service → /usr/lib/systemd/system/httpd.service.
+----
+
+* Fedora 29 Administration Guide: 
+https://docs.fedoraproject.org/en-US/fedora/f29/system-administrators-guide/infrastructure-services/Services_and_Daemons/[Services and Daemons]
+
+== Viewing Logs
+
+Log files are generally located in the `/var/log` directory.
+System logs can be viewed and searched with `journalctl`.
+
+
+* Fedora 29 Administration Guide: 
+https://docs.fedoraproject.org/en-US/fedora/f29/system-administrators-guide/monitoring-and-automation/Viewing_and_Managing_Log_Files/[Viewing and Managing Log Files]  
+* Fedora Quick Docs:
+https://docs.fedoraproject.org/en-US/quick-docs/viewing-logs/[Viewing logs in Fedora]  
+
+Time and Date matters:
+
+* Fedora 29 Administration Guide: 
+https://docs.fedoraproject.org/en-US/fedora/f29/system-administrators-guide/basic-system-configuration/Configuring_the_Date_and_Time/[Configuring the Date and Time]
+
+
+// any remote logging available out of box? rsyslog?
+
+== Remote Administration with Ansible
+
+The Fedora IoT image includes python3 and Ansible versions 2.5 and above have support for Python 3 (python 3.5 and above only).
+To use Ansible to configure your Fedora IoT device, set the ansible_python_interpreter configuration option use the python3 binary `/usr/bin/python3`.
+This is done with an inventory variable as described in the 
+https://docs.ansible.com/ansible/latest/reference_appendices/python_3_support.html[Ansible Python 3 Support^] documentation.
+
+The https://docs.ansible.com/ansible/latest/user_guide/index.html[Ansible User Guide] covers how to work with Ansible.
+Some useful https://docs.ansible.com/ansible/latest/user_guide/modules.html[modules] include:
+
+* user
+* nmcli
+* firewalld
+* service
+* yum_repository
+* reboot
+
+There is no current activity on a https://github.com/ansible/ansible/issues/21185[request for an rpm-ostree module] so for now, you will have to use the command module to run rpm-ostree commands.
+Use the creates argument to see if it needs to be run: 
+
+----
+- name: Install git with rpm-ostree
+  command: rpm-ostree install git
+  args:
+    creates: /bin/git
+- name: Reboot a slow device (default timeout is 600)
+  reboot:
+    reboot_timeout: 3600
+----
+
+

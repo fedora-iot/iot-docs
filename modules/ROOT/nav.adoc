@@ -19,6 +19,7 @@
 *** xref:buildah.adoc[Using buildah]
 ** xref:update-applications.adoc[Updating Applications]
 ** xref:rebasing.adoc[Rebasing to New Versions]
+** xref:admin-tasks.adoc[Administration Tasks]
 * xref:reference-platforms.adoc[Reference Platforms]
 * xref:release-criteria.adoc[Release Criteria]
 * xref:prd.adoc[Product Requirement Doc]
