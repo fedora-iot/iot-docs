@@ -13,7 +13,7 @@ $ mkdir demo-docker && cd demo-docker
 There are many examples of building containers using a Dockerfile.
 A simple Dockerfile will contain some of the following elements:
 
-* The FROM line indicates is the starting container, such as a latest Fedora image. 
+* The FROM line indicates the base, or starting, container, such as a latest Fedora image. 
 This image will be pulled if it is not already available locally. 
 Specify details for which image the same as you would with a `podman pull` command.
 * Creates layers with each RUN command. 
@@ -56,7 +56,7 @@ $ echo 'COPY index.html /var/www/html/index.html' >> Dockerfile
 ----
 
 The EXPOSE line specifies that the container listens on specified network ports. 
-It use used by the `--publish-all` option on the `podman run` command.
+It is used by the `--publish-all` option on the `podman run` command.
 
 Document what ports are available to publish:
 
