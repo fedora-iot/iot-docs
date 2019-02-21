@@ -44,6 +44,9 @@ $ getent passwd appuser
 appuser:x:992:981::/var/home/appuser:/sbin/nologin
 ----
 
+Centralized users accounts (LDAP, Kerberos) can be configured with `authconfig` after the client packages, including `sssd`, have been installed.
+The `/etc/nsswitch.conf` file is already configured to look for sss as well as files and altfiles for account information.
+
 * Fedora 29 Administration Guide: 
 https://docs.fedoraproject.org/en-US/fedora/f29/system-administrators-guide/basic-system-configuration/Managing_Users_and_Groups/[Managing Users and Groups]
 
@@ -71,13 +74,79 @@ $ ssh-copy-id testuser@10.11.12.13
 
 Replace the username and IP address with that of your device. 
 Use the `-i` option to specify a key file other than the default of the most recently modified `~/.ssh/id_*pub` file.
+The `ssh-copy-id` command will append the public key to the user's authorized keys file on the device. It will create the `~/.ssh` directory if it does not already exist and ensure the permission on the files are correct.
 
 * Fedora 29 Administration Guide: 
 https://docs.fedoraproject.org/en-US/fedora/f29/system-administrators-guide/infrastructure-services/OpenSSH/#s3-ssh-configuration-keypairs-generating[Generating Key Pairs]
 
 == Network Configuration
 
-// sample for a static setting instead of dhcp.  Also adding wireless passwords.
+List the network devices:
+
+----
+$ nmcli dev
+DEVICE  TYPE      STATE      CONNECTION  
+eth0    ethernet  connected  System eth0 
+lo      loopback  unmanaged  --          
+----
+
+Show details of a device:
+
+----
+$ nmcli dev show eth0
+GENERAL.DEVICE:                         eth0
+GENERAL.TYPE:                           ethernet
+GENERAL.HWADDR:                         B8:27:EB:B4:93:D8
+GENERAL.MTU:                            1500
+...Output Omitted...
+----
+
+List the connection configurations:
+
+----
+$ nmcli con
+NAME         UUID                                  TYPE      DEVICE 
+System eth0  5fb06bd0-0bb0-7ffb-45f1-d6edd65f3e03  ethernet  eth0   
+enp1s0       8a6006ff-a1b5-4048-be93-258087a1853f  ethernet  --     
+----
+
+Only one connection per device can be UP but multiple connections can be defined.
+
+Show connection information:
+
+----
+$ nmcli con show enp1s0 
+connection.id:                          enp1s0
+connection.uuid:                        8a6006ff-a1b5-4048-be93-258087a1853f
+connection.stable-id:                   --
+connection.type:                        802-3-ethernet
+... Output Omitted ...
+----
+
+The `nmcli conn` command has a variety of options including edit, modify, up, down, add, and delete.
+Use the `nmcli conn help` command to view the syntax.
+
+The default configurations will try to obtain connection information from a DHCP service on your network.
+If no DHCP service is available on your network, you can add a static connection:
+
+----
+$ nmcli connection add con-name cable ipv4.addresses \
+192.168.0.10/24 ipv4.gateway 192.168.0.1 \
+connection.autoconnect true ipv4.dns "8.8.8.8,1.1.1.1" \
+type ethernet ifname eth0 ipv4.method manual
+----
+
+Connect a device to a wifi SSID, prompting for the password:
+
+----
+$ sudo nmcli –ask device wifi connect SSID-Name 
+----
+
+For more wifi options look at:
+
+----
+$ nmcli device wifi help
+----
 
 * Fedora Quick Docs:
 https://docs.fedoraproject.org/en-US/quick-docs/configuring-ip-networking-with-nmcli/[Configuring ip networking with nmcli]
@@ -85,9 +154,9 @@ https://docs.fedoraproject.org/en-US/quick-docs/configuring-ip-networking-with-n
 == Securing remote access
 
 The root account is locked by default with no password set. 
-The SSH daemon is configured to allow root access so if the image was created with an ssh key added, root can still access the system remotely.
+The SSH daemon is configured to allow root access so if the image was created with an ssh key added, or if a password is set for the root account, then root can still access the system remotely.
 
-Disable remote ssh access for root by editing the `/etc/ssh/sshd_config` file:
+Disable remote ssh access for root by editing the following line in the  `/etc/ssh/sshd_config` file:
 
 ----
 PermitRootLogin no
@@ -102,9 +171,29 @@ View the default firewall configuration:
 $ sudo firewall-cmd --list-all
 ----
 
-// --info-service --add-service --add-port --permanent
-// I see that the default config allows all from local interface. May not want that.
-// intro zones? upstream or blog links?
+The `firewalld` services are different than `systemd` services. 
+To see what configuration a `firewalld` service includes use:
+
+----
+$ sudo firewall-cmd --info-service=mdns
+mdns
+  ports: 5353/udp
+  protocols: 
+  source-ports: 
+  modules: 
+  destination: ipv4:224.0.0.251 ipv6:ff02::fb
+----
+
+Use the `--add-service` or `--add-port` options to open ports in the firewall:
+
+----
+$ sudo firewall-cmd --add-port=8080/tcp --add-port=8081/tcp --permanent
+$ sudo firewall-cmd --reload
+----
+
+The `--permanent` option saves the setting to files so that they will be loaded the next time `firewalld` is loaded.
+The `--reload` option reloads the configuration from the saved files. 
+If you add a port or service without the `--permanent` option, it will modify the runtime firewalld settings but it will not save your changes to survive a reboot of the system.
 
 * Fedora Quick Docs:
 https://docs.fedoraproject.org/en-US/quick-docs/firewalld/[Using firewalld]
@@ -156,13 +245,12 @@ https://docs.fedoraproject.org/en-US/fedora/f29/system-administrators-guide/moni
 * Fedora Quick Docs:
 https://docs.fedoraproject.org/en-US/quick-docs/viewing-logs/[Viewing logs in Fedora]  
 
-Time and Date matters:
+Accurate time and date stamps help find the correct event when troubleshooting or auditing.
 
 * Fedora 29 Administration Guide: 
 https://docs.fedoraproject.org/en-US/fedora/f29/system-administrators-guide/basic-system-configuration/Configuring_the_Date_and_Time/[Configuring the Date and Time]
-
-
-// any remote logging available out of box? rsyslog?
+* Fedora 29 Administration Guide: 
+https://docs.fedoraproject.org/en-US/fedora/f29/system-administrators-guide/servers/Configuring_NTP_Using_the_chrony_Suite/[Configuring NTP Using the chrony Suite]
 
 == Remote Administration with Ansible
 
@@ -174,12 +262,12 @@ https://docs.ansible.com/ansible/latest/reference_appendices/python_3_support.ht
 The https://docs.ansible.com/ansible/latest/user_guide/index.html[Ansible User Guide] covers how to work with Ansible.
 Some useful https://docs.ansible.com/ansible/latest/user_guide/modules.html[modules] include:
 
-* user
-* nmcli
-* firewalld
-* service
-* yum_repository
-* reboot
+* Networks: nmcli
+* Users: user, authorized_key, htpasswd
+* Packages, services and ports: yum_repository, service, firewalld
+* Files and directories: file, copy, template, get_url, unarchive
+* Interact with HTTP and HTTPS web services: uri 
+* System: timezone, reboot
 
 There is no current activity on a https://github.com/ansible/ansible/issues/21185[request for an rpm-ostree module] so for now, you will have to use the command module to run rpm-ostree commands.
 Use the creates argument to see if it needs to be run: 
