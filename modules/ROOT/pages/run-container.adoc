@@ -16,12 +16,12 @@ The resulting name will include both the registry location and the name of the i
 
 * The registry name may include a port number.
 * The image name consists of USER/REPO. The user can be an individual, team, or company that uploads the images to the registry.
-* The image repository contains tagged images and hidden layers. Most repositories contain and image with the tag of 'latest'.
+* The image repository contains tagged images and hidden layers. Most repositories contain an image with the tag of 'latest'.
 * When downloading an image with pull, run, or build commands, you may specify a specific tag image. The default is to pull the image tagged 'latest'.
 
 // Add reminder on naming conventions.
 
-The https://github.com/containers/skopeo[`skopeo`^, role="ext-link"] command is a utility to work with images in many different container environments. 
+The https://github.com/containers/skopeo[`skopeo`] command is a utility to work with images in many different container environments. 
 It was created to view information in remote registries and is now a command and library for copying images with different transports.
 It is used to manage container images and image storage remotely and locally and all without requiring root.
 It can also pass authentication credentials when required by the repository.
@@ -73,7 +73,7 @@ $ sudo podman images
 ----
 
 Some actions can not be done with rootless containers. 
-Some devices and volumes will require that pull and run containers in the root namespace. 
+Some devices and volumes will require that you pull and run containers in the root namespace. 
 The current podman v1.0 also requires root for port publishing. 
 The next version will allow rootless port publishing.
 
@@ -145,7 +145,7 @@ You can then connect to your application via 127.0.0.1:8080
 
 The format is `ip:hostPort:containerPort | ip::containerPort | hostPort:containerPort | containerPort`. 
 
-Other options for publishing ports and many other run options are available and well documentation in the podman-run man page.
+Other options for publishing ports and many other run options are available and well documented in the podman-run man page.
 
 == Mapping a local directory
 

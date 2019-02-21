@@ -51,8 +51,11 @@ Show the options for listing images:
 $ podman image ls --help
 ----
 
-https://podman.io/[Podman^, role="ext-link"] has a lot of well written documentation and articles you can find a number of them at the following links:
+https://podman.io/[Podman] has a lot of well written documentation and articles. 
+You can find a number of them at the following links:
 
-* https://github.com/projectatomic/libpod/blob/master/docs/tutorials/podman_tutorial.md[getting started tutorial^, role="ext-link"]
-* https://github.com/projectatomic/libpod/blob/master/transfer.md[docker to podman command mapping^, role="ext-link"]
-* https://medium.com/cri-o[Podman news and releases^, role="ext-link"]
+
+* https://github.com/projectatomic/libpod/blob/master/docs/tutorials/podman_tutorial.md[getting started tutorial]
+* https://github.com/projectatomic/libpod/blob/master/transfer.md[docker to podman command mapping]
+* https://medium.com/cri-o[Podman news and releases]
+

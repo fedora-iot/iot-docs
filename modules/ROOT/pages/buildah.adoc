@@ -81,7 +81,7 @@ Test the portability of the container with `docker pull` or `podman pull` or `bu
 
 Learn more about using buildah from:
 
-* Fedora Magazine: https://fedoramagazine.org/daemon-less-container-management-buildah/[How to build container images with Buildah (2018)^, role="ext-link"]
-* buildah.io: https://github.com/containers/buildah/tree/master/docs/tutorials[Tutorials^, role="ext-link"]
+* Fedora Magazine: https://fedoramagazine.org/daemon-less-container-management-buildah/[How to build container images with Buildah (2018)]
+* buildah.io: https://github.com/containers/buildah/tree/master/docs/tutorials[Tutorials]
 
 

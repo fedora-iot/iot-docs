@@ -18,4 +18,4 @@ The list of supported reference devices will expand with time.
 The images being created are currently 4GB in size.
 The current memory used for testing is 1GB of RAM.
 The Fedora IoT base image should run with less,
-but of course this limits the amount of container applications can be run on top of the base OS.
+but of course this limits the amount of container applications that can be run on top of the base OS.
