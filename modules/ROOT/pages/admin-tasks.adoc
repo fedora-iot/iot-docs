@@ -252,6 +252,28 @@ https://docs.fedoraproject.org/en-US/fedora/f29/system-administrators-guide/basi
 * Fedora 29 Administration Guide: 
 https://docs.fedoraproject.org/en-US/fedora/f29/system-administrators-guide/servers/Configuring_NTP_Using_the_chrony_Suite/[Configuring NTP Using the chrony Suite]
 
+== Editing Kernel Command Line Arguments
+
+Sometimes it's useful to be able to edit the kernel command line arguements, whether to add a serial console or some options for debugging.
+
+View the current kernel command line:
+
+----
+$ sudo rpm-ostree kargs
+----
+
+Edit the kerenl command line arguements with the default editor (the default for editor is vim) to adjust such as adding a serial console:
+
+----
+$ sudo rpm-ostree kargs --editor
+----
+
+Reboot the system:
+
+----
+$ sudo systemctl reboot
+----
+
 == Remote Administration with Ansible
 
 The Fedora IoT image includes python3 and Ansible versions 2.5 and above have support for Python 3 (python 3.5 and above only).
