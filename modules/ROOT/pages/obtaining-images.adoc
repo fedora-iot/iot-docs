@@ -2,10 +2,6 @@
 
 Available images for download are described on the IoT https://iot.fedoraproject.org[landing page].
 
-// once the landing page actually exists, decide what if anything to include for direct links
-There are image builds and checksum files for x86_64 and aarch64 available https://download.fedoraproject.org/pub/alt/iot/[here].
-// or at one of the https://ostree.fedoraproject.org/iot/mirrorlist[mirror sites]. 
-
 == Why the Fedora IoT Image
 
 The use of https://ostree.readthedocs.io/en/latest/[OSTree] brings fully atomic upgrades, easy rollbacks and workflows that are familiar to users of immutable, image based servers.
