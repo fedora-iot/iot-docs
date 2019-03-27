@@ -7,7 +7,7 @@ The currently tested reference devices are as follows:
 
 * x86_64 and aarch64 VMs
 * Raspberry Pi 3 Model B and Raspberry Pi 3 Model B+
-* 96boads Dragonboard 410c
+* 96boards Dragonboard 410c
 * 96boards Rock960 Consumer Edition
 
 Other devices should work, but aren't being actively tested in the context of IoT.
