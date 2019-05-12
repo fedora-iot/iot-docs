@@ -58,7 +58,7 @@ Aside from the adoption and development of applications on top of the Fedora IoT
 == User Profiles, Primary Use Cases and Goals
 === Personas
 
-We will use a set of personasto describe our target users and their respective needs. This document will list the personas in their simplified forms, with detailed explanations of each one available on their respective wiki pages.
+We will use a set of personas to describe our target users and their respective needs. This document will list the personas in their simplified forms, with detailed explanations of each one available on their respective wiki pages.
 
 * IoT hobbyist and systems administrator
 ** Uses IoT devices to experiment with technology. This could be a home user using platforms such as Mozilla Web of Things Gateway or Home Assistant to do home automation or a systems administrator experimenting with IoT technologies.
