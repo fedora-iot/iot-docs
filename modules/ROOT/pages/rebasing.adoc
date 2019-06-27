@@ -39,14 +39,14 @@ Application Options:
 List remote repository names:
 
 ----
-$ ostreee remote list
+$ ostree remote list
 fedora-iot
 ----
 
 Show the remote URL:
 
 ----
-$ ostreee remote show-url fedora-iot
+$ ostree remote show-url fedora-iot
 https://ostree.fedoraproject.org/iot
 ----
 
