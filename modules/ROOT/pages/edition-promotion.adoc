@@ -1,0 +1,52 @@
+== Requirements to promote Fedora IoT to an official edition
+
+=== Phase one: MVP Edition launch (timeframe: July. Before Flock.)
+* Items for IoT team to complete
+** F-30 published on stable ostree repo
+*** Currently on “devel” branch -- need F30 to be the stable one instead of F29
+***  This is something Peter can do, but for F31 this should be integrated into proper QA & Rel-Eng process. Need procedures and to define clear roles.
+** Clean up release process
+** New ostrees and new ISOs
+** Equivalent of two-week Atomic release process, but monthly
+** Initial basic docs for release process
+*** So that not everything is just in Peter’s head
+** Update release criterial documentation
+** Automatic updates enabled for F-30 release images
+*** This is a change to ostree configuration to match CoreOS
+** Update fedora-release-iot defaults and settings, add greenboot
+*** PR from IoT team
+*** Package owned by release engineering so CPE team expected to review and integrate PR
+*** Review move to standard Fedora keys if ostree key rollover works
+** Review of outstanding tickets for features/fixes
+
+* Web site(s) updates
+** New content for the IoT page
+*** Content from IoT team
+*** Design from ??? (will ask OSPO)
+*** Integration work into new web system from CPE
+*** Parity with existing iot.fedoraproject.org for automatic updates when new images come out with 
+** New content for front page presenting the edition
+*** Any text from CPE team
+*** Design to match existing front page
+*** Update to front page from ???
+** Redirect from iot.fedoraproject.org to new getfedora edition page
+
+=== Phase two: Ideal target, Fedora 31 GA (October)
+* ARMv7 supported images (actually aiming this for phase 1)
+* Container pipeline for supported architectures
+*** x86_64, ARMv7, aarch64
+*** Current state: just x86_64, so we need ARM
+**** Donated aarch64 hardware exists but is being used as koji builders
+**** Note hardware was donated for this purpose
+
+** Possible future: i686
+** This is the big request for CPE
+* IoT Toolbox container
+** X86_64, ARMv7, aarch64
+** This is an IoT team thing
+* A number of containers for IoT demo use cases
+** X86_64, ARMv7, aarch64
+** Also handed by IoT team
+* Publish “devel” image with toolbox container, and “production” image without toolbox
+** This is a rel-eng change, but PT from IoT team, because we’re adding additional deliverables
+
