@@ -2,10 +2,6 @@
 
 IMPORTANT: There must be either a serial console or HDMI monitor with USB keyboard connected to the device to complete the initial setup.
 
-.Initial Setup Limited to Create User
-[NOTE]
-There are currently a few issues with the initial-setup. It currently only allows you to create a standard user. This issue is currently been tracked in https://bugzilla.redhat.com/show_bug.cgi?id=1578930[RHBZ 1578930].
-
 == Create a User
 
 The provided image has a locked root account. 
