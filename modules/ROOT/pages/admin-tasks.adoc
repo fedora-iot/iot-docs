@@ -47,7 +47,7 @@ Centralized users accounts (LDAP, Kerberos) can be configured with `authconfig` 
 The `/etc/nsswitch.conf` file is already configured to look for sss as well as files and altfiles for account information.
 
 * Fedora 29 Administration Guide: 
-https://docs.fedoraproject.org/en-US/fedora/f29/system-administrators-guide/basic-system-configuration/Managing_Users_and_Groups/[Managing Users and Groups]
+  https://docs.fedoraproject.org/en-US/fedora/f29/system-administrators-guide/basic-system-configuration/Managing_Users_and_Groups/[Managing Users and Groups]
 
 User accounts which are members of the wheel group automatically have full privileges with the `sudo` command.
 This is from the following lines in the sudo configuration file:
@@ -63,7 +63,7 @@ Edits to this configuration file should be made with the `visudo` command so tha
 Instead of editing the main configuration file, grant other users the ability to issue specific commands as a different user by adding a configuration file to the `/etc/sudoers.d/` directory.
 
 * Fedora 29 Administration Guide: 
-https://docs.fedoraproject.org/en-US/fedora/f29/system-administrators-guide/basic-system-configuration/Gaining_Privileges/[Gaining Privileges]
+  https://docs.fedoraproject.org/en-US/fedora/f29/system-administrators-guide/basic-system-configuration/Gaining_Privileges/[Gaining Privileges]
 
 Use `ssh-keygen` to generate an ssh key pair then add the public key to the user account on your Fedora IoT device:
 
@@ -76,7 +76,7 @@ Use the `-i` option to specify a key file other than the default of the most rec
 The `ssh-copy-id` command will append the public key to the user's authorized keys file on the device. It will create the `~/.ssh` directory if it does not already exist and ensure the permission on the files are correct.
 
 * Fedora 29 Administration Guide: 
-https://docs.fedoraproject.org/en-US/fedora/f29/system-administrators-guide/infrastructure-services/OpenSSH/#s3-ssh-configuration-keypairs-generating[Generating Key Pairs]
+  https://docs.fedoraproject.org/en-US/fedora/f29/system-administrators-guide/infrastructure-services/OpenSSH/#s3-ssh-configuration-keypairs-generating[Generating Key Pairs]
 
 == Network Configuration
 
@@ -148,7 +148,7 @@ $ nmcli device wifi help
 ----
 
 * Fedora Quick Docs:
-https://docs.fedoraproject.org/en-US/quick-docs/configuring-ip-networking-with-nmcli/[Configuring ip networking with nmcli]
+  https://docs.fedoraproject.org/en-US/quick-docs/configuring-ip-networking-with-nmcli/[Configuring ip networking with nmcli]
 
 == Securing remote access
 
@@ -162,7 +162,7 @@ PermitRootLogin no
 ----
 
 * Fedora 29 Administration Guide: 
-https://docs.fedoraproject.org/en-US/fedora/f29/system-administrators-guide/infrastructure-services/OpenSSH/[OpenSSH]
+  https://docs.fedoraproject.org/en-US/fedora/f29/system-administrators-guide/infrastructure-services/OpenSSH/[OpenSSH]
 
 View the default firewall configuration:
 
@@ -195,7 +195,7 @@ The `--reload` option reloads the configuration from the saved files.
 If you add a port or service without the `--permanent` option, it will modify the runtime firewalld settings but it will not save your changes to survive a reboot of the system.
 
 * Fedora Quick Docs:
-https://docs.fedoraproject.org/en-US/quick-docs/firewalld/[Using firewalld]
+  https://docs.fedoraproject.org/en-US/quick-docs/firewalld/[Using firewalld]
 
 == Service Management
 
@@ -231,7 +231,7 @@ Created symlink /etc/systemd/system/multi-user.target.wants/httpd.service → /u
 ----
 
 * Fedora 29 Administration Guide: 
-https://docs.fedoraproject.org/en-US/fedora/f29/system-administrators-guide/infrastructure-services/Services_and_Daemons/[Services and Daemons]
+  https://docs.fedoraproject.org/en-US/fedora/f29/system-administrators-guide/infrastructure-services/Services_and_Daemons/[Services and Daemons]
 
 == Viewing Logs
 
@@ -240,16 +240,16 @@ System logs can be viewed and searched with `journalctl`.
 
 
 * Fedora 29 Administration Guide: 
-https://docs.fedoraproject.org/en-US/fedora/f29/system-administrators-guide/monitoring-and-automation/Viewing_and_Managing_Log_Files/[Viewing and Managing Log Files]  
+  https://docs.fedoraproject.org/en-US/fedora/f29/system-administrators-guide/monitoring-and-automation/Viewing_and_Managing_Log_Files/[Viewing and Managing Log Files]
 * Fedora Quick Docs:
-https://docs.fedoraproject.org/en-US/quick-docs/viewing-logs/[Viewing logs in Fedora]  
+  https://docs.fedoraproject.org/en-US/quick-docs/viewing-logs/[Viewing logs in Fedora]
 
 Accurate time and date stamps help find the correct event when troubleshooting or auditing.
 
 * Fedora 29 Administration Guide: 
-https://docs.fedoraproject.org/en-US/fedora/f29/system-administrators-guide/basic-system-configuration/Configuring_the_Date_and_Time/[Configuring the Date and Time]
+  https://docs.fedoraproject.org/en-US/fedora/f29/system-administrators-guide/basic-system-configuration/Configuring_the_Date_and_Time/[Configuring the Date and Time]
 * Fedora 29 Administration Guide: 
-https://docs.fedoraproject.org/en-US/fedora/f29/system-administrators-guide/servers/Configuring_NTP_Using_the_chrony_Suite/[Configuring NTP Using the chrony Suite]
+  https://docs.fedoraproject.org/en-US/fedora/f29/system-administrators-guide/servers/Configuring_NTP_Using_the_chrony_Suite/[Configuring NTP Using the chrony Suite]
 
 == Editing Kernel Command Line Arguments
 

@@ -36,9 +36,9 @@ If you have not already xref:obtaining-images.adoc[downloaded the image], do so 
 There are several options for determining the media device name.
 
 * Run the `lsblk` command before and after inserting the card.
-The new device that appears on the list is the device for the media.
-If your microSD card has partitions, locate the name from the line that is type 'disk'.
-In this example the device name is `mmcblk0` and will be referenced later as `/dev/mmcblk0`:
+  The new device that appears on the list is the device for the media.
+  If your microSD card has partitions, locate the name from the line that is type 'disk'.
+  In this example the device name is `mmcblk0` and will be referenced later as `/dev/mmcblk0`:
 ----
 $ lsblk
 NAME            MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT

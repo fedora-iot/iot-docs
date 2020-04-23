@@ -14,11 +14,11 @@ There are many examples of building containers using a Dockerfile.
 A simple Dockerfile will contain some of the following elements:
 
 * The FROM line indicates the base, or starting, container, such as a latest Fedora image. 
-This image will be pulled if it is not already available locally. 
-Specify details for which image the same as you would with a `podman pull` command.
+  This image will be pulled if it is not already available locally.
+  Specify details for which image the same as you would with a `podman pull` command.
 * Creates layers with each RUN command. 
-Try to minimize the number of layers with multiple commands on the same line using && between commands.
-Also include any cleanup commands such as `dnf clean all` to reduce the final image size.
+  Try to minimize the number of layers with multiple commands on the same line using && between commands.
+  Also include any cleanup commands such as `dnf clean all` to reduce the final image size.
 * Copy content from the working directory into the container.
 * Specify any ports to listen on with EXPOSE 
 * Start your application
