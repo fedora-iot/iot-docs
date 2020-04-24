@@ -133,25 +133,25 @@ At the moment the options are aarch64 or x86_64.
 To rebase to stable:
 
 ----
-sudo rpm-ostree rebase -b fedora/stable/<ARCH>/iot
+$ sudo rpm-ostree rebase -b fedora/stable/<ARCH>/iot
 ----
 
 To rebase to devel:
 
 ----
-sudo rpm-ostree rebase -b fedora/devel/<ARCH>/iot
+$ sudo rpm-ostree rebase -b fedora/devel/<ARCH>/iot
 ----
 
 To rebase to rawhide:
 
 ----
-sudo rpm-ostree rebase -b fedora/rawhide/<ARCH>/iot
+$ sudo rpm-ostree rebase -b fedora/rawhide/<ARCH>/iot
 ----
 
 Once ready, reboot the system to use the new image:
 
 ----
-$ systemctl reboot
+$ sudo systemctl reboot
 ----
 
 == Rebase to any New Version
@@ -174,12 +174,11 @@ The new OS is downloaded and installed in the background.
 Once ready, reboot the system to use the new image:
 
 ----
-$ systemctl reboot
+$ sudo systemctl reboot
 ----
 
 Just like system updates, rebases can be reversed.
 The previous deployment is still available, and you can boot back into it if there are any problems with the new OS.
 
 NOTE: More information is available in the upstream documentation for https://ostree.readthedocs.io[libostree] and https://rpm-ostree.readthedocs.io[rpm-ostree].
-
 
