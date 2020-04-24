@@ -7,8 +7,10 @@ The currently tested reference devices are as follows:
 
 * x86_64 and aarch64 VMs
 * Raspberry Pi 3 Model B and Raspberry Pi 3 Model B+
-* 96boards Dragonboard 410c
 * 96boards Rock960 Consumer Edition
+* Pine64 A64-LTS
+* Pine64 Rockpro64 and Rock64
+* Up Squared
 
 Other devices should work, but aren't being actively tested in the context of IoT.
 The list of supported reference devices will expand with time.
