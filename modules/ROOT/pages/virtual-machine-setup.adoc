@@ -16,7 +16,7 @@ When asked for an installation source or storage location, point the tool at the
 
 image::virt-manager-create_new-20190204.png[virt-manager create new dialog]
 
-When your image begins booting, continue with the xref:initial-setup.adoc[Initial Setup] instructions.
+When your image begins booting, continue with the xref:ignition.adoc[Zezere] instructions.
 
 To learn more about the libvirt family of tools used in Fedora, visit the https://docs.fedoraproject.org/en-US/quick-docs/getting-started-with-virtualization/[Getting started with virtualization] section of the Fedora Documentation.
 
@@ -40,7 +40,7 @@ image::new-box-dialog-20190204.png[GNOME Boxes create new dialog]
 Image should be modified with an outline around the "Select a file" option
 ////
 
-When your image begins booting, continue with the xref:initial-setup.adoc[Initial Setup] instructions.
+When your image begins booting, continue with the xref:ignition.adoc[Zezere] instructions.
 
 Alternately, you can install a new box from the ISO image.
 ////
@@ -70,7 +70,7 @@ image::virtualbox-new-dialog-20190204.png[VirtualBox create new hard disk dialog
 Image should be modified with an outline around the "Use an existing"  option
 ////
 
-When your image begins booting, continue with the xref:initial-setup.adoc[Initial Setup] instructions.
+When your image begins booting, continue with the xref:ignition.adoc[Zezere] instructions.
 
 More information for using Virtual Box can be found at https://www.virtualbox.org/[VirtualBox.org]
 
