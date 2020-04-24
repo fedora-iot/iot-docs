@@ -1,13 +1,13 @@
-= Setting up a Device with Zezere-ignition
+= Setting up a Device with Zezere
 
 The disk images do not have a pre-configured user or any passwords set for security reasons. To use the deployment you will need to add your SSH key to the root account using the provisiong server - Zezere. 
 
-== Using Zezere Provisioning Server
-When an IoT system is booted, you will the Zezere provision server URL as well as the MAC address of the device deployed. 
+== Using the Zezere Provisioning Server
+When a Fedora IoT system is booted, you will see the Zezere provisioning server URL as well as the MAC address of the device deployed. 
 
 image::provision-url-login.png[Fedora IoT log in]
 
-Once the Fedora IoT system has been booted, navigate to the Zezere provisioning server on another device. Open the 'SSH Key Management' Tab and add your SSH public key.
+Once the Fedora IoT system has been booted, navigate to Zezere on another device. Open the 'SSH Key Management' Tab and add your SSH public key.
 
 image::zezere-ssh-key-management.png[Zezere SSH Key Management tab]
 
