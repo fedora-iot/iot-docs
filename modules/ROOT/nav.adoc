@@ -3,6 +3,7 @@
 ** xref:obtaining-images.adoc[Obtaining Images]
 ** xref:virtual-machine-setup.adoc[Setting up a Virtual Machine]
 ** xref:physical-device-setup.adoc[Setting up a Physical Device]
+** xref:ignition.adoc[Setting up a Device with Zezere-ignition]
 ** xref:initial-setup.adoc[Initial Setup Once the VM or Physical Device is Running]
 ** xref:network-access.adoc[Network Access]
 ** xref:applying-updates-GS.adoc[Applying Updates]
