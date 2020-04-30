@@ -139,5 +139,3 @@ xzcat Fedora-IoT-[version].raw.xz | sudo dd status=progress bs=4M of=/dev/XXX
 
 If you wish to use a serial console you'll need to configure it. 
 Details for the https://fedoraproject.org/wiki/Architectures/ARM/Raspberry_Pi?rd=Raspberry_Pi#How_do_I_use_a_serial_console.3F[Raspberry PI are here].
-
-IMPORTANT: There must be either a serial console or HDMI monitor with USB keyboard connected to the device to complete the initial setup.
