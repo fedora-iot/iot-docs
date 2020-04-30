@@ -15,7 +15,7 @@ We have a page covering the currently tested xref:reference-platforms.adoc[Refer
 Other devices supported by Fedora on either x86_64 or aarch64 should work just fine but haven't been widely tested in the IoT context so your milage may vary.
 
 The list of supported reference devices will expand with time.
-If you're a hardware vendor and would like to have a device become a reference platform by actively participating and testing Fedora IoT, 
+If you're a hardware vendor and would like to have a device become a reference platform by actively participating and testing Fedora IoT,
 please reach out to https://fedoraproject.org/wiki/User:Pbrobinson[Peter Robinson], the Fedora IoT Lead.
 
 == Required resources
