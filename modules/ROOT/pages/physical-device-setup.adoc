@@ -7,14 +7,11 @@ A list of currently tested devices is maintained in the xref:reference-platforms
 
 Always reference the documentation of the board you have selected for assembly instructions and requirements. At a minimum you will need the board, a power source, and a microSD card. 
 
-=== Console for the initial setup
-For the xref:initial-setup.adoc[initial setup] of the Fedora IoT images, you will also need either a serial console or HDMI monitor with USB keyboard. Once the initial setup has been completed during the first boot, the device can be changed to a headless state or be left with attached console access. 
-
 === Network connection
 If support for your wireless network devices are not available in the Fedora image, it will have to be added after installation. 
 You will need a wired connection to complete the install of the xref:enabling-wireless.adoc[layered package].
 
-For the Fedora 29 images:
+For the Fedora disk images:
 
 * The Raspberry Pi WiFi is supported in the base image.
 * The `wcn36xx-firmware` for the Dragonboard will need to be added later. 
