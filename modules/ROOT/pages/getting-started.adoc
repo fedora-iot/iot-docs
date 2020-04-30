@@ -8,19 +8,28 @@ image::iot-fedora.svg[SoC board]
 
 == Supported Platforms
 
-For the moment Fedora IoT supports the x86_64 and aarch64 architectures.
+For the moment, Fedora IoT supports the x86_64 and aarch64 architectures.
 The components to support ARMv7 are being worked upon and will be added shortly.
 
-We have a page covering the currently tested xref:reference-platforms.adoc[Reference Platforms].
-Other devices supported by Fedora on either x86_64 or aarch64 should work just fine but haven't been widely tested in the IoT context so your milage may vary.
+Refer to the list of currently tested xref:reference-platforms.adoc[Reference Platforms]. The list of supported reference platforms will expand over time.
+Other x86_64 or aarch64 platforms should work just fine but haven't been widely tested in the IoT context so your milage may vary.
 
-The list of supported reference devices will expand with time.
-If you're a hardware vendor and would like to have a device become a reference platform by actively participating and testing Fedora IoT, 
+If you're a hardware vendor and would like to have a device become a reference platform by actively participating and testing Fedora IoT,
 please reach out to https://fedoraproject.org/wiki/User:Pbrobinson[Peter Robinson], the Fedora IoT Lead.
 
-== Required resources
+== Required Resources
+The current images are 4GB in size and tested with 1GB of RAM.
+The Fedora IoT base image should be able to run with less resources, but of course this will limit the amount of container applications that can be run on top of the base OS.
 
-The images being created are currently 4GB in size.
-The current memory used for testing is 1GB of RAM.
-The Fedora IoT base image should run with less,
-but of course this limits the amount of container applications that can be run on top of the base OS.
+== Download Image
+
+Fedora IoT images for download are available at the Fedora IoT https://iot.fedoraproject.org[landing page].
+
+== Setup VM or Physical Device
+
+- Follow these steps to link:virtual-machine-setup.adoc[setup virtual machine]
+
+- Follow these steps to link:physical-device-setup.adoc[setup physical device]
+
+
+Follow the setup instructions from initial-setup.adoc[Initial Setup]

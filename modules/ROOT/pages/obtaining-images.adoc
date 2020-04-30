@@ -6,15 +6,15 @@ Available images for download are described on the IoT https://iot.fedoraproject
 
 The use of https://ostree.readthedocs.io/en/latest/[OSTree] brings fully atomic upgrades, easy rollbacks and workflows that are familiar to users of immutable, image based servers.
 
-An OS image that is composed on the server side allows for testing the exact bits before they reach client systems, leading to more reliable updates. 
+An OS image that is composed on the server side allows for testing the exact bits before they reach client systems, leading to more reliable updates.
 The GPG signed image based deployments scale well to very large numbers of clients.
 Updates are atomic so nothing changes until the device is rebooted and the rollback capability makes it easy to recover remotely if there is a failure during upgrade.
 
-The Fedora IoT images work with https://rpm-ostree.readthedocs.io/en/latest/[rpm-ostree] which is a hybrid image/package system. 
+The Fedora IoT images work with https://rpm-ostree.readthedocs.io/en/latest/[rpm-ostree] which is a hybrid image/package system.
 It supports package layering, which allows installation of RPMs for additional hardware support or applications.
 
 The Fedora IoT images also have excellent support for container-focused workflows.
-Containers allow you to separate core OS updates from application updates as well as test and deploy different versions of applications. 
+Containers allow you to separate core OS updates from application updates as well as test and deploy different versions of applications.
 The https://podman.io/[podman] daemon is light weight and ready for you to download or create containers for your home assistant, industrial gateways, or data storage and analytics.
 
 == Pick the Right Tool for the Job
@@ -24,6 +24,3 @@ If you are looking for a graphical desktop environment based on OSTree and desig
 If you are looking for a traditional dnf based operating system for your ARM device, look at https://arm.fedoraproject.org/[Fedora ARM]
 
 If you are looking for a lightweight yet powerful and scalable core OS for your Internet of Things project, you came to the right place! https://iot.fedoraproject.org/[Download the images now]!
-
-If you are after an OS for kubernetes there is https://getfedora.org/en/coreos/[Fedora CoreOS]
-
