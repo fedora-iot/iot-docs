@@ -20,17 +20,6 @@ If you are looking for a lightweight yet powerful and scalable core OS for your 
 If you are after an OS for Kubernetes there is https://getfedora.org/en/coreos/[Fedora CoreOS]
 
 == Contribute to Fedora IoT Edition
-[TODO]
-
-
-== Communications
-
-We primarily communicate by the https://lists.fedoraproject.org/admin/lists/iot.lists.fedoraproject.org/[Fedora IoT mailing list] and the #fedora-iot IRC channel on FreeNode.
-
-== Tracking of development
-
-We have a pagure group for https://pagure.io/group/fedora-iot[Fedora IoT] where we have various git repositories for the various components of Fedora IoT. This includes a https://pagure.io/fedora-iot/issues[core issue tracker].
-
-There's also a https://tree.taiga.io/project/nullr0ute-fedora-iot/[Fedora IoT Kanban board] too where we will be tracking development, feature requirements, sprints and other related things.
+For communication and contributing please see the xref:contributing.adoc[Contributing and Reporting Bugs] section.
 
 image::iot-fedora.svg[SoC board]

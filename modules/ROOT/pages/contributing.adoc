@@ -1,0 +1,23 @@
+= Contribute to Fedora IoT Edition
+
+Fedora IoT is made up of many components, including a lot that are part of the main Fedora project, so there is a number of places where you may contribute. This is by no means a canonical source for contribution, if you don't see an area where which seems to match please see the communications section for general ways to engage with us to get answers to your quetsions.
+
+== Reporting bugs
+
+If you are seeing issues with software that is included in the Fedora IoT Edition that is not necessarily specific to IoT the bug should be reported against the specific Fedora component. There's details on how to do that in the https://docs.fedoraproject.org/en-US/quick-docs/howto-file-a-bug/[how to file a bug] doc.
+
+For issues specific to the Fedora IoT Edition we have a https://pagure.io/fedora-iot/issues[Fedora IoT issue tracker] and a https://bugzilla.redhat.com/show_bug.cgi?id=1269538[Bugzilla Tracker bug].
+
+The provisioning portal is a project called Zezere, you can report bugs and file feature requestions on the https://github.com/fedora-iot/zezere[Zezere project page].
+
+== Communications
+
+We primarily communicate by the https://lists.fedoraproject.org/admin/lists/iot.lists.fedoraproject.org/[Fedora IoT mailing list] and the #fedora-iot IRC channel on FreeNode.
+
+== Contributing to Fedora IoT
+
+There's a number of components that make up Fedora IoT, the upstream source compoents for general projects like the Zezere and Greenboot reside on the https://github.com/fedora-iot/[Fedora IoT github page].
+
+Fora general Fedora IoT distribution development we have a https://teams.fedoraproject.org/project/fedora-iot/kanban[Fedora IoT Kanban board] where we will be tracking distro feature development, sprints and other related things.
+
+For the source for Fedora specific things like compose configs and docs we have the https://pagure.io/group/fedora-iot[Fedora IoT] pagure organisation which contains the various git repositories for building Fedora IoT. This includes the https://pagure.io/fedora-iot/issues[core issue tracker].
