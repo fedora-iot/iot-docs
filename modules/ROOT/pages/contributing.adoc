@@ -8,7 +8,7 @@ If you are seeing issues with software that is included in the Fedora IoT Editio
 
 For issues specific to the Fedora IoT Edition we have a https://pagure.io/fedora-iot/issues[Fedora IoT issue tracker] and a https://bugzilla.redhat.com/show_bug.cgi?id=1269538[Bugzilla Tracker bug].
 
-The provisioning portal is a project called Zezere, you can report bugs and file feature requestions on the https://github.com/fedora-iot/zezere[Zezere project page].
+The provisioning portal is a project called Zezere, you can report bugs and file feature requests on the https://github.com/fedora-iot/zezere[Zezere project page].
 
 == Communications
 
