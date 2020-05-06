@@ -12,8 +12,7 @@ General Resources:
 
 == User Management
 
-The initial image includes a root account without a password and the user configured during the xref:initial-setup.adoc[initial setup].
-If the initial user was made an Administrator then that user was placed in the wheel group:
+The initial image includes a locked root account without a password, a ssh key is provisioned via the provisioning service using xref:ignition.adoc[ignition].
 
 ----
 $ id testuser

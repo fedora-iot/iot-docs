@@ -32,4 +32,4 @@ Fedora IoT images for download are available at the Fedora IoT https://iot.fedor
 - Follow these steps to link:physical-device-setup.adoc[setup physical device]
 
 
-Follow the setup instructions from initial-setup.adoc[Initial Setup]
+Follow the setup instructions from xref:ignition.adoc[ignition]
