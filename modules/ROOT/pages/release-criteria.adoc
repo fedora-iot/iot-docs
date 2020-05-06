@@ -5,16 +5,10 @@ The Fedora IoT Installation ISO must work and the resulting installation must bo
 The IoT images must boot on supported hardware.
 
 ==== Supported Platforms
-===== AArch64
-* Raspberry Pi 3 Model B and Raspberry Pi 3 Model B+
-* Dragonboard 410c
-* Virtualization
+See xref:reference-platforms.adoc[Reference Platforms]
 
-===== x86_64
-* Virtualization
-
-=== Initial-Setup Service
-The initial-setup service must run on all images and allow users to create a privileged user (administrator)  account.
+=== User Provisioning
+The zezere-ignition service must run on all images and allow users to provision a user key for a privileged user (administrator) account.
 
 === Upgrade
 When a new ostree is composed and made available, it must be possible to upgrade an existing host using *rpm-ostree upgrade*.
