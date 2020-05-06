@@ -91,7 +91,7 @@ docker.io/library/fedora   latest    8b38e3af7237   4 weeks ago     315MB
 ----
 
 To make the application port available to the host device use the `--publish` or `-p` option with `hostPort:containerPort` numbers. 
-An IP can also be specified as well as ranges of ports. See the https://github.com/containers/libpod/blob/master/docs/podman-run.1.md[man page] for more options.
+An IP can also be specified as well as ranges of ports. See the https://github.com/containers/libpod/blob/master/docs/source/markdown/podman-run.1.md[man page] for more options.
 
 Run the container and publish the port:
 
@@ -248,7 +248,7 @@ To extract the image to a local directory in a docker format:
 $ podman push quay.io/testuser/fedora-myhttpd dir:/tmp/fedora-myhttpd
 ----
 
-For more exporting options, see the https://github.com/containers/libpod/blob/master/docs/podman-push.1.md[podman-push] man page.
+For more exporting options, see the https://github.com/containers/libpod/blob/master/docs/source/markdown/podman-push.1.md[podman-push] man page.
 
 
 
