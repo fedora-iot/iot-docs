@@ -15,7 +15,7 @@ If you are looking for a graphical desktop environment based on OSTree and desig
 
 If you are looking for a traditional dnf based operating system for your ARM device, look at https://arm.fedoraproject.org/[Fedora ARM]
 
-If you are looking for a lightweight yet powerful and scalable core OS for your Internet of Things project, you came to the right place! getting-started.adoc[Get Started with Fedora IoT]!
+If you are looking for a lightweight yet powerful and scalable core OS for your Internet of Things project, you came to the right place! xref:getting-started.adoc[Get Started with Fedora IoT]!
 
 If you are after an OS for Kubernetes there is https://getfedora.org/en/coreos/[Fedora CoreOS]
 
