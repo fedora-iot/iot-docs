@@ -294,13 +294,35 @@ There is no current activity on a https://github.com/ansible/ansible/issues/2118
 Use the creates argument to see if it needs to be run: 
 
 ----
-- name: Install git with rpm-ostree
-  command: rpm-ostree install git
-  args:
-    creates: /bin/git
-- name: Reboot a slow device (default timeout is 600)
+- name: install cockpit
+  command: >-
+    rpm-ostree install --idempotent --unchanged-exit-77
+      cockpit
+      cockpit-podman
+      cockpit-storaged
+      cockpit-dashboard
+      cockpit-ostree
+  register: ostree
+  failed_when: not ( ostree.rc == 77 or ostree.rc == 0 )
+  changed_when: ostree.rc != 77
+
+- name: reboot if new stuff was installed
   reboot:
-    reboot_timeout: 3600
+    reboot_timeout: 300
+  when: ostree.rc != 77
+
+- name: start and enable cockpit
+  service:
+    name: cockpit.socket
+    state: started
+    enabled: true
+
+- name: allow cockpit through firewall
+  firewalld:
+    service: cockpit
+    permanent: yes
+    immediate: yes
+    state: enabled
 ----
 
 
