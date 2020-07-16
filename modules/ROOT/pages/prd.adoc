@@ -119,6 +119,21 @@ The initial basic set of metrics will be:
 
 * At least one large hardware vendor uses Fedora IoT as the basis for their platform.
 
+=== Scope of hardware support
+
+See xref:../reference-platforms.adoc[Reference Platforms].
+
+=== Release deliverables
+
+|====
+| **Deliverable** | **Release blocking** | **Optical boot is blocking** | **Max size**
+|IoT/aarch64/images/Fedora-IoT-_RELEASE_MILESTONE_.aarch64.raw.xz | yes | no | N/A
+|IoT/aarch64/iso/Fedora-IoT-IoT-ostree-aarch64-_RELEASE_MILESTONE_.iso | yes | no | N/A
+|IoT/armhfp/iso/Fedora-IoT-IoT-ostree-armhfp-_RELEASE_MILESTONE_.iso | no | no | N/A
+|IoT/x86_64/images/Fedora-IoT-_RELEASE_MILESTONE_.x86_64.raw.xz | yes | no | N/A
+|IoT/x86_64/iso/Fedora-IoT-IoT-ostree-x86_64-_RELEASE_MILESTONE_.iso | yes | no | N/A
+|====
+
 == About this Document
 
 === Authors
