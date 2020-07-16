@@ -1,5 +1,42 @@
 == Requirements to promote Fedora IoT to an official edition
 
+This is based on the https://fedoraproject.org/wiki/Editions/Promotion_Process[Edition promotion process] pending approval from the Fedora Council.
+Historical information is included below for reference, although it is now incredibly out of date.
+
+=== Prerequisites
+
+[cols="8,2,8",options="header"]
+|=====
+| Requirement | Status | Additional information
+| The candidate Edition must be backed by a team that holds regular public meetings | https://docs.fedoraproject.org/en-US/iot/contributing/#_communications[DONE] | 
+| The candidate Edition must get trademark approval from the Fedora Council | https://pagure.io/Fedora-Council/tickets/issue/277[DONE] | 
+| The candidate Edition must have a product requirements document | In-progress | Some information https://docs.fedoraproject.org/en-US/iot/prd/[exists]. Some required information is being collected.
+|=====
+
+=== Process
+
+==== Pre-submission steps
+
+[cols="8,2,8",options="header"]
+|====
+| **Requirement** | **Status** | **Additional information**
+| Review test cases and release criteria with QA | https://fedoraproject.org/wiki/Category:IoT_Acceptance_Test_Cases[DONE] | 
+| Work with Release Engineering | DONE | Composes are being produced
+|====
+
+
+==== Post-submission steps
+
+[cols="8,2,8",options="header"]
+|====
+|Request design deliverables | |
+|Provide updated website content | https://teams.fedoraproject.org/project/fedora-iot/us/83?kanban-status=71[In-progress] | Basic content is on iot.fedoraproject.org. Further content will be needed as we finalize the web site.
+|Notify Documentation and Translation teams | https://teams.fedoraproject.org/project/fedora-iot/us/87?kanban-status=71[TODO] |
+|Provide marketing blurbs | https://teams.fedoraproject.org/project/fedora-iot/us/75?kanban-status=71[TODO] |
+|====
+
+== Historical content
+
 === Phase one: MVP Edition launch (timeframe: July. Before Flock.)
 * Items for IoT team to complete
 ** F-30 published on stable ostree repo
