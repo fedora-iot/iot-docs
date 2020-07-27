@@ -98,6 +98,18 @@ Fedora IoT will need to address the following use-cases:
 ** Messaging support such as MQTT and AMQP
 ** Data analytics
 
+=== Core services and features
+
+* Greenboot
+
+=== Core applications
+
+None
+
+=== Unique policies for installation, updates, etc
+
+None
+
 == Logistical Concerns
 
 === Delivery Mechanisms
