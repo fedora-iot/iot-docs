@@ -27,9 +27,9 @@ Fedora IoT images for download are available at the Fedora IoT https://iot.fedor
 
 == Setup VM or Physical Device
 
-- Follow these steps to link:virtual-machine-setup.adoc[setup virtual machine]
+- Follow these steps to xref:virtual-machine-setup.adoc[setup virtual machine]
 
-- Follow these steps to link:physical-device-setup.adoc[setup physical device]
+- Follow these steps to xref:physical-device-setup.adoc[setup physical device]
 
 
 Follow the setup instructions from xref:ignition.adoc[ignition]
