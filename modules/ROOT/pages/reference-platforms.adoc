@@ -3,6 +3,8 @@
 For the moment Fedora supports the x86_64 and aarch64 architectures.
 The components to support ARMv7 are being worked upon and will be added shortly.
 
+These reference platforms have been tested and are known to work with Fedora IoT, however their inclusion on this list does not necessarily constitute a release-blocking issue should a bug that is specific to the hardware below be found.
+
 The currently tested reference devices are as follows:
 
 * x86_64 and aarch64 VMs
