@@ -23,7 +23,7 @@ The Fedora IoT base image should be able to run with less resources, but of cour
 
 == Download Image
 
-Fedora IoT images for download are available at the Fedora IoT https://iot.fedoraproject.org[landing page].
+Fedora IoT images for download are available at the Fedora IoT https://getfedora.org/en/iot/[landing page].
 
 == Setup VM or Physical Device
 
