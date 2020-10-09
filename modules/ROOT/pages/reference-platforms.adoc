@@ -7,7 +7,7 @@ These reference platforms have been tested and are known to work with Fedora IoT
 
 The currently tested reference devices are as follows:
 
-* x86_64 and aarch64 VMs
+* x86_64, aarch64 and ARMv7 virtual machines
 * Raspberry Pi 3 Model B and Raspberry Pi 3 Model B+
 * 96boards Rock960 Consumer Edition
 * Pine64 A64-LTS
