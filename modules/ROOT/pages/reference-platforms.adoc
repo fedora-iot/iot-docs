@@ -1,18 +1,30 @@
 = Reference Platforms
 
-For the moment Fedora supports the x86_64 and aarch64 architectures.
-The components to support ARMv7 are being worked upon and will be added shortly.
+Fedora IoT supports the aarch64, ARMv8 and x86_64 architectures.
 
 These reference platforms have been tested and are known to work with Fedora IoT, however their inclusion on this list does not necessarily constitute a release-blocking issue should a bug that is specific to the hardware below be found.
 
 The currently tested reference devices are as follows:
 
-* x86_64, aarch64 and ARMv7 virtual machines
-* Raspberry Pi 3 Model B and Raspberry Pi 3 Model B+
+== aarch64 architecture
+* KVM based aarch64 virtual machine booting using TianoCore UEFI firmware
 * 96boards Rock960 Consumer Edition
+* NVidia Jetson AGX (Jetson Nano coming soon)
 * Pine64 A64-LTS
 * Pine64 Rockpro64 and Rock64
+* Raspberry Pi 3 Model B and 3 Model B+
+* Solid Run HummingBoard-M (i.MX8 based)
+* Generic aarch64 SBSA/SBBR compliant products
+
+== ARMv7 architecture
+* KVM ARMv7 virtual machine booting using TianoCore UEFI firmware
+* Raspberry Pi 2 Model B, 3 Model B and 3 Model B+
+
+== x86_64 architecture
+* KVM x86_64 virtual machine booting using TianoCore UEFI firmware
+* Compulabs Fitlet2
 * Up Squared
+* Generic Intel x86-64 products with UEFI
 
 Other devices should work, but aren't being actively tested in the context of IoT.
 The list of supported reference devices will expand with time.
