@@ -24,4 +24,3 @@
 * xref:reference-platforms.adoc[Reference Platforms]
 * xref:prd.adoc[Product Requirement Doc]
 * xref:edition-promotion.adoc[Edition Promotion]
-* xref:release-criteria.adoc[Release Criteria]
