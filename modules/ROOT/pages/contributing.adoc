@@ -17,7 +17,7 @@ Check the https://apps.fedoraproject.org/calendar/IoT/[IoT calendar] for meeting
 
 == Contributing to Fedora IoT
 
-There's a number of components that make up Fedora IoT, the upstream source compoents for general projects like the Zezere and Greenboot reside on the https://github.com/fedora-iot/[Fedora IoT github page].
+There's a number of components that make up Fedora IoT, the upstream source components for general projects like the Zezere and Greenboot reside on the https://github.com/fedora-iot/[Fedora IoT github page].
 
 Fora general Fedora IoT distribution development we have a https://teams.fedoraproject.org/project/fedora-iot/kanban[Fedora IoT Kanban board] where we will be tracking distro feature development, sprints and other related things.
 
