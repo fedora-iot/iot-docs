@@ -1,4 +1,4 @@
-= Upgrades and Rollbacks
+= Updates and Rollbacks
 :toc:
 
 NOTE: The latest image builds for x86_64 and aarch64 are available at https://download.fedoraproject.org/pub/alt/iot/[here]. 
@@ -99,7 +99,7 @@ $ sudo rpm-ostree rollback --reboot
 
 NOTE: More information about https://docs.fedoraproject.org/en-US/quick-docs/bootloading-with-grub2/[Bootloading with GRUB2] can be found in the Fedora Quick Docs.
 
-NOTE: More information about the `rpm-ostree` command can be found in the upstream https://rpm-ostree.readthedocs.io/en/latest/manual/administrator-handbook/[Adminstrator Handbook]
+NOTE: More information about the `rpm-ostree` command can be found in the upstream https://coreos.github.io/rpm-ostree/administrator-handbook/[Administrator Handbook]
 
 
 == Automatic updates
