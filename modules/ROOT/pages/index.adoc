@@ -7,7 +7,7 @@ The operating system (OS) for IoT systems needs to be immutable and image based,
 
 The Fedora IoT images work with https://rpm-ostree.readthedocs.io/en/latest/[rpm-ostree], a hybrid image/package system. It supports package layering, which allows installation of RPMs for additional hardware support or applications. The GPG signed image based deployments scale well to very large numbers of clients. Updates are atomic with easy rollback capability.
 
-The Fedora IoT images also have excellent support for container-focused workflows. Containers allow you to separate core OS updates from application updates as well as test and deploy different versions of applications.  The https://podman.io/[podman] daemon is light weight and ready for you to download or create containers for your home assistant, industrial gateways, or data storage and analytics.
+The Fedora IoT images also have excellent support for container-focused workflows. Containers allow you to separate core OS updates from application updates as well as test and deploy different versions of applications.  The https://podman.io/[podman] container engine is light weight and ready for you to download or create containers for your home assistant, industrial gateways, or data storage and analytics.
 
 == Is Fedora IoT for you?
 
