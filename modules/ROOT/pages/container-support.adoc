@@ -2,7 +2,7 @@
 
 The Fedora IoT images have excellent support for container-focused workflows. 
 Containers allow you to separate core OS updates from application updates as well as test and deploy different versions of applications. 
-The `podman` daemon is light weight and ready for you to download or create containers for your home assistant, industrial gateways, or data storage and analytics.
+The `podman` container engine is light weight and ready for you to download or create containers for your home assistant, industrial gateways, or data storage and analytics.
 
 With `podman`, images and containers can be managed and used by a non-privileged user.
 Commands are very similar to those used with `docker`.
