@@ -300,7 +300,6 @@ Use the creates argument to see if it needs to be run:
       cockpit
       cockpit-podman
       cockpit-storaged
-      cockpit-dashboard
       cockpit-ostree
   register: ostree
   failed_when: not ( ostree.rc == 77 or ostree.rc == 0 )
