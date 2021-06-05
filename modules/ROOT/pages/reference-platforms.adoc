@@ -7,14 +7,14 @@ These reference platforms have been tested and are known to work with Fedora IoT
 The currently tested reference devices are as follows:
 
 == aarch64 architecture
-* KVM based aarch64 virtual machine booting using TianoCore UEFI firmware
-* 96boards Rock960 Consumer Edition
-* NVidia Jetson AGX (Jetson Nano coming soon)
-* Pine64 A64-LTS
-* Pine64 Rockpro64 and Rock64
-* Raspberry Pi 3 Model B and 3 Model B+
-* Solid Run HummingBoard-M (i.MX8 based)
-* Generic aarch64 SBSA/SBBR compliant products
+
+[frame="none",grid="none"]
+|=======================
+| KVM based VM (TianoCore UEFI) | SystemReady-SR Server Ready (SBSA/SBBR) | SystemReady-ES Embedded System Ready
+| NVidia Jetson Xaver AGX | NVidia Jetson Xaver NX | NVidia Jetson nano 
+| Raspberry Pi 4 (4B/CM4) | Raspberry Po 3 (3B/3B+)| 96boards Rock960 Consumer Edition
+| Solid Run HummingBoard-M (i.MX8 based)| Pine64 Rockpro64 and Rock64 | Pine64 A64-LTS
+|=======================
 
 == ARMv7 architecture
 * KVM ARMv7 virtual machine booting using TianoCore UEFI firmware
