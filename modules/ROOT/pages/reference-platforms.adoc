@@ -1,6 +1,6 @@
 = Reference Platforms
 
-Fedora IoT supports the aarch64, ARMv8 and x86_64 architectures.
+Fedora IoT supports the aarch64 (arm64), ARMv7 (arm32) and x86_64 architectures.
 
 These reference platforms have been tested and are known to work with Fedora IoT, however their inclusion on this list does not necessarily constitute a release-blocking issue should a bug that is specific to the hardware below be found.
 
