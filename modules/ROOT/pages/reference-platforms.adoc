@@ -2,29 +2,58 @@
 
 Fedora IoT supports the aarch64 (arm64), ARMv7 (arm32) and x86_64 architectures.
 
+We only actively support UEFI plaforms so if your device doesn't boot with UEFI it probably won't work.
+
 These reference platforms have been tested and are known to work with Fedora IoT, however their inclusion on this list does not necessarily constitute a release-blocking issue should a bug that is specific to the hardware below be found.
 
 The currently tested reference devices are as follows:
 
-== aarch64 architecture
+== aarch64 (arm64) architecture
 
-[frame="none",grid="none"]
-|=======================
-| KVM based VM (TianoCore UEFI) | SystemReady-SR Server Ready (SBSA/SBBR) | SystemReady-ES Embedded System Ready
-| NVidia Jetson Xaver AGX | NVidia Jetson Xaver NX | NVidia Jetson nano 
-| Raspberry Pi 4 (4B/CM4) | Raspberry Po 3 (3B/3B+)| 96boards Rock960 Consumer Edition
-| Solid Run HummingBoard-M (i.MX8 based)| Pine64 Rockpro64 and Rock64 | Pine64 A64-LTS
-|=======================
+[cols="3*a",frame="none",grid="none",align="center"]
+|===
+| SystemReady-SR Server Ready (SBSA/SBBR)
+| SystemReady-ES Embedded System Ready
+| SystemReady-IR IoT Ready
 
-== ARMv7 architecture
-* KVM ARMv7 virtual machine booting using TianoCore UEFI firmware
-* Raspberry Pi 2 Model B, 3 Model B and 3 Model B+
+| KVM based VM (TianoCore UEFI)
+| NVidia Jetson Xaver AGX
+| NVidia Jetson Xaver NX
+
+| Raspberry Pi 4 (4B/CM4)
+| Raspberry Pi 3 (3B/3B+/3CM)
+| 96boards Rock960 Consumer Edition
+
+| Solid Run HummingBoard-M (i.MX8 based)
+| Pine64 Rockpro64 and Rock64
+| Pine64 A64-LTS and SoPine
+|===
+
+== ARMv7 (arm32) architecture
+
+[cols="3*a",frame="none",grid="none",align="center"]
+|===
+| KVM based VM (TianoCore UEFI)
+| SystemReady-IR IoT Ready
+| Raspberry Pi 3 (3B/3B+/3CM)
+
+| Raspberry Pi 2B
+|
+|
+|===
 
 == x86_64 architecture
-* KVM x86_64 virtual machine booting using TianoCore UEFI firmware
-* Compulabs Fitlet2
-* Up Squared
-* Generic Intel x86-64 products with UEFI
+
+[cols="3*a",frame="none",grid="none",align="center"]
+|===
+| KVM based VM (TianoCore UEFI)
+| Compulabs Fitlet2
+| Up Squared
+
+| Generic Intel x86-64 products with UEFI
+|
+|
+|===
 
 Other devices should work, but aren't being actively tested in the context of IoT.
 The list of supported reference devices will expand with time.
