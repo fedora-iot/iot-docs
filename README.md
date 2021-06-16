@@ -19,7 +19,7 @@ Should also work on macOS running the Docker CE.
 $ ./build.sh
 ```
 
-Please note the build script uses Docker to build the site in an insolated environment.
+Please note the build script uses Docker to build the site in an isolated environment.
 You might be asked for a root password in order to run it.
 
 The result will be in a `./public/` directory.
