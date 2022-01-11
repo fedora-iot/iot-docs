@@ -1,4 +1,4 @@
-site: 
+site:
   title: Local Preview
   start_page: iot:ROOT:index.adoc
 content:
@@ -10,11 +10,11 @@ ui:
     url: https://asamalik.fedorapeople.org/ui-bundle.zip
     snapshot: true
   default_layout: with_menu
-output: 
-  clean: true 
+output:
+  clean: true
   dir: ./public
-  destinations: 
-  - provider: archive 
+  destinations:
+  - provider: archive
 runtime:
   fetch: true
   cache_dir: ./cache
