@@ -9,7 +9,7 @@ Always reference the documentation of the board you have selected for assembly i
 
 === Network connection
 If support for your wireless network devices are not available in the Fedora image, it will have to be added after installation. 
-You will need a wired connection to complete the install of the xref:enabling-wireless.adoc[layered package].
+You will need a wired connection to complete the install of the xref:add-layered.adoc[layered package].
 
 For the Fedora disk images:
 
