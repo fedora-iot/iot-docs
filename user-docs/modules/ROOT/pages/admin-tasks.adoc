@@ -290,25 +290,30 @@ Some useful https://docs.ansible.com/ansible/latest/user_guide/modules.html[modu
 * Interact with HTTP and HTTPS web services: uri 
 * System: timezone, reboot
 
-There is no current activity on a https://github.com/ansible/ansible/issues/21185[request for an rpm-ostree module] so for now, you will have to use the command module to run rpm-ostree commands.
-Use the creates argument to see if it needs to be run: 
+There is a community supported module for rpm-ostree, https://docs.ansible.com/ansible/latest/collections/community/general/rpm_ostree_pkg_module.html#[community.general.rpm_ostree_pkg], which can be used to add and remove overlays.
+You must install the community.general collection to use this module.
+
+----
+$ ansible-galaxy collection install community.general
+----
+
+Then the module can be used like so:
 
 ----
 - name: install cockpit
-  command: >-
-    rpm-ostree install --idempotent --unchanged-exit-77
-      cockpit
-      cockpit-podman
-      cockpit-storaged
-      cockpit-ostree
-  register: ostree
-  failed_when: not ( ostree.rc == 77 or ostree.rc == 0 )
-  changed_when: ostree.rc != 77
+  community.general.rpm_ostree_pkg:
+    name:
+    - cockpit
+    - cockpit-podman
+    - cockpit-storaged
+    - cockpit-ostree
+    state: present
+  register: result
 
 - name: reboot if new stuff was installed
   reboot:
     reboot_timeout: 300
-  when: ostree.rc != 77
+  when: result.changed
 
 - name: start and enable cockpit
   service:
@@ -323,5 +328,3 @@ Use the creates argument to see if it needs to be run:
     immediate: yes
     state: enabled
 ----
-
-
