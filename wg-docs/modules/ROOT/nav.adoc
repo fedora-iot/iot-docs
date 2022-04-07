@@ -1,0 +1,5 @@
+* xref:index.adoc[Welcome]
+* xref:prd.adoc[Product Requirement Doc]
+* xref:iot::index.adoc[User Docs]
+* Historical docs
+** xref:edition-promotion.adoc[Edition Promotion]
