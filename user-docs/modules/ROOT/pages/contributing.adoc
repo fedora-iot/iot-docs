@@ -13,7 +13,7 @@ The provisioning portal is a project called Zezere, you can report bugs and file
 == Communications
 
 We primarily communicate by the https://lists.fedoraproject.org/admin/lists/iot.lists.fedoraproject.org/[Fedora IoT mailing list] and the #fedora-iot IRC channel on https://libera.chat/[Libera.Chat].
-Check the https://apps.fedoraproject.org/calendar/IoT/[IoT calendar] for meeting times and locations.
+Check the https://calendar.fedoraproject.org/IoT/[IoT calendar] for meeting times and locations.
 
 == Contributing to Fedora IoT
 
