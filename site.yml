@@ -3,8 +3,12 @@ site:
   start_page: iot:ROOT:index.adoc
 content:
   sources:
-   - url: .
-     branches: HEAD
+    - url: .
+      branches: HEAD
+      start_path: user-docs 
+    - url: .
+      branches: HEAD
+      start_path: wg-docs
 ui:
   bundle:
     url: https://asamalik.fedorapeople.org/ui-bundle.zip

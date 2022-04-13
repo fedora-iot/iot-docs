@@ -21,5 +21,3 @@
 ** xref:admin-tasks.adoc[Administration Tasks]
 * xref:contributing.adoc[Contributing & Reporting Bugs]
 * xref:reference-platforms.adoc[Reference Platforms]
-* xref:prd.adoc[Product Requirement Doc]
-* xref:edition-promotion.adoc[Edition Promotion]
