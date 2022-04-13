@@ -1,4 +1,6 @@
 = Contribute to Fedora IoT Edition
+:url-irc: https://web.libera.chat/?channel=#fedora-iot
+:url-matrix: https://matrix.to/#/#iot:fedoraproject.org
 
 Fedora IoT is made up of many components, including a lot that are part of the main Fedora project, so there is a number of places where you may contribute. This is by no means a canonical source for contribution, if you don't see an area where which seems to match please see the communications section for general ways to engage with us to get answers to your questions.
 
@@ -12,7 +14,7 @@ The provisioning portal is a project called Zezere, you can report bugs and file
 
 == Communications
 
-We primarily communicate by the https://lists.fedoraproject.org/admin/lists/iot.lists.fedoraproject.org/[Fedora IoT mailing list] and the https://web.libera.chat/?channel=#fedora-iot[#fedora-iot IRC channel on Libera.Chat] (bridged to https://matrix.to/#/#iot:fedoraproject.org[#iot on chat.fedoraproject.org]).
+We primarily communicate by the https://lists.fedoraproject.org/admin/lists/iot.lists.fedoraproject.org/[Fedora IoT mailing list] and the {url-irc}[#fedora-iot IRC channel on Libera.Chat] (bridged to {url-matrix}[#iot on chat.fedoraproject.org]).
 Check the https://calendar.fedoraproject.org/IoT/[IoT calendar] for meeting times and locations.
 
 == Contributing to Fedora IoT
