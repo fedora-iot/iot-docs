@@ -15,5 +15,8 @@ Check the https://calendar.fedoraproject.org/IoT/[IoT calendar] for meeting time
 There's a number of components that make up Fedora IoT.
 The upstream source components for general projects like the Zezere and Greenboot reside on the https://github.com/fedora-iot/[Fedora IoT GitHub page].
 
-For the source for Fedora specific things like compose configs and docs we have the https://pagure.io/group/fedora-iot[Fedora IoT] Pagure organisation which contains the various git repositories for building Fedora IoT.
-This includes the https://pagure.io/fedora-iot/issues[core issue tracker].
+For the source for Fedora specific things like compose configs, we have the https://pagure.io/group/fedora-iot[Fedora IoT] Pagure organisation which contains the various git repositories for building Fedora IoT.
+
+Docs and upstream component sources are on https://github.com/fedora-iot[GitHub].
+
+Bugs are tracked in Red Hat Bugzilla using the https://bugzilla.redhat.com/show_bug.cgi?id=IoT[IoT tracker bug] for bugs reported against other components and the https://bugzilla.redhat.com/buglist.cgi?component=IoT&product=Fedora[IoT compoenent] for IoT-specific issues.
