@@ -1,8 +1,8 @@
 = Container Support
 
-The Fedora IoT images have excellent support for container-focused workflows. 
-Containers allow you to separate core OS updates from application updates as well as test and deploy different versions of applications. 
-The `podman` container engine is light weight and ready for you to download or create containers for your home assistant, industrial gateways, or data storage and analytics.
+Fedora IoT has excellent support for container-focused workflows.
+Containers provide for separation of OS updates from application updates, as well as allow testing and deployment of  different versions of applications.
+Fedora IoT uses podman, a daemonless container engine to develop, download, manage, and run containers to support your home assistant, industrial gateways, or data storage and analytics.
 
 With `podman`, images and containers can be managed and used by a non-privileged user.
 Commands are very similar to those used with `docker`.
@@ -37,7 +37,7 @@ Show the options for the pull command:
 $ podman pull --help
 ----
 
-Some commands have other sub commands. 
+Some commands have other sub commands.
 Show the options for the image command:
 
 ----
@@ -51,11 +51,10 @@ Show the options for listing images:
 $ podman image ls --help
 ----
 
-https://podman.io/[Podman] has a lot of well written documentation and articles. 
+https://podman.io/[Podman] has a lot of well written documentation and articles.
 You can find a number of them at the following links:
 
 
 * https://github.com/projectatomic/libpod/blob/master/docs/tutorials/podman_tutorial.md[getting started tutorial]
 * https://github.com/projectatomic/libpod/blob/master/transfer.md[docker to podman command mapping]
 * https://medium.com/cri-o[Podman news and releases]
-

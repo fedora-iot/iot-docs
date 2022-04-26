@@ -1,11 +1,11 @@
-= Updating Applications
+= Updating Packages and Applications
 
 == Updating Layered Packages
 
 Packages added to the Fedora IoT image with `rpm-ostree install` will be updated along with the base operating system when `rpm-ostree upgrade` is run as described in xref:applying-updates-UG.adoc[Updates and Rollbacks].
 
-The `rpm-ostree` utility uses repositories configured in the /etc/yum.repos.d directory. 
-The Fedora IoT image is configured to check for packages from several Fedora repositories including the fedora-updates and fedora-updates-modular repositories. 
+The `rpm-ostree` utility uses repositories configured in the /etc/yum.repos.d directory.
+The Fedora IoT image is configured to check for packages from several Fedora repositories including the fedora-updates and fedora-updates-modular repositories.
 
 In Fedora, before updates are generally available, they are tested in the fedora-updates-testing and fedora-updates-testing-modular repositories.
 The configuration files and gpg keys for these repositories are included in the Fedora IoT image but are not enabled by default.
@@ -14,7 +14,7 @@ The configuration files and gpg keys for these repositories are included in the 
 To enable the testing repos, edit the configuration files in /etc/yum.repos.d and for each desired repository, change the enabled= line to `enabled=1`
 
 ----
-$ cat /etc/yum.repos.d/fedora-updates-testing-modular.repo 
+$ cat /etc/yum.repos.d/fedora-updates-testing-modular.repo
 [updates-testing-modular] <1>
 name=Fedora Modular $releasever - $basearch - Test Updates
 failovermethod=priority
@@ -42,18 +42,16 @@ You can xref:add-repos.adoc[add additional repository] configuration files to en
 
 == Updating Containers
 
-By placing applications in containers, the host operating system can be updated quickly without changing versions inside the container. 
+By placing applications in containers, the host operating system can be updated quickly without affecting package versions inside the container.
 But what about when the fix needs to be applied to packages that are a part of the container?
 
 Containers are supposed to be lightweight, interchangeable, and ephemeral.
-When they are stopped or in need of an update, they are removed and a new container is deployed or built and deployed.
+When an container is in need of an update, it is removed and a new container is deployed in its place.
 
-If your containers are built from another base image, it is your responsibility to monitor that base image for updates and to build your containers using the updated image.
+If your containers are built from another base image, you need to monitor that base image for updates and to rebuild your containers using the updated image.
 
 The industry has a variety of services available to assist with vulnerability scanning, update notifications, build systems, and other CD/CI tools for containers.
 
-Patching inside of a container does not scale well. 
-Instead, build a new container and then deploy that container to many devices. 
+It's a good practice to not patch inside of a container as it does not scale well.
+Instead, build a new container and then deploy that container to many devices.
 A container available in a shared registry and tagged as 'latest' will be used the next time podman run requests that image.
-
-

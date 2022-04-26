@@ -12,7 +12,7 @@ $ podman search homeassistant
 
 The registries which will be searched are configured in the /etc/containers/registry.conf file.
 
-The resulting name will include both the registry location and the name of the image.
+The search result will include both the registry location and the name of the image.
 
 * The registry name may include a port number.
 * The image name consists of USER/REPO. The user can be an individual, team, or company that uploads the images to the registry.
@@ -21,7 +21,7 @@ The resulting name will include both the registry location and the name of the i
 
 // Add reminder on naming conventions.
 
-The https://github.com/containers/skopeo[`skopeo`] command is a utility to work with images in many different container environments. 
+The https://github.com/containers/skopeo[`skopeo`] command is a utility to work with images in many different container environments.
 It was created to view information in remote registries and is now a command and library for copying images with different transports.
 It is used to manage container images and image storage remotely and locally and all without requiring root.
 It can also pass authentication credentials when required by the repository.
@@ -35,7 +35,7 @@ $ skopeo inspect docker://registry.fedoraproject.org/fedora-minimal
 
 == Manage Local Images
 
-When you run a container, the image is first downloaded to the local system. 
+When you run a container, the image is first downloaded to the local system.
 It can be helpful to go ahead and download an image as a separate command.
 
 The default is to pull the latest image from the default registry:
@@ -60,21 +60,21 @@ docker.io/homeassistant/raspberrypi3-homeassistant   latest    3c74046ca2a7   3 
 docker.io/library/fedora                             latest    8b38e3af7237   4 weeks ago   315MB
 ----
 
-The same output is show with `podman image ls`. 
+The same output is show with `podman image ls`.
 Note the singular 'image' command before the additional 'ls' command.
-If you have a lot of images, you may want to specify filters or sort by a value other than the creation date. 
+If you have a lot of images, you may want to specify filters or sort by a value other than the creation date.
 
 As a user, the local images will be stored under the `~/.local/share/containers/` directory.
-Each user has their own namespace so these are separate from containers run as root. 
+Each user has their own namespace so these are separate from containers run as root.
 Listing the images available to root displays a different or empty list:
 
 ----
 $ sudo podman images
 ----
 
-Some actions can not be done with rootless containers. 
-Some devices and volumes will require that you pull and run containers in the root namespace. 
-The current podman v1.0 also requires root for port publishing. 
+Some actions can not be done with rootless containers.
+Some devices and volumes will require that you pull and run containers in the root namespace.
+The current podman v1.0 also requires root for port publishing.
 The next version will allow rootless port publishing.
 
 Like remote images, local images can also be inspected:
@@ -118,21 +118,21 @@ The exited containers are kept so that any data, including logs, can be investig
 Options on the run command can change the behavior of launching a container:
 
 ----
-$ podman run -it \ <1> 
+$ podman run -it \ <1>
 > --name demo \ <2>
-> --rm \ <3> 
+> --rm \ <3>
 > fedora /bin/bash <4>
 bash-4.4#  <5>
 ----
 <1> The -it options enable interactive mode and allocates a pseudo-TTY.
 <2> You can name your container. Without this option, a random name will be generated.
-<3> The --rm option causes the container to be deleted when it is terminated. This preserves space and allows a new container to be started with the same name. 
+<3> The --rm option causes the container to be deleted when it is terminated. This preserves space and allows a new container to be started with the same name.
 <4> The command to run. The command must be in the image. Not all images include bash.
 <5> The /bin/bash process is running in the foreground. When you exit the shell, the container will terminate.
 
 == Publishing Ports
 
-If your application listens on the network, you will need to map the container port to a local port on your device. 
+If your application listens on the network, you will need to map the container port to a local port on your device.
 In the current version, publishing ports requires root so the image must be available in the root namespace.
 
 Add the `-p` option when you launch the container:
@@ -143,14 +143,14 @@ $ sudo podman run -p 127.0.0.1:8080:80 --name demo mydemohttp:latest
 
 You can then connect to your application via 127.0.0.1:8080
 
-The format is `ip:hostPort:containerPort | ip::containerPort | hostPort:containerPort | containerPort`. 
+The format is `ip:hostPort:containerPort | ip::containerPort | hostPort:containerPort | containerPort`.
 
 Other options for publishing ports and many other run options are available and well documented in the podman-run man page.
 
 == Mapping a local directory
 
 You may want to have your application write logs or collect data to a directory on the host.
-Some containers expect that customized configuration files are on the host device. 
+Some containers expect that customized configuration files are on the host device.
 In both cases, you can create a bind mount with the `--volume` option.
 Specify the host directory, the mount point inside the container, and any mount options.
 
@@ -162,7 +162,7 @@ $ podman run -d --name="home-assistant" -v /home/pi/homeassistant:/config -v /et
 
 == Mapping a local device
 
-The `--device` option will add a host device to the container. 
+The `--device` option will add a host device to the container.
 Specify the host device name and optionally, the device name on the container and any permissions.
 Some devices, like the GPIO device, will require root.
 
@@ -212,5 +212,3 @@ You can also remove an image with the `image` command:
 ----
 $ podman image rm registry.fedoraproject.org/fedora-minimal:rawhide
 ----
-
-

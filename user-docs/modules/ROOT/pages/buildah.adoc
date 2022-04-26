@@ -1,7 +1,7 @@
-= Using buildah
+= Build a Container with Buildah
 
-Buildah is a tool that facilitates building OCI container images. 
-You can build images from scratch, from a container pulled from a registry, or using a Dockerfile. 
+Buildah is a tool that facilitates building OCI container images.
+You can build images from scratch, from a container pulled from a registry, or using a Dockerfile.
 
 To use buildah in the Fedora IoT you will need to install the layered packages:
 
@@ -23,6 +23,13 @@ Add packages to the working container:
 ----
 $ buildah run fedora-working-container dnf install httpd -y
 ----
+
+Create a working directory with some content for a web server:
+
+----
+$ mkdir demo-httpd && cd demo-httpd && echo 'sample container' > index.html
+----
+
 
 Copy local files into the working container:
 
@@ -55,8 +62,8 @@ You can run now the container locally with podman:
 $ podman run fedora-myhttpd
 ----
 
-To make the image available on other devices, push the image to a registry. 
-The default image has a tag of 'latest'. 
+To make the image available on other devices, push the image to a registry.
+The default image has a tag of 'latest'.
 Use `buildah tag` to add additional tags to the image before pushing to a repository.
 
 To push the image to a local Docker registry:
@@ -83,5 +90,3 @@ Learn more about using buildah from:
 
 * Fedora Magazine: https://fedoramagazine.org/daemon-less-container-management-buildah/[How to build container images with Buildah (2018)]
 * buildah.io: https://github.com/containers/buildah/tree/master/docs/tutorials[Tutorials]
-
-
