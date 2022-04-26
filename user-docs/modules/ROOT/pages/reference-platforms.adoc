@@ -12,45 +12,46 @@ The currently tested reference devices are as follows:
 
 [cols="3*a",frame="none",grid="none",align="center"]
 |===
-| SystemReady-SR Server Ready (SBSA/SBBR)
-| SystemReady-ES Embedded System Ready
-| SystemReady-IR IoT Ready
+| image::ARM1605_SystemReadyStandardStamplogo_SR_V1.png[caption="",title="SystemReady-SR Server Ready (SBSA/SBBR)"]
+| image::ARM1605_SystemReadyStandardStamplogo_ES_V1.png[caption="",title="SystemReady-ES Embedded System Ready"]
+| image::ARM1605_SystemReady_logo_IR_V1.png[caption="",title="SystemReady-IR IoT Ready"]
 
-| KVM based VM (TianoCore UEFI)
-| NVidia Jetson Xaver AGX
-| NVidia Jetson Xaver NX
+| image::tianocore-logo.svg[align="center",caption="",title="KVM based VM (TianoCore UEFI)"]
+| image::nvidia-jetson-agx-xavier-devkit.png[,200,200,caption="",title="NVidia Jetson Xaver AGX"]
+| image::nvidia-jetson-xavier-nx-devkit.png[,200,200,caption="",title="NVidia Jetson Xaver NX"]
 
-| Raspberry Pi 4 (4B/CM4)
-| Raspberry Pi 3 (3B/3B+/3CM)
-| 96boards Rock960 Consumer Edition
+| image::raspberry-pi4.png[,200,200,caption="",title="Raspberry Pi 4 (4B/CM4)"]
+| image::raspberry-pi3b.png[,200,200,caption="",title="Raspberry Pi 3 (3B/3B+/3CM)"]
+| image::ROCK960_Front_SD.png[,300,200,caption="",title="96boards Rock960 Consumer Edition"]
 
-| Solid Run HummingBoard-M (i.MX8 based)
-| Pine64 Rockpro64 and Rock64
-| Pine64 A64-LTS and SoPine
+| image::hummingboard-pulse.png[,200,200,caption="",title="Solid Run HummingBoard-M (i.MX8 based)"]
+| image::ROCKPro64-SBC-3.jpg[,190,200,caption="",title="Pine64 Rockpro64 and Rock64"]
+| image::PINEA64_LTS_board_front.jpg[,300,200,caption="",title="Pine64 A64-LTS and SoPine"]
 |===
 
 == ARMv7 (arm32) architecture
 
 [cols="3*a",frame="none",grid="none",align="center"]
 |===
-| KVM based VM (TianoCore UEFI)
-| SystemReady-IR IoT Ready
-| Raspberry Pi 3 (3B/3B+/3CM)
+| image::ARM1605_SystemReady_logo_IR_V1.png[caption="",title="SystemReady-IR IoT Ready"]
+| image::tianocore-logo.svg[align="center",caption="",title="KVM based VM (TianoCore UEFI)"]
+| image::raspberry-pi3b.png[,200,200,caption="",title="Raspberry Pi 3 (3B/3B+/3CM)"]
 
-| Raspberry Pi 2B
-|
-|
+
+| image::Pi2B-1.2_1500.jpg[,200,200,caption="",title="Raspberry Pi 2B"]
+| 
+| 
 |===
 
 == x86_64 architecture
 
 [cols="3*a",frame="none",grid="none",align="center"]
 |===
-| KVM based VM (TianoCore UEFI)
-| Compulabs Fitlet2
-| Up Squared
+| image::tianocore-logo.svg[align="center",caption="",title="KVM based VM (TianoCore UEFI)"]
+| image::fitlet2.png[,200,200,caption="",title="Compulabs Fitlet2"]
+| image::up_squared.png[,200,200,caption="",title="Up Squared"]
 
-| Generic Intel x86-64 products with UEFI
+| image::intel-x86.png[caption="",title="Generic Intel x86-64 products with UEFI"]
 |
 |
 |===
