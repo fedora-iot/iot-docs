@@ -5,7 +5,6 @@
 ** xref:physical-device-setup.adoc[Setting up a Physical Device]
 ** xref:ignition.adoc[Setting up a Device with Zezere]
 ** xref:network-access.adoc[Network Access]
-** xref:applying-updates-GS.adoc[Applying Updates]
 * xref:user-guide.adoc[User Guide]
 ** xref:applying-updates-UG.adoc[Updates and Rollbacks]
 ** xref:adding-layered.adoc[Layered Packages]
