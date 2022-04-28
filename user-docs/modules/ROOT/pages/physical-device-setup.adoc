@@ -14,7 +14,6 @@ You will need a wired connection to complete the install of the xref:add-layered
 For the Fedora disk images:
 
 * The Raspberry Pi WiFi is supported in the base image.
-* The `wcn36xx-firmware` for the Dragonboard will need to be added later. 
 
 === SD Card
 The Fedora IoT image is currently 4GB in size.
@@ -102,17 +101,11 @@ For the Raspberry Pi Model 3 B/B+ use:
 --target=rpi3
 ----
 
-For the Dragonboard410c use:
-
-----
---target=dragonboard410c
-----
-
 Provide the correct path for the downloaded image and the microSD media.
 Replace `XXX` with the location of your media. It will be `sdX` or `mmcblkX` depending on hardware:
 
 ----
-$ sudo arm-image-installer --image=Fedora-IoT-[version].raw.xz --target=dragonboard410c --media=/dev/XXX
+$ sudo arm-image-installer --image=Fedora-IoT-[version].raw.xz --target=rpi3 --media=/dev/XXX
 ----
 
 Other options of interest:
