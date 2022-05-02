@@ -1,7 +1,7 @@
 = Updates and Rollbacks
 :toc:
 
-NOTE: The latest image builds for x86_64 and aarch64 are available at https://download.fedoraproject.org/pub/alt/iot/[here]. 
+NOTE: The latest image builds are available https://download.fedoraproject.org/pub/alt/iot/[here].
 
 == Upgrade to the Latest Image
 Display the status of the currently running deployment:
