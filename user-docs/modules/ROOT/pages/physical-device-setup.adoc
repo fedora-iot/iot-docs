@@ -23,7 +23,6 @@ A faster speed class is better for writes but the trade off is slower read speed
 Documentation for your board may also recommend specific SD Card choices as well as required physical sizes for each device.
 
 * Raspberry Pi discusses card size and speed class in their https://www.raspberrypi.org/documentation/installation/sd-cards.md[SD Card Documentation].
-* The 96Boards specification is simply that all boards have a microSDHC socket present.
 
 WARNING: The following procedures will overwrite everything on the micro SD card. Be sure to backup any data before continuing!
 
