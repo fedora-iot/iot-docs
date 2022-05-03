@@ -153,7 +153,7 @@ $ nmcli device wifi help
 == Securing remote access
 
 The root account is locked by default with no password set. 
-The SSH daemon is configured to allow root access so if the image was created with an ssh key added, or if a password is set for the root account, then root can still access the system remotely.
+The SSH daemon is configured with password authentication disabled for the root account and only allows access remotely if an ssh key has been added.
 
 Disable remote ssh access for root by editing the following line in the  `/etc/ssh/sshd_config` file:
 
@@ -161,7 +161,13 @@ Disable remote ssh access for root by editing the following line in the  `/etc/s
 PermitRootLogin no
 ----
 
-* Fedora Administration Guide: 
+To disable password authentication for all users, edit `/etc/ssh/sshd_config` file and add the following:
+
+----
+PasswordAuthentication no
+----
+
+* For additional information, visit the Fedora Administration Guide: 
   https://docs.fedoraproject.org/en-US/fedora/latest/system-administrators-guide/infrastructure-services/OpenSSH/[OpenSSH]
 
 View the default firewall configuration:
