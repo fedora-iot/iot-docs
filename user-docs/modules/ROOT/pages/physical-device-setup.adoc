@@ -109,7 +109,7 @@ $ sudo arm-image-installer --image=Fedora-IoT-[version].raw.xz --target=rpi3 --m
 
 Other options of interest:
 
-* The `--addkey=` option will place a specified ssh public key into the `/root/authorized_keys` file.
+* The `--addkey=` option will place a specified ssh public key into the `/root/authorized_keys` file (the option expects the path to the key).
 * The `--resizefs` options will expand the `/sysroot` partition to use all remaining space on the microSD card.
 
 ////
