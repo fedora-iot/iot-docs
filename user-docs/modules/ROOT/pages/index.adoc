@@ -3,7 +3,7 @@
 Welcome to Fedora Internet of Things homepage. Fedora Internet of Things is a Fedora Edition to provide a strong foundation for IoT ecosystems. Whether you're working on a project at home, industrial gateways, smart cities or analytics with AI/ML, Fedora IoT can provide a trusted open source platform to build on. Fedora IoT rolling releases help you keep your ecosystem up-to-date.
 
 == Why use Fedora IoT?
-The operating system (OS) for IoT systems needs to be immutable and image based, where image is fully tested centrally and signed before being deployed at scale to IoT systems. As these IoT systems are often located remotely, the OS should support atomic updates so nothing changes until the device is rebooted and rollback capability so it is easy to recover remotely if there is a failure during upgrade.
+The operating system (OS) for IoT systems needs to be immutable and image based, where the image is fully tested centrally and signed before being deployed at scale to IoT systems. As these IoT systems are often located remotely, the OS should support atomic updates so nothing changes until the device is rebooted and rollback capability so it is easy to recover remotely if there is a failure during upgrade.
 
 The Fedora IoT images work with https://rpm-ostree.readthedocs.io/en/latest/[rpm-ostree], a hybrid image/package system. It supports package layering, which allows installation of RPMs for additional hardware support or applications. The GPG signed image based deployments scale well to very large numbers of clients. Updates are atomic with easy rollback capability.
 
