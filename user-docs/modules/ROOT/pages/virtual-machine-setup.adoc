@@ -1,6 +1,15 @@
 = Setting up a Virtual Machine
 :toc:
 
+== Enable UEFI support for KVM virtual machines
+Fedora IoT requires UEFI, take a look at this wiki page on how to make it available for your VM: https://docs.fedoraproject.org/en-US/quick-docs/uefi-with-qemu/
+
+Once everything's set, make sure you enable UEFI for the new VM:
+
+- If using virt-install, add the `--boot uefi` flag
+
+- If using Virtual Machine Manager, check `Customize configuration before install` before finishing the initial setup -> Overview -> Firmware: UEFI -> Begin Installation
+
 == Setup with QEMU/KVM Tools
 The images generated are compressed raw disk images. They can be utilized both on physical devices and used as disks on a virtualization platform. The images work without change on QEMU/KVM.
 
