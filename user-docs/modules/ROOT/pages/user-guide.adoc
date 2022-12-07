@@ -8,7 +8,7 @@ image::iot-fedora.svg[SoC board]
 
 == Supported Platforms
 
-Fedora IoT supports the x86_64, aarch64 and ARMv7 architectures.
+Fedora IoT supports the x86_64, aarch64 and ARMv7 architectures. The ARMv7 architecture has been deprecated, with support ending with Fedora 36 in May 2023.
 
 We have a page covering the currently tested xref:reference-platforms.adoc[Reference Platforms].
 Other devices supported by Fedora on x86_64, aarch64 or ARMv7 should work just fine but haven't been widely tested in the IoT context so your milage may vary.
