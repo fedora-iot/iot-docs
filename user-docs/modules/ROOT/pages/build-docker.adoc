@@ -248,7 +248,7 @@ To extract the image to a local directory in a docker format:
 $ podman push quay.io/testuser/fedora-myhttpd dir:/tmp/fedora-myhttpd
 ----
 
-For more exporting options, see the https://github.com/containers/libpod/blob/master/docs/source/markdown/podman-push.1.md[podman-push] man page.
+For more exporting options, see the https://github.com/containers/libpod/blob/main/docs/source/markdown/podman-push.1.md[podman-push] man page.
 
 
 
