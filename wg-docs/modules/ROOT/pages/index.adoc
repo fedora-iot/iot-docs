@@ -19,4 +19,4 @@ For the source for Fedora specific things like compose configs, we have the http
 
 Docs and upstream component sources are on https://github.com/fedora-iot[GitHub].
 
-Bugs are tracked in Red Hat Bugzilla using the https://bugzilla.redhat.com/show_bug.cgi?id=IoT[IoT tracker bug] for bugs reported against other components and the https://bugzilla.redhat.com/buglist.cgi?component=IoT&product=Fedora[IoT compoenent] for IoT-specific issues.
+Bugs are tracked in Red Hat Bugzilla using the https://bugzilla.redhat.com/show_bug.cgi?id=IoT[IoT tracker bug] for bugs reported against other components and the https://bugzilla.redhat.com/buglist.cgi?component=IoT&product=Fedora[IoT component] for IoT-specific issues.
