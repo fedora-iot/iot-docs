@@ -35,16 +35,17 @@ To learn more about the libvirt family of tools used in Fedora, visit the https:
 
 QEMU (on Linux hosts only) also supports user mode emulation. In this mode, QEMU can launch Linux processes compiled for one CPU on another CPU. Learn more in the https://docs.fedoraproject.org/en-US/quick-docs/qemu/[How to use QEMU] section of the Fedora Documentation.
 
-== Setup with qemu-kvm
+== Setup with virt-install
 
-For fast iterations on the raw image, you can use `qemu-kvm`:
+For fast iterations on the raw image, you can use `virt-install`:
 
 ----
 $ xz -d Fedora-IoT-[version].raw.xz
 $ qemu-img convert -f raw Fedora-IoT-[version].raw -O qcow2 Fedora-IoT-[version].qcow2
-$ qemu-kvm -m 2048 -cpu host -snapshot -bios /usr/share/OVMF/OVMF_CODE.fd \
-        -drive if=virtio,file=Fedora-IoT-[version].qcow2 \
-        -nic user,model=virtio,hostfwd=tcp::2222-:22
+$ virt-install --name FedoraIoT --memory 2048 --vcpus 2 --boot uefi \
+	--disk /path/to/Fedora-IoT-[version].qcow2 \
+	--import --os-variant fedora[version]
+
 ----
 
 == Setup with GNOME Boxes
