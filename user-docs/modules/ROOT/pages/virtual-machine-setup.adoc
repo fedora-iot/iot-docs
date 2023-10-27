@@ -68,6 +68,20 @@ Image should be modified with an outline around the "Select a file" option
 When your image begins booting, continue with the xref:ignition.adoc[Zezere] instructions.
 
 Alternately, you can install a new box from the ISO image.
+
+image::gnome-boxes-install-00.png[GNOME Boxes New Virtual Machine]
+    
+When installing from the ISO image, after selecting the ISO from your filesystem, you'll see that the Operating System has not been found.
+
+image::gnome-boxes-install-01.png[GNOME Boxes Selecting Fedora]
+
+To continue with the installation, type 'Fedora' in the 'Search for an operating system...' box and select the 'Fedora' option.
+
+image::gnome-boxes-install-02.png[GNOME Boxes Selecting UEFI]
+
+Once the Fedora Operating System option has been selected, an option to select the Firmware type will appear, select 'UEFI' and continue with the Virtual Machine creation.
+
+    
 ////
 Link to new (still to be created) page to show ISO install.
 SilverBlue has an example with lots of screenshots for the F28 Anaconda install.
