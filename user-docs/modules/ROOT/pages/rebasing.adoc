@@ -55,13 +55,10 @@ List the remote reference branches:
 ----
 $ ostree remote refs fedora-iot
 fedora-iot:fedora/stable/aarch64/iot
-fedora-iot:fedora/stable/armhfp/iot
 fedora-iot:fedora/stable/x86_64/iot
 fedora-iot:fedora/devel/aarch64/iot
-fedora-iot:fedora/devel/armhfp/iot
 fedora-iot:fedora/devel/x86_64/iot
 fedora-iot:fedora/rawhide/aarch64/iot
-fedora-iot:fedora/rawhide/armhfp/iot
 fedora-iot:fedora/rawhide/x86_64/iot
 ----
 
@@ -128,7 +125,7 @@ $ sudo ostree remote delete fedora-iot
 Currently there are three branches, the stable, develop, and rawhide branches. Each branch corresponds to the Fedora release that's the latest stable (stable), rawhide and if Fedora currently has a branched version that is undergoing stablisation in preparaiton for release (devel).
 
 You need to specify the architecture as part of the branch option. 
-At the moment the options are aarch64, armhfp or x86_64.
+At the moment the options are aarch64 or x86_64.
 
 To rebase to stable:
 
