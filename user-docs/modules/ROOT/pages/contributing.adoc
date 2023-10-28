@@ -15,7 +15,7 @@ There's details on how to do that in the xref:quick-docs::howto-file-a-bug.adoc[
 If you know which component the bug is in, file a bug in https://bugzilla.redhat.com[Red Hat Bugzilla] against the _Fedora_ product and the component in question.
 Set the bug to block the https://bugzilla.redhat.com/show_bug.cgi?id=IoT[IoT Bugzilla tracker].
 
-If you don't know which component to use, you can file a bug against the https://bugzilla.redhat.com/enter_bug.cgi?component=IoT&product=Fedora&version=rawhide[IoT component].
+If you don't know which component to use or would to request a new package or feature be added to Fedora IoT,  you can file an issue in the https://github.com/fedora-iot/iot-distro/issues/new/choose[IoT Distro] Issue tracker in Github.
 
 The provisioning portal is a project called Zezere.
 You can report bugs and file feature requests on the https://github.com/fedora-iot/zezere[Zezere project page].
