@@ -21,6 +21,6 @@ The https://podman.io/[podman] daemon is light weight and ready for you to downl
 
 If you are looking for a graphical desktop environment based on OSTree and designed for developers, look at https://silverblue.fedoraproject.org/[Fedora Silverblue].
 
-If you are looking for a traditional dnf based operating system for your ARM device, look at https://arm.fedoraproject.org/[Fedora ARM]
+If you are looking for a traditional dnf based operating system for your ARM device, visit https://fedoraproject.org/[Fedora].
 
 If you are looking for a lightweight yet powerful and scalable core OS for your Internet of Things project, you came to the right place! https://iot.fedoraproject.org/[Download the images now]!
