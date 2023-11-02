@@ -105,11 +105,14 @@ NOTE: More information about the `rpm-ostree` command can be found in the upstre
 == Automatic updates
 
 A `rpm-ostreed` service is available to monitor for upgrades automatically.
-This is configured in the `/etc/rpm-ostreed.conf` file:
 
-* The default policy is 'none' which disables automatic updates.
+To enable automated updates edit the `/etc/rpm-ostreed.conf` file. The options
+available are as follow:
+
+* The 'none' option disables automatic updates. This is the default policy.
 * The 'check' option downloads enough metadata to display available updates with `rpm-ostree status`.
-* The 'stage' option, which is still new and experimental, downloads and unpacks the update which will be finalized on a reboot.
+* The 'stage' option downloads, unpacks and stages the update which will be finalized on a reboot.
+* The 'apply' option is the same as stage but also initiates the reboot to the new version.
 
 ----
 # cat /etc/rpm-ostreed.conf 
@@ -120,6 +123,19 @@ This is configured in the `/etc/rpm-ostreed.conf` file:
 [Daemon]
 AutomaticUpdatePolicy=check
 #IdleExitTimeout=60
+----
+
+Next we need to enable the appropriate services:
+----
+systemctl reload rpm-ostreed
+systemctl enable rpm-ostreed-automatic.timer --now
+----
+
+We should now be able to see the state of automatic updates in the status:
+----
+# rpm-ostree status
+State: idle
+AutomaticUpdates: stage; rpm-ostreed-automatic.timer: last run 4min 22s ago
 ----
 
 The rpm-ostreed-automatic.service and rpm-ostreed-automatic.timer control frequency of checks and upgrades.
