@@ -10,7 +10,7 @@ If you're interested in joining the Fedora IoT Working Group, check out the xref
 == Reporting IoT bugs
 
 If you are seeing issues with software that is included in the Fedora IoT Edition that is not necessarily specific to IoT the bug should be reported against the specific Fedora component.
-There's details on how to do that in the xref:quick-docs::howto-file-a-bug.adoc[how to file a bug] doc.
+There's details on how to do that in the https://docs.fedoraproject.org/en-US/quick-docs/bugzilla-file-a-bug/[how to file a bug] doc.
 
 If you know which component the bug is in, file a bug in https://bugzilla.redhat.com[Red Hat Bugzilla] against the _Fedora_ product and the component in question.
 Set the bug to block the https://bugzilla.redhat.com/show_bug.cgi?id=IoT[IoT Bugzilla tracker].
