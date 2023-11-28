@@ -8,9 +8,9 @@ Historical information is included below for reference, although it is now incre
 [cols="8,2,8",options="header"]
 |=====
 | Requirement | Status | Additional information
-| The candidate Edition must be backed by a team that holds regular public meetings | https://docs.fedoraproject.org/en-US/iot/contributing/#_communications[DONE] | 
-| The candidate Edition must get trademark approval from the Fedora Council | https://pagure.io/Fedora-Council/tickets/issue/277[DONE] | 
-| The candidate Edition must have a product requirements document | https://docs.fedoraproject.org/en-US/iot/prd/[DONE] | 
+| The candidate Edition must be backed by a team that holds regular public meetings | https://docs.fedoraproject.org/en-US/iot/contributing/#_communications[DONE] |
+| The candidate Edition must get trademark approval from the Fedora Council | https://pagure.io/Fedora-Council/tickets/issue/277[DONE] |
+| The candidate Edition must have a product requirements document | https://docs.fedoraproject.org/en-US/iot/prd/[DONE] |
 |=====
 
 === Process
@@ -20,7 +20,7 @@ Historical information is included below for reference, although it is now incre
 [cols="8,2,8",options="header"]
 |====
 | **Requirement** | **Status** | **Additional information**
-| Review test cases and release criteria with QA | https://fedoraproject.org/wiki/Category:IoT_Acceptance_Test_Cases[DONE] | 
+| Review test cases and release criteria with QA | https://fedoraproject.org/wiki/Category:IoT_Acceptance_Test_Cases[DONE] |
 | Work with Release Engineering | DONE | Composes are being produced
 |====
 
@@ -61,7 +61,7 @@ Historical information is included below for reference, although it is now incre
 *** Content from IoT team
 *** Design from ??? (will ask OSPO)
 *** Integration work into new web system from CPE
-*** Parity with existing iot.fedoraproject.org for automatic updates when new images come out with 
+*** Parity with existing iot.fedoraproject.org for automatic updates when new images come out with
 ** New content for front page presenting the edition
 *** Any text from CPE team
 *** Design to match existing front page
