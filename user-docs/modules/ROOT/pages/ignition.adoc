@@ -1,6 +1,6 @@
 = Setting up a Device with Zezere
 
-The disk images do not have a pre-configured user or any passwords set for security reasons. To use the deployment you will need to add your SSH key to the root account using the provisiong service - Zezere.
+The disk images do not have a pre-configured user or any passwords set for security reasons. To use the deployment you will need to add your SSH key to the root account using the provisioning service - Zezere.
 
 == Using the Zezere Provisioning Server
 When a Fedora IoT system is booted, you will see the Zezere provisioning server URL as well as the MAC address of the device deployed.
