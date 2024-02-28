@@ -17,8 +17,8 @@ The currently tested reference devices are as follows:
 | image::ARM1605_SystemReady_logo_IR_V1.png[caption="",title="SystemReady-IR IoT Ready"]
 
 | image::tianocore-logo.svg[align="center",caption="",title="KVM based VM (TianoCore UEFI)"]
-| image::nvidia-jetson-agx-xavier-devkit.png[,200,200,caption="",title="NVidia Jetson Xavier AGX"]
-| image::nvidia-jetson-xavier-nx-devkit.png[,200,200,caption="",title="NVidia Jetson Xavier NX"]
+| image::nvidia-jetson-agx-xavier-devkit.png[,200,200,caption="",title="NVidia Jetson Xavier Series"]
+| image::nvidia-jetson-agx-orin-devkit.png[,200,200,caption="",title="NVidia Jetson Orin Series"]
 
 | image::raspberry-pi4.png[,200,200,caption="",title="Raspberry Pi 4 (4B/CM4)"]
 | image::raspberry-pi3b.png[,200,200,caption="",title="Raspberry Pi 3 (3B/3B+/3CM)"]
