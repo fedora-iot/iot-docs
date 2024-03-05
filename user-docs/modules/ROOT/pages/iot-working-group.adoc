@@ -1,0 +1,7 @@
+= Fedora IoT Working Group 
+
+This page documents the Standard Operating Procedures for the IoT working group in Fedora. 
+
+== Standard Operating Procedures
+
+* xref:sop-branching-fedora-iot.adoc[Branching Fedora IoT]

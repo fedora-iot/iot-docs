@@ -1,0 +1,188 @@
+= Branching Fedora IoT
+
+Branched is the name given to a version of Fedora that has "branched" from the rolling Rawhide tree and will become the next stable Fedora release. This document will detail the steps for branching Fedora IoT from Rawhide. 
+
+To complete these steps and open any pull requests you need a valid [Fedora account](https://docs.fedoraproject.org/en-US/fedora-accounts/user/).
+
+== Working with the pungi-iot repository
+
+Clone and fork the Fedora IoT Pungi repository to make changes to the configuration files used to build Fedora IoT.
+
+----
+git clone https://pagure.io/fedora-iot/pungi-iot.git
+----
+
+
+Create the new branch and push to the upstream repository. Change `$release` to the new numeric branch of Fedora.
+This is not done as a PR and should be pushed directly to the upstream repository, to do so you will need commit permissions.
+
+----
+git checkout main; git pull; git checkout -b f$release; git push --set-upstream upstream f$release
+----
+
+Example, used for Fedora 40:
+
+----
+git checkout main; git pull; git checkout -b f40 ; git push --set-upstream upstream f40
+----
+
+=== Rawhide (main)
+
+On your local fork, create a new branch for changes to Rawhide (main).
+
+Update the signing key for Rawhide from the main fedora-pungi repo - https://pagure.io/pungi-fedora/commits/main.
+As of Fedora 40 branching you can find this [here](https://pagure.io/pungi-fedora/blob/main/f/fedora.conf#_21). 
+
+Copy the key used in Rawhide to `fedora-iot.conf`, replacing the previous key. 
+
+Example:
+
+----
+sed -i 's|$OLD_SIGNING_KEY|$NEW_RAWHIDE_KEY|g' fedora-iot.conf
+----
+
+Example used in Fedora 40 branching:
+
+----
+sed -i 's|a15B79cc|e99d6ad1]|g' fedora-iot.conf
+----
+
+Main will remain as "Rawhide", but we need to update the release to the next version of Fedora. 
+
+----
+sed -i 's|40|41|g' fedora-iot.conf nightly.sh sync-release.sh twoweek-nightly.sh
+----
+
+Commit the changes:
+
+----
+git commit -a -m "F-41: Update for branching" -s
+----
+
+Review the changes and if satisfied, push to your fork and open a pull request for others to review. https://pagure.io/fedora-iot/pungi-iot/c/db00b44a9ddf0eb37c4194b089bbea799cb3ecb6?branch=main[Example PR]
+
+=== Branched (the next stable fedora release)
+Now we need to work on the new release, or branch of Fedora that we created at the beginning, and specify the release number (eg '40') rather than 'Rawhide'.
+
+Example:
+
+----
+git checkout f$release
+----
+
+Used in Fedora 40 branching:
+
+----
+git checkout f40
+----
+
+On your local fork, create a new branch for changes.
+
+Update symlinks to ensure we are using the latest completed upstream compose in Fedora
+
+----
+sed -i 's|latest-Fedora-Rawhide|latest-Fedora-40|g' fedora-iot.conf
+----
+
+Update Fedora URLS with 'branched':
+
+----
+sed -i 's|compose/rawhide|compose/branched|g' fedora-iot.conf
+----
+
+Update iot repos to use 'devel' rather than 'rawhide':
+
+----
+sed -i 's|fedora/rawhide/|fedora/devel/|g' fedora-iot.conf
+----
+
+Update instances of 'main' to the release:
+
+----
+sed -i 's|main|f40|g' fedora-iot.conf
+----
+IMPORTANT: You will need to manually change the comps repo back to main. There are no branches in comps. (comps files are XML files used by various Fedora tools to perform grouping of packages into functional groups. For more information visit [click here](https://pagure.io/fedora-comps).
+
+Update the 'global_ksurl': 
+
+----
+sed -i 's|=HEAD|=origin/f40|g' fedora-iot.conf
+----
+
+Update the location of where the release is copied to during the compose process, and hosted for download and rsync'ing to the various Fedora mirrors. This path is created when the `twoweek-nightly.sh` is executed and can be found on the [Fedora Project master mirror](https://dl.fedoraproject.org/pub/alt/iot/).
+----
+sed -i 's|/pub/alt/iot/rawhide/|/pub/alt/iot/branched/|g' twoweek-nightly.sh
+----
+
+Commit the changes:
+
+----
+git commit -a -m "F-40: Update for branching" -s
+----
+
+Review the changes and if satisfied, push to your fork and open a pull request for others to review. https://pagure.io/fedora-iot/pungi-iot/c/8793fd5b80e3c269bac84cda175f5bf9987eea99?branch=f40[Example PR]
+
+== Working with the OStree repository
+
+This repository is used to configure the Fedora IoT ostree and includes the packages, services and various settings including selinux and unified-core.
+
+Clone and fork the upstream ostree repository:
+
+----
+git clone https://pagure.io/fedora-iot/ostree.git
+----
+
+Create the new branch and push to the upstream repository. Change `$release` to the new numeric branch of Fedora:
+
+----
+git checkout main; git pull; git checkout -b f$release; git push --set-upstream upstream f$release
+----
+
+Example, used for Fedora 40 (the next stable release of Fedora):
+
+----
+git checkout main; git pull; git checkout -b f40 ; git push --set-upstream upstream f40
+----
+
+=== Rawhide (main) 
+Create a branch in your local fork and make the following changes for Rawhide:
+
+----
+sed -i 's|40|41|g' config.ini fedora-40.repo fedora-iot-base.yaml fedora-iot.yaml
+mv fedora-40.repo fedora-41.repo
+git add fedora-41.repo
+git commit -a -m "IoT: Update rawhide for F-41" -s
+----
+
+Review the changes and if satisfied, push to your fork and open a pull request for others to review.
+
+=== Branched (the next stable fedora release)
+Checkout the newly created branch for the next stable Fedora and create a branch in your fork for the PR. 
+
+Change the urls from `development/rawhide` to `development/40`:
+
+----
+sed -i 's|development/rawhide|development/40|g' config.ini
+----
+
+Update instances of `rawhide`, replacing with `devel`:
+
+----
+sed -i 's|rawhide|devel|g' config.ini fedora-40.repo fedora-iot-base.yaml fedora-iot.yaml fedora-iot-updates-stable.yaml fedora-iot-updates-testing.yaml
+----
+
+Write the commit message:
+
+----
+git commit -a -m "Setup for F-40 branched" -s
+----
+
+Review the changes and if satisfied, push to your fork and open a pull request for others to review.
+
+== Additional Checks
+* check to make sure the Fedora IoT tag has been created in koji. To verify you will need to install the `koji` package in Fedora
+    * Verify the tags are listed for the new branches `koji list-tags|grep f*-iot`
+
+* ensure the signing key has been updated in ansible (look for the iot portion)
+    * https://pagure.io/fedora-infra/ansible
+    * As of Fedora 40 you can find the relevant section [here](https://pagure.io/fedora-infra/ansible/blob/main/f/roles/robosignatory/templates/robosignatory.toml.j2=_434)
