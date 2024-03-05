@@ -21,3 +21,5 @@
 * xref:contributing.adoc[Contributing & Reporting Bugs]
 * xref:reference-platforms.adoc[Reference Platforms]
 * xref:prd.adoc[Product Requirement Document]
+* xref:iot-working-group.adoc[Fedora IoT Working Group]
+** xref:sop-branching-fedora-iot.adoc[Branching Fedora IoT]
