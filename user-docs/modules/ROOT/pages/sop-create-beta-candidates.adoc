@@ -1,0 +1,43 @@
+= Create Fedora IoT Beta Candidates
+
+To complete these steps you will need a valid [Fedora account](https://docs.fedoraproject.org/en-US/fedora-accounts/user/), with appropriate permissions in [Koji](https://koji.fedoraproject.org/koji/), the Fedora buildsystem.
+
+Review the current compose tag used for Fedora IoT and what is currently tagged and included.
+
+----
+koji list-tagged f[release_version]-iot
+----
+
+Untag any builds currently included:
+
+----
+koji untag-build --all f[release_version]-iot [build1 build2 ...]
+----
+
+Review the upstream Fedora ticket requesting the Beta Candidates for a listing of all Fedora release Blockers and Freeze Exceptions that are needed for the compose. An example ticket for [Fedora 40 Beta Candidate Request](https://pagure.io/releng/issue/12007). 
+
+Add any builds specified by the Fedora QE team.
+
+----
+koji tag-build f[release_version]-iot [build1 build2 ...]
+----
+
+Compare the tagged builds with the Fedora compose tag (f40-compose):
+
+----
+koji list-tagged f[release_version]-compose
+----
+
+Log into the Fedora IoT compose host and run the compose for the pending release. 
+
+== Once the release has been declared `Go!`
+
+When the release is signed off on Thursday after the Go/No-Go meeting. Open a ticket with [Release Engineering] to sign the deliverables. A request [example](https://pagure.io/releng/issue/11677) from Fedora 39.
+
+Once the release is signed, from the compose host create the directory and run the script to copy the release so it can be sync'd to the Fedora mirrors. 
+
+----
+mkdir /pub/alt/iot/test/f[release_version]
+./sync-release.sh
+----
+
