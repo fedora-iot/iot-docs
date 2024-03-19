@@ -23,3 +23,4 @@
 * xref:prd.adoc[Product Requirement Document]
 * xref:iot-working-group.adoc[Fedora IoT Working Group]
 ** xref:sop-branching-fedora-iot.adoc[Branching Fedora IoT]
+** xref:sop-create-beta-candidates.adoc[Create Beta Candidates]
