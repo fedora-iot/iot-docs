@@ -1,6 +1,6 @@
-= Create Fedora IoT Beta Candidates
+= Create Fedora IoT Release Candidates
 
-To complete these steps you will need a valid [Fedora account](https://docs.fedoraproject.org/en-US/fedora-accounts/user/), with appropriate permissions in [Koji](https://koji.fedoraproject.org/koji/), the Fedora buildsystem.
+To complete these steps you will need a valid https://docs.fedoraproject.org/en-US/fedora-accounts/user/[Fedora account], with appropriate permissions in https://koji.fedoraproject.org/koji/[Koji], the Fedora buildsystem.
 
 Review the current compose tag used for Fedora IoT and what is currently tagged and included.
 
@@ -14,7 +14,9 @@ Untag any builds currently included:
 koji untag-build --all f[release_version]-iot [build1 build2 ...]
 ----
 
-Review the upstream Fedora ticket requesting the Beta Candidates for a listing of all Fedora release Blockers and Freeze Exceptions that are needed for the compose. An example ticket for [Fedora 40 Beta Candidate Request](https://pagure.io/releng/issue/12007). 
+Review the upstream Fedora ticket requesting the Release Candidates for a listing of all Fedora release Blockers and Freeze Exceptions that are needed for the compose. 
+- An example ticket for https://pagure.io/releng/issue/12007[Fedora 40 Beta Candidate Request].
+- An example ticket for https://pagure.io/releng/issue/12060[Fedora 40 Final Candidate Request].
 
 Add any builds specified by the Fedora QE team.
 
@@ -28,7 +30,7 @@ Compare the tagged builds with the Fedora compose tag (f40-compose):
 koji list-tagged f[release_version]-compose
 ----
 
-Log into the Fedora IoT compose host and run the compose for the pending release. 
+Log into the Fedora IoT compose host and run the compose for the pending release. Once the compose is complete, review the results for any outstanding deliverables. 
 
 == Once the release has been declared `Go!`
 
@@ -36,8 +38,18 @@ When the release is signed off on Thursday after the Go/No-Go meeting. Open a ti
 
 Once the release is signed, from the compose host create the directory and run the script to copy the release so it can be sync'd to the Fedora mirrors. 
 
+For the Beta release, note the destintation is the `test` directory:
+
 ----
 mkdir /pub/alt/iot/test/f[release_version]
 ./sync-release.sh
 ----
+
+For final:
+
+----
+mkdir /pub/alt/iot/test/f[release_version]
+./sync-release.sh
+----
+
 
