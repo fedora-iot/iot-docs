@@ -1,0 +1,44 @@
+= FIDO device onboarding glossary
+
+Learn more about the FIDO device onboarding terminology.
+
+.FDO glossary
+
+|===
+| Term                   | Description
+
+| FDO                    | FIDO Device Onboarding.
+| Device                 | Any hardware, device, or computer.
+| Device Credential (DC) | Key credential and rendezvous stored in the device at manufacture.
+| Keys                   | Keys to configure the manufacturing server
+
+* key_path
+
+* cert_path
+
+* key_type
+
+* mfg_string_type: device serial number
+
+* allowed_key_storage_types: Filesystem and Trusted Platform Module (TPM) that protects the data used to authenticate the device you are using.
+
+| Manufacturer           | The device manufacturer.
+| Manufacturer server    | Creates the device credentials for the device.
+| Manufacturer client    | Informs the location of the manufacturing server.
+| Owner                  | The final owner of the device - a company or an IT department.
+| Ownership Voucher (OV) | Record of ownership of an individual device.
+
+Contains the following information:
+
+* Owner (`fdo-owner-onboarding-service`)
+
+* Rendezvous Server - FIDO server (`fdo-rendezvous-server`)
+
+* Device (at least one combination)  (`fdo-manufacturing-service`)
+
+| Rendezvous server      | Link to a server used by the device and later on, used on the process to find out who is the owner of the device
+|===
+
+.Additional resources
+* https://fidoalliance.org/specs/fidoiot/FIDO-IoT-spec-v1.0-wd-20200730.html#OV[FIDO IoT spec]
+

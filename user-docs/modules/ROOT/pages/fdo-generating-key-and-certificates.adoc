@@ -1,0 +1,46 @@
+= Generating key and certificates
+
+To run the FIDO Device Onboarding (FDO) infrastructure, you need to generate
+keys and certificates. FDO generates these keys and certificates to configure
+the manufacturing server. FDO automatically generates the certificates and
+`.yaml` configuration files when you install the services, and re-creating them
+is optional. After you install and start the services, it runs with the default
+settings.
+
+.Prerequisites
+
+* You installed the `fdo-admin-cli` RPM package
+
+.Procedure
+
+. Generate the keys and certificates in the `/etc/fdo` directory:
++
+----
+$ for i in "diun" "manufacturer" "device-ca" "owner"; do
+    fdo-admin-tool generate-key-and-cert $i;
+  done
+----
+
+. Check the key and certificates that were created in the `/etc/fdo/keys` directory:
++
+----
+$ tree keys
+----
++
+You can see the following output:
++
+----
+keys/
+├── device_ca_cert.pem
+├── device_ca_key.der
+├── diun_cert.pem
+├── diun_key.der
+├── manufacturer_cert.pem
+├── manufacturer_key.der
+├── owner_cert.pem
+└── owner_key.der
+----
+
+.Additional resources
+* See the `fdo-admin-tool generate-key-and-cert –-help` manual page
+

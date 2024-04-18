@@ -1,0 +1,126 @@
+= Installing and running the manufacturing server
+
+The `fdo-manufacturing-server` RPM package enables you to run the Manufacturing
+Server component of the FDO protocol. It also stores other components, such as
+the owner vouchers, the manufacturer keys, and information about the manufacturing
+sessions. During the device installation, the Manufacturing server generates the
+device credentials for the specific device, including its GUID, rendezvous
+information and other metadata. Later on in the process, the device uses this
+rendezvous information to contact the Rendezvous server.
+
+To install the `manufacturing server` RPM package, complete the following steps:
+
+.Procedure
+
+. Install the `fdo-admin-cli` package:
++
+----
+# dnf install -y fdo-admin-cli
+----
+
+. Check if the `fdo-manufacturing-server` RPM package is installed:
++
+----
+$ rpm -qa | grep fdo-manufacturing-server --refresh
+----
+
+. Check if the files were correctly installed:
++
+----
+$ ls /usr/share/doc/fdo
+----
++
+You can see the following output:
++
+----
+manufacturing-server.yml
+owner-onboarding-server.yml
+rendezvous-info.yml
+rendezvous-server.yml
+serviceinfo-api-server.yml
+----
+
+. Optional: Check the content of each file, for example:
++
+----
+$ cat /usr/share/doc/fdo/manufacturing-server.yml
+----
+
+. Configure the Manufacturing server. You must provide the following information:
+
+* The Manufacturing server URL
+* The IP address or DNS name for the Rendezvous server
+* The path to the keys and certificates you generated. See xref:fdo-generating-key-and-certificates.adoc[Generating key and certificates].
++
+You can find an example of a Manufacturing server configuration file in the
+`/usr/share/doc/fdo/manufacturing-server.yml` directory. The following is a
+`manufacturing server.yml` example that is created and saved in the `/etc/fdo`
+directory. It contains paths to the directories, certificates, keys that you
+created, the Rendezvous server IP address and the default port.
++
+----
+session_store_driver:
+  Directory:
+    path: /etc/fdo/stores/manufacturing_sessions/
+ownership_voucher_store_driver:
+  Directory:
+    path: /etc/fdo/stores/owner_vouchers
+public_key_store_driver:
+  Directory:
+    path: /etc/fdo/stores/manufacturer_keys
+bind: "0.0.0.0:8080"
+protocols:
+  plain_di: false
+  diun:
+    mfg_string_type: SerialNumber
+    key_type: SECP384R1
+    allowed_key_storage_types:
+      - Tpm
+      - FileSystem
+    key_path: /etc/fdo/keys/diun_key.der
+    cert_path: /etc/fdo/keys/diun_cert.pem
+rendezvous_info:
+  - deviceport: 8082
+    ip_address: 192.168.122.1
+    ownerport: 8082
+    protocol: http
+manufacturing:
+  manufacturer_cert_path: /etc/fdo/keys/manufacturer_cert.pem
+  device_cert_ca_private_key: /etc/fdo/keys/device_ca_key.der
+  device_cert_ca_chain: /etc/fdo/keys/device_ca_cert.pem
+  owner_cert_path: /etc/fdo/keys/owner_cert.pem
+  manufacturer_private_key: /etc/fdo/keys/manufacturer_key.der
+----
+
+. Start the Manufacturing server.
+.. Check if the systemd unit file are in the server:
++
+----
+# systemctl list-unit-files | grep fdo | grep manufacturing
+fdo-manufacturing-server.service disabled disabled
+----
+
+.. Enable and start the manufacturing server.
++
+----
+# systemctl enable --now fdo-manufacturing-server.service
+----
+
+.. Open the default ports in your firewall:
++
+----
+# firewall-cmd --add-port=8080/tcp --permanent
+# systemctl restart firewalld
+----
+
+.. Ensure that the service is listening on the port 8080:
++
+----
+# ss -ltn
+----
+
+. Install Fedora IoT onto your system using the simplified installer. See xref:fdo-device-setup.adoc[Setting up a Device with FDO].
+
+.Additional resources
+* The link:https://github.com/fedora-iot/fido-device-onboard-rs/blob/main/examples/config/manufacturing-server.yml[manufacturing-server.yml example]
+* xref:fdo-glossary.adoc[FIDO device onboarding glossary]
