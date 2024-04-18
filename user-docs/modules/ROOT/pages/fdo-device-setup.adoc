@@ -1,0 +1,101 @@
+= Setup a device by using FDO and the Simplified Installer
+:FedoraVersion: 40
+:toc:
+
+== Prerequisites
+
+* You have installed and configured the FDO services as described in:
+** xref:fdo-installing-the-manufacturing-server-package.adoc[Installing and configuring the Manufacturing server]
+** xref:fdo-installing-configuring-and-running-the-rendezvous-server.adoc[Installing and configuring the Rendezvous Server]
+** xref:fdo-installing-configuring-and-running-the-owner-server.adoc[Installing and configuring the Owner's Onboarding Server]
+* You have downloaded the link:http://iot.fedoraproject.org[Simplified Installer ISO image].
+* If using libvirt make sure the FDO server ports are reachable from the VMs
++
+....
+# firewall-cmd --zone libvirt \
+               --add-port=8080/tcp \
+               --add-port=8081/tcp \
+               --add-port=8082/tcp \
+               --permanent
+# systemctl restart firewalld
+....
+
+== Boot the Simplified Installer
+
+Boot the Simplified Installer from one of the sources below:
+
+=== Boot from the Simplified Installer ISO
+
+If you are using Virtual Machines, you can use the `virt-install`
+command to boot from the Simplified installer ISO.
+[subs="attributes"]
+....
+# virt-install --connect qemu:///system \
+               --name "fedora-iot-device" \
+               --os-variant "fedora-rawhide" \
+               --boot uefi,loader.secure=false \
+               --vcpus 1 --memory 3072 \
+               --network network=default,model=virtio \
+               --disk pool=default,size=30 \
+               --cdrom Fedora-IoT-provisioner-{FedoraVersion}.*.iso
+....
+
+If you are using physical devices with a CD-ROM unit:
+
+* Burn the downloaded Simplified Installer ISO to a CD-ROM
+* Use the CD-ROM to boot the IoT device from it.
+
+Continue by xref:fdo-device-setup.adoc#_edit_the_boot_parameters[editing the boot parameters]
+
+=== Boot the Simplified Installer from an USB Flash Drive
+
+* Copy the ISO image file to a USB flash drive (You will need a 8 GB USB flash drive at least)
+* Connect the USB flash drive to the port of the computer you want to boot.
+* Boot the ISO image from the USB flash drive.
+* Continue by xref:fdo-device-setup.adoc#_edit_boot_parameters[editing the boot parameters]
+
+== Edit the boot parameters
+
+Once device has been booted from the Simplified Installer the boot menu shows
+following options:
+[subs="attributes"]
+....
+Install Fedora {FedoraVersion}
+Test this media & install Fedora {FedoraVersion}
+Troubleshooting -->
+....
+
+* Select *"Install Fedora {FedoraVersion}"* and press the *"e"* key to edit the menu entry.
+* Make sure the installation device variable (`coreos.inst.install_dev`) is correct and
+append the manufacturing parameters
+(`fdo.manufacturing_server_url=http://192.168.122.1:8080 fdo.diun_pub_key_insecure=true`)
+to the `linux` line if not present:
++
+[subs="attributes"]
+....
+### BEGIN /etc/grub.d/10_linux ###
+menuentry 'Install Fedora {FedoraVersion}' --class fedora --class gnu-linux --class gnu --class os {
+	/images/pxeboot/vmlinuz rd.neednet=1 coreos.inst.crypt_root=1 coreos.inst.isoroot=Fedora-{FedoraVersion}-IoT-x86_64 coreos.inst.install_dev=/dev/vda coreos.inst.image_file=/run/media/iso/image.raw.xz coreos.inst.insecure quiet fdo.manufacturing_server_url=http://192.168.122.1:8080 fdo.diun_pub_key_insecure=true
+	initrd images/pxeboot/initrd.img
+}
+....
+* Boot the menu entry by pressing `Ctrl-x`
+* Once the IoT device has been installed and performed the manufacturing process it will reboot and perform the FDO Onboarding in the next boot.
+
+== Verifying the Onboarding
+
+If the onboarding finished successfully you sould be able to login with the initial user configured in the Service Info API server.
+
+When using libvirt in the same host where the FDO services are running you can use the following command to connect to the VM:
+....
+#! /bin/bash
+
+export LIBVIRT_DEFAULT_URI=qemu:///system
+export LIBVIRT_DOMAIN_NAME=fedora-iot-device
+export LIBVIRT_NETWORK=default
+
+MAC=$(virsh domiflist "${LIBVIRT_DOMAIN_NAME}" | grep "${LIBVIRT_NETWORK}" | awk '{print $5}')
+IP=$(virsh net-dhcp-leases "${LIBVIRT_NETWORK}"| grep "${MAC}" | awk '{print $5}'| cut -f1 -d/)
+ssh admin@${IP}
+....
+

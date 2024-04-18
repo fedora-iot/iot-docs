@@ -1,0 +1,134 @@
+= The FIDO Device Onboarding (FDO) process
+
+The FIDO Device Onboarding (FDO) is the process that:
+
+* Provisions and onboards a device.
+* Automatically configures credentials for this device. The FDO process is an
+automatic onboarding mechanism that is triggered by the installation of a new
+device.
+* Enables this device to securely connect and interact on the network.
+
+With FIDO Device Onboarding (FDO), you can perform a secure device onboarding
+by adding new devices into your IoT architecture. This includes the specified
+device configuration that needs to be trusted and integrated with the rest of
+the running systems. The FDO process is an automatic onboarding mechanism that
+is triggered by the installation of a new device.
+
+The FDO protocol performs the following tasks:
+
+* Solves the trust and chain of ownership along with the automation needed to
+securely onboard a device at scale.
+* Performs device initialization at the manufacturing stage and late device
+binding for its actual use. This means that actual binding of the device to a
+management system happens on the first boot of the device without requiring
+manual configuration on the device.
+* Supports automated secure devices onboarding, that is, zero touch
+installation and onboarding that does not need any specialized person at the
+edge location. After the device is onboarded, the management platform can
+connect to it and apply patches, updates, and rollbacks.
+
+With FDO, you can benefit from the following:
+
+* FDO is a secure and simple way to enroll a device to a management platform.
+Instead of embedding a Kickstart configuration to the image, FDO applies the
+device credentials during the device first boot directly to the ISO image.
+* FDO solves the issue of late binding to a device, enabling any sensitive
+data to be shared over a secure FDO channel.
+* FDO cryptographically identifies the system identity and ownership before
+enrolling and passing the configuration and other secrets to the system. That
+enables non-technical users to power-on the system.
+
+To build a Fedora IoT Simplified Installer image and automatically onboard it,
+provide an existing OSTree commit. The resulting simplified image contains a
+raw image that has the OSTree commit deployed. After you boot the Simplified
+installer ISO image, it provisions a Fedora IoT system that you can use on a
+hard disk or as a boot image in a virtual machine.
+
+The Fedora IoT Simplified Installer image is optimized for unattended
+installation to a device and supports both network-based deployment and
+non-network-based deployments. However, for network-based deployment, it
+supports only UEFI HTTP boot.
+
+The FDO protocol is based on the following servers:
+
+Manufacturing server::
++
+. Generates the device credentials.
+. Creates an Ownership voucher that is used to set the ownership of the device,
+later in the process.
+. Binds the device to a specific management platform.
+
+Owner management system::
++
+. Receives the Ownership voucher from the Manufacturing server and becomes the
+owner of the associated device.
+. Later in the process, it creates a secure channel between the device and
+the owner onboarding server after the device authentication.
+. Uses the secure channel to send the required information, such as files and
+scripts for the onboarding automation to the device.
+
+Service-info API server::
++
+Based on Service-info API server's configuration and modules available on the
+client, it performs the final steps of onboarding on target client devices,
+such as copying SSH keys and files, executing commands, creating users,
+encrypting disks and so on
+
+Rendezvous server::
++
+. Gets the Ownership voucher from the Owner management system and makes a
+mapping of the device UUID to the Owner server IP. Then, the Rendezvous server
+matches the device UUID with a target platform and informs the device about
+which Owner onboarding server endpoint this device must use.
+
+. During the first boot, the Rendezvous server will be the contact point for
+the device and it will direct the device to the owner, so that the device and
+the owner can establish a secure channel.
+
+Device client::
++
+This is installed on the device. The Device client performs the following actions:
+
+. Starts the queries to the multiple servers where the onboarding automation will
+be executed.
+. Uses TCP/IP protocols to communicate with the servers.
+
+The following diagram represents the FIDO device onboarding workflow:
+.Deploying Fedora IoT in non-network environment
+image::FDO_Process.png[FDO device onboarding]
+
+At the *Device Initialization*, the device contacts the Manufacturing server to
+get the FDO credentials, a set of certificates and keys to be installed on the
+operating system with the Rendezvous server endpoint (URL). It also gets the
+Ownership Voucher, that is maintained separately in case you need to change the
+owner assignment.
+
+. The Device contacts the Manufacturing server
+. The Manufacturing server generates an Ownership Voucher and the Device
+Credentials for the Device.
+. The Ownership Voucher is transferred to the Owner onboarding server.
+
+At the *On-site onboarding*, the Device gets the Rendezvous server endpoint
+(URL) from its device credentials and contacts Rendezvous server endpoint to
+start the onboarding process, which will redirect it to the Owner management
+system, that is formed by the Owner onboarding server and the Service Info
+API server.
+
+. The Owner onboarding server transfers the Ownership Voucher to the Rendezvous
+server, which makes a mapping of the Ownership Voucher to the Owner.
+. The device client reads device credentials.
+. The device client connects to the network.
+. After connecting to the network, the Device client contacts the Rendezvous
+server.
+. The Rendezvous server sends the owner endpoint URL to the Device Client, and
+registers the device.
+. The Device client connects to the Owner onboarding server shared by the
+Rendezvous server.
+. The Device proves that it is the correct device by signing a statement with a
+device key.
+. The Owner onboarding server proves itself correct by signing a statement with
+the last key of the Owner Voucher.
+. The Owner onboarding server transfers the information of the Device to the
+Service Info API server.
+. The Service info API server sends the configuration for the Device.
+. The Device is onboarded.
