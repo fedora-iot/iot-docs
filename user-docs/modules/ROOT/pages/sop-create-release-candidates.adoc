@@ -15,8 +15,8 @@ koji untag-build --all f[release_version]-iot [build1 build2 ...]
 ----
 
 Review the upstream Fedora ticket requesting the Release Candidates for a listing of all Fedora release Blockers and Freeze Exceptions that are needed for the compose. 
-- An example ticket for https://pagure.io/releng/issue/12007[Fedora 40 Beta Candidate Request].
-- An example ticket for https://pagure.io/releng/issue/12060[Fedora 40 Final Candidate Request].
+* An example ticket for https://pagure.io/releng/issue/12007[Fedora 40 Beta Candidate Request].
+* An example ticket for https://pagure.io/releng/issue/12060[Fedora 40 Final Candidate Request].
 
 Add any builds specified by the Fedora QE team.
 
@@ -34,7 +34,7 @@ Log into the Fedora IoT compose host and run the compose for the pending release
 
 == Once the release has been declared `Go!`
 
-When the release is signed off on Thursday after the Go/No-Go meeting. Open a ticket with [Release Engineering] to sign the deliverables. A request [example](https://pagure.io/releng/issue/11677) from Fedora 39.
+When the release is signed off on Thursday after the Go/No-Go meeting. Open a ticket with https://pagure.io/releng/issues[Release Engineering] to sign the deliverables. A request https://pagure.io/releng/issue/11677[example] from Fedora 39.
 
 Once the release is signed, from the compose host create the directory and run the script to copy the release so it can be sync'd to the Fedora mirrors. 
 
