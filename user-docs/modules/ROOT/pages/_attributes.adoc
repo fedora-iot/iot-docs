@@ -1,0 +1,16 @@
+:FedoraVersion: 40
+:OSVariant: fedora-{FedoraVersion}
+:VMName: fedora-iot-device
+:VMCPUs: 1
+:VMMemory: 3072
+:DefaultServerIP: 192.168.122.1
+:ManufacturingServerIP: {DefaultServerIP}
+:ManufacturingServerPort: 8080
+:OwnerOnboardingServerIP: {DefaultServerIP}
+:OwnerOnboardingServerPort: 8081
+:RendezvousServerIP: {DefaultServerIP}
+:RendezvousServerPort: 8082
+:UEFIHTTPBootServerIP: {DefaultServerIP}
+:UEFIHTTPBootServerPort: 9080
+:FedoraSimplifiedInstallerISO: Fedora-IoT-provisioner-{FedoraVersion}.*.iso
+
