@@ -1,5 +1,5 @@
 = Setup a device by using FDO and the Simplified Installer
-:FedoraVersion: 40
+include::_attributes.adoc[]
 :toc:
 
 == Prerequisites
@@ -11,11 +11,12 @@
 * You have downloaded the link:http://iot.fedoraproject.org[Simplified Installer ISO image].
 * If using libvirt make sure the FDO server ports are reachable from the VMs
 +
+[subs="attributes"]
 ....
 # firewall-cmd --zone libvirt \
-               --add-port=8080/tcp \
-               --add-port=8081/tcp \
-               --add-port=8082/tcp \
+               --add-port={ManufacturingServerPort}/tcp \
+               --add-port={OwnerOnboardingServerPort}/tcp \
+               --add-port={RendezvousServerPort}/tcp \
                --permanent
 # systemctl restart firewalld
 ....
@@ -31,13 +32,13 @@ command to boot from the Simplified installer ISO.
 [subs="attributes"]
 ....
 # virt-install --connect qemu:///system \
-               --name "fedora-iot-device" \
-               --os-variant "fedora-rawhide" \
+               --name "{VMName}" \
+               --os-variant "{OSVariant}" \
                --boot uefi,loader.secure=false \
-               --vcpus 1 --memory 3072 \
+               --vcpus {VMCPUs} --memory {VMMemory} \
                --network network=default,model=virtio \
                --disk pool=default,size=30 \
-               --cdrom Fedora-IoT-provisioner-{FedoraVersion}.*.iso
+               --cdrom {FedoraSimplifiedInstallerISO}
 ....
 
 If you are using physical devices with a CD-ROM unit:
@@ -65,21 +66,21 @@ Test this media & install Fedora {FedoraVersion}
 Troubleshooting -->
 ....
 
-* Select *"Install Fedora {FedoraVersion}"* and press the *"e"* key to edit the menu entry.
+* Select *"Install Fedora {FedoraVersion}"* and press the *"[e]"* key to edit the menu entry.
 * Make sure the installation device variable (`coreos.inst.install_dev`) is correct and
 append the manufacturing parameters
-(`fdo.manufacturing_server_url=http://192.168.122.1:8080 fdo.diun_pub_key_insecure=true`)
+(`fdo.manufacturing_server_url=http://{ManufacturingServerIP}:{ManufacturingServerPort} fdo.diun_pub_key_insecure=true`)
 to the `linux` line if not present:
 +
 [subs="attributes"]
 ....
 ### BEGIN /etc/grub.d/10_linux ###
 menuentry 'Install Fedora {FedoraVersion}' --class fedora --class gnu-linux --class gnu --class os {
-	/images/pxeboot/vmlinuz rd.neednet=1 coreos.inst.crypt_root=1 coreos.inst.isoroot=Fedora-{FedoraVersion}-IoT-x86_64 coreos.inst.install_dev=/dev/vda coreos.inst.image_file=/run/media/iso/image.raw.xz coreos.inst.insecure quiet fdo.manufacturing_server_url=http://192.168.122.1:8080 fdo.diun_pub_key_insecure=true
+	/images/pxeboot/vmlinuz rd.neednet=1 coreos.inst.crypt_root=1 coreos.inst.isoroot=Fedora-{FedoraVersion}-IoT-x86_64 coreos.inst.install_dev=/dev/vda coreos.inst.image_file=/run/media/iso/image.raw.xz coreos.inst.insecure quiet fdo.manufacturing_server_url=http://{ManufacturingServerIP}:{ManufacturingServerPort} fdo.diun_pub_key_insecure=true
 	initrd images/pxeboot/initrd.img
 }
 ....
-* Boot the menu entry by pressing `Ctrl-x`
+* Boot the menu entry by pressing *"[Ctrl-x]"*
 * Once the IoT device has been installed and performed the manufacturing process it will reboot and perform the FDO Onboarding in the next boot.
 
 == Verifying the Onboarding
@@ -91,7 +92,7 @@ When using libvirt in the same host where the FDO services are running you can u
 #! /bin/bash
 
 export LIBVIRT_DEFAULT_URI=qemu:///system
-export LIBVIRT_DOMAIN_NAME=fedora-iot-device
+export LIBVIRT_DOMAIN_NAME={VMName}
 export LIBVIRT_NETWORK=default
 
 MAC=$(virsh domiflist "${LIBVIRT_DOMAIN_NAME}" | grep "${LIBVIRT_NETWORK}" | awk '{print $5}')
