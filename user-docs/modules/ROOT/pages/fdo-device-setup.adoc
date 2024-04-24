@@ -1,5 +1,6 @@
-= Setup a device by using FDO and the Simplified Installer
 include::_attributes.adoc[]
+
+= Setup a device by using FDO and the Simplified Installer
 :toc:
 
 == Prerequisites
@@ -207,7 +208,7 @@ to the `linux` line if not present:
 ....
 ### BEGIN /etc/grub.d/10_linux ###
 menuentry 'Install Fedora {FedoraVersion}' --class fedora --class gnu-linux --class gnu --class os {
-	/images/pxeboot/vmlinuz rd.neednet=1 coreos.inst.crypt_root=1 coreos.inst.isoroot=Fedora-{FedoraVersion}-IoT-x86_64 coreos.inst.install_dev=/dev/vda coreos.inst.image_file=/run/media/iso/image.raw.xz coreos.inst.insecure quiet fdo.manufacturing_server_url=http://{ManufacturingServerIP}:{ManufacturingServerPort} fdo.diun_pub_key_insecure=true
+	linux  images/pxeboot/vmlinuz rd.neednet=1 coreos.inst.crypt_root=1 coreos.inst.isoroot=Fedora-{FedoraVersion}-IoT-x86_64 coreos.inst.install_dev=/dev/vda coreos.inst.image_file=/run/media/iso/image.raw.xz coreos.inst.insecure quiet fdo.manufacturing_server_url=http://{ManufacturingServerIP}:{ManufacturingServerPort} fdo.diun_pub_key_insecure=true
 	initrd images/pxeboot/initrd.img
 }
 ....
@@ -219,6 +220,7 @@ menuentry 'Install Fedora {FedoraVersion}' --class fedora --class gnu-linux --cl
 If the onboarding finished successfully you sould be able to login with the initial user configured in the Service Info API server.
 
 When using libvirt in the same host where the FDO services are running you can use the following command to connect to the VM:
+[subs="attributes"]
 ....
 #! /bin/bash
 
@@ -226,8 +228,8 @@ export LIBVIRT_DEFAULT_URI=qemu:///system
 export LIBVIRT_DOMAIN_NAME={VMName}
 export LIBVIRT_NETWORK=default
 
-MAC=$(virsh domiflist "${LIBVIRT_DOMAIN_NAME}" | grep "${LIBVIRT_NETWORK}" | awk '{print $5}')
-IP=$(virsh net-dhcp-leases "${LIBVIRT_NETWORK}"| grep "${MAC}" | awk '{print $5}'| cut -f1 -d/)
-ssh admin@${IP}
+MAC=$(virsh domiflist "$\{LIBVIRT_DOMAIN_NAME\}" | grep "$\{LIBVIRT_NETWORK\}" | awk '{print $5}')
+IP=$(virsh net-dhcp-leases "$\{LIBVIRT_NETWORK\}"| grep "$\{MAC\}" | awk '{print $5}'| cut -f1 -d/)
+ssh admin@$\{IP\}
 ....
 

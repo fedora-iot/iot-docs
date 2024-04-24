@@ -10,6 +10,8 @@
 :OwnerOnboardingServerPort: 8081
 :RendezvousServerIP: {DefaultServerIP}
 :RendezvousServerPort: 8082
+:ServiceInfoServerIP: {DefaultServerIP}
+:ServiceInfoServerPort: 8083
 :UEFIHTTPBootServerIP: {DefaultServerIP}
 :UEFIHTTPBootServerPort: 9080
 :FedoraSimplifiedInstallerISO: Fedora-IoT-provisioner-{FedoraVersion}.*.iso

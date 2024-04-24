@@ -1,3 +1,5 @@
+include::_attributes.adoc[]
+
 = Installing and running the manufacturing server
 
 The `fdo-manufacturing-server` RPM package enables you to run the Manufacturing
@@ -14,24 +16,28 @@ To install the `manufacturing server` RPM package, complete the following steps:
 
 . Install the `fdo-admin-cli` package:
 +
+[subs="attributes"]
 ----
 # dnf install -y fdo-admin-cli
 ----
 
 . Check if the `fdo-manufacturing-server` RPM package is installed:
 +
+[subs="attributes"]
 ----
 $ rpm -qa | grep fdo-manufacturing-server --refresh
 ----
 
 . Check if the files were correctly installed:
 +
+[subs="attributes"]
 ----
 $ ls /usr/share/doc/fdo
 ----
 +
 You can see the following output:
 +
+[subs="attributes"]
 ----
 manufacturing-server.yml
 owner-onboarding-server.yml
@@ -42,6 +48,7 @@ serviceinfo-api-server.yml
 
 . Optional: Check the content of each file, for example:
 +
+[subs="attributes"]
 ----
 $ cat /usr/share/doc/fdo/manufacturing-server.yml
 ----
@@ -58,6 +65,7 @@ You can find an example of a Manufacturing server configuration file in the
 directory. It contains paths to the directories, certificates, keys that you
 created, the Rendezvous server IP address and the default port.
 +
+[subs="attributes"]
 ----
 session_store_driver:
   Directory:
@@ -68,7 +76,7 @@ ownership_voucher_store_driver:
 public_key_store_driver:
   Directory:
     path: /etc/fdo/stores/manufacturer_keys
-bind: "0.0.0.0:8080"
+bind: "0.0.0.0:{ManufacturingServerPort}"
 protocols:
   plain_di: false
   diun:
@@ -80,9 +88,9 @@ protocols:
     key_path: /etc/fdo/keys/diun_key.der
     cert_path: /etc/fdo/keys/diun_cert.pem
 rendezvous_info:
-  - deviceport: 8082
-    ip_address: 192.168.122.1
-    ownerport: 8082
+  - deviceport: {RendezvousServerPort}
+    ip_address: {RendezvousServerIP}
+    ownerport: {RendezvousServerPort}
     protocol: http
 manufacturing:
   manufacturer_cert_path: /etc/fdo/keys/manufacturer_cert.pem
@@ -95,6 +103,7 @@ manufacturing:
 . Start the Manufacturing server.
 .. Check if the systemd unit file are in the server:
 +
+[subs="attributes"]
 ----
 # systemctl list-unit-files | grep fdo | grep manufacturing
 fdo-manufacturing-server.service disabled disabled
@@ -102,19 +111,22 @@ fdo-manufacturing-server.service disabled disabled
 
 .. Enable and start the manufacturing server.
 +
+[subs="attributes"]
 ----
 # systemctl enable --now fdo-manufacturing-server.service
 ----
 
 .. Open the default ports in your firewall:
 +
+[subs="attributes"]
 ----
-# firewall-cmd --add-port=8080/tcp --permanent
+# firewall-cmd --add-port={ManufacturingServerPort}/tcp --permanent
 # systemctl restart firewalld
 ----
 
 .. Ensure that the service is listening on the port 8080:
 +
+[subs="attributes"]
 ----
 # ss -ltn
 ----
