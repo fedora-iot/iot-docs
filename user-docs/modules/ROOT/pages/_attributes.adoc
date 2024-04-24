@@ -4,6 +4,9 @@
 :VMCPUs: 1
 :VMMemory: 3072
 :DefaultServerIP: 192.168.122.1
+:DefaultIoTDeviceIP: 192.168.122.10
+:DefaultNetworkPrefix: 24
+:DefaultGateway: {DefaultServerIP}
 :ManufacturingServerIP: {DefaultServerIP}
 :ManufacturingServerPort: 8080
 :OwnerOnboardingServerIP: {DefaultServerIP}
@@ -14,5 +17,6 @@
 :ServiceInfoServerPort: 8083
 :UEFIHTTPBootServerIP: {DefaultServerIP}
 :UEFIHTTPBootServerPort: 9080
-:FedoraSimplifiedInstallerISO: Fedora-IoT-provisioner-{FedoraVersion}.*.iso
-
+:FedoraSimplifiedProvisionerISO: Fedora-IoT-provisioner-{FedoraVersion}.*.iso
+:SimplifiedProvisionerKernelIgnitionConfigURL: coreos.inst.append=ignition.config.url=http://{DefaultServerIP}/fiot.ign
+:SimplifiedProvisionerKernelRdNeedNet: coreos.inst.append=rd.neednet=1

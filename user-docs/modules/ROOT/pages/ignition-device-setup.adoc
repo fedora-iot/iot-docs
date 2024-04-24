@@ -1,0 +1,47 @@
+include::_attributes.adoc[]
+
+= Setup a device by using Ignition and the Simplified Provisioner
+:toc:
+
+== Prerequisites
+
+* You have xref:creating-an-ignition-configuration-file.adoc[created an Ignition configuration file] and is accessible via HTTP/HTTPS.
+* You have downloaded the link:http://iot.fedoraproject.org[Simplified Provisioner ISO image] and booted the device from it by
+using one of the methods described in xref:booting-the-simplified-provisioner.adoc[Booting the Simplified Provisioner].
+
+
+== Edit the boot parameters
+
+Once device has been booted from the Simplified Provisioner the boot menu shows the
+following options:
+[subs="attributes"]
+....
+Install Fedora {FedoraVersion}
+Test this media & install Fedora {FedoraVersion}
+Troubleshooting -->
+....
+
+* Select *"Install Fedora {FedoraVersion}"* and press the *"[e]"* key to edit the menu entry.
+* Make sure the installation device variable (`coreos.inst.install_dev`) is correct and
+append the ignition parameters (e.g.: `{SimplifiedProvisionerKernelIgnitionConfigURL} {SimplifiedProvisionerKernelRdNeedNet}`)
+to the `linux` line if not present (e.g.:):
++
+[subs="attributes"]
+....
+### BEGIN /etc/grub.d/10_linux ###
+menuentry 'Install Fedora {FedoraVersion}' --class fedora --class gnu-linux --class gnu --class os {
+	linux  images/pxeboot/vmlinuz rd.neednet=1 coreos.inst.crypt_root=1 coreos.inst.isoroot=Fedora-{FedoraVersion}-IoT-x86_64 coreos.inst.install_dev=/dev/vda coreos.inst.image_file=/run/media/iso/image.raw.xz coreos.inst.insecure quiet {SimplifiedProvisionerKernelIgnitionConfigURL} {SimplifiedProvisionerKernelRdNeedNet}
+	initrd images/pxeboot/initrd.img
+}
+....
+* Boot the menu entry by pressing *"[Ctrl-x]"* to boot and install the IoT device
+
+== Verifying the installation
+
+Once the installation has finished and the device has rebooted you should be able to login with the user
+configured within the ignition file:
+[subs="attributes"]
+....
+ssh core@${DefaultIoTDeviceIP}
+....
+

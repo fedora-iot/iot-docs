@@ -1,0 +1,160 @@
+include::_attributes.adoc[]
+
+= Creating an Ignition configuration file
+
+The `Butane` tool is the preferred option to create an Ignition configuration
+file. `Butane` consumes a `Butane Config YAML` file and produces an
+`Ignition Config` in the JSON format. The JSON file is used by a system on its
+first boot. The `Ignition Config` applies the configuration in the image, such
+as user creation, and `systemd` units installation.
+
+.Prerequisites
+
+* You have installed podman or link:https://github.com/coreos/butane/releases/tag/v0.20.0[Butane v0.20.0] or later:
+
+.Procedure
+
+. Create a `Butane Config` file and save it in the `.bu` format. You must
+specify the `variant` entry as `fiot`, and the `version` entry as `1.0.0`,
+for Fedora IoT images. The butane `fiot` variant on version 1.0.0 targets
+Ignition spec version `3.3.0`. The following is a Butane Config YAML file
+example:
++
+[subs="attributes"]
+----
+variant: fiot
+version: 1.0.0
+ignition:
+  config:
+    merge:
+      - source: http://{DefaultServerIP}/config.ign
+passwd:
+  users:
+    - name: core
+      groups:
+        - wheel
+      password_hash: password_hash_here
+      ssh_authorized_keys:
+        - ssh-ed25519 some-ssh-key-here
+storage:
+  files:
+    - path: /etc/NetworkManager/system-connections/enp1s0.nmconnection
+      contents:
+        inline: |
+          [connection]
+          id=enp1s0
+          type=ethernet
+          interface-name=enp1s0
+          [ipv4]
+          address1={DefaultIotDeviceIP}/{DefaultNetworkPrefix},{DefaultGateway}
+          dns=8.8.8.8;
+          dns-search=
+          may-fail=false
+          method=manual
+      mode: 0600
+    - path: /usr/local/bin/startup.sh
+      contents:
+        inline: |
+          #!/bin/bash
+          echo "Hello, World!"
+      mode: 0755
+systemd:
+  units:
+    - name: hello.service
+      contents: |
+        [Unit]
+        Description=A hello world
+        [Install]
+        WantedBy=multi-user.target
+      enabled: true
+    - name: fdo-client-linuxapp.service
+      dropins:
+        - name: log_trace.conf
+          contents: |
+            [Service]
+            Environment=LOG_LEVEL=trace
+----
+
+. Run the following command to consume the `Butane Config YAML` file and
+generate an Ignition Config in the JSON format:
++
+[subs="attributes"]
+----
+$ podman run -i --rm quay.io/coreos/butane --pretty --strict < fiot.bn | tee fiot.ign
+{
+  "ignition": {
+    "config": {
+      "merge": [
+        {
+          "source": "http://192.168.122.1/config.ign"
+        }
+      ]
+    },
+    "version": "3.4.0"
+  },
+  "passwd": {
+    "users": [
+      {
+        "groups": [
+          "wheel"
+        ],
+        "name": "core",
+        "passwordHash": "password_hash_here",
+        "sshAuthorizedKeys": [
+          "ssh-ed25519 some-ssh-key-here"
+        ]
+      }
+    ]
+  },
+  "storage": {
+    "files": [
+      {
+        "path": "/etc/NetworkManager/system-connections/enp1s0.nmconnection",
+        "contents": {
+          "compression": "gzip",
+          "source": "data:;base64,H4sIAAAAAAAC/1SKwQrCMBAF7/stNjahSEX2S0oPS/JKA822JKvQvxcFDzKnGWaKuyqi5V1nyomhh2892XmAYSuqwiiroS4S0akU/J4pH69hJkmpojXP/h6cv43Oh+B8fw3D5a9Q0saj+/L4SNcgNa5MRc5ukbzxIlsDFdi6Jy6iT9noHQAA//9IedCQoQAAAA=="
+        },
+        "mode": 384
+      },
+      {
+        "path": "/usr/local/bin/startup.sh",
+        "contents": {
+          "compression": "",
+          "source": "data:;base64,IyEvYmluL2Jhc2gKZWNobyAiSGVsbG8sIFdvcmxkISIK"
+        },
+        "mode": 493
+      }
+    ]
+  },
+  "systemd": {
+    "units": [
+      {
+        "contents": "[Unit]\nDescription=A hello world\n[Install]\nWantedBy=multi-user.target\n",
+        "enabled": true,
+        "name": "hello.service"
+      },
+      {
+        "dropins": [
+          {
+            "contents": "[Service]\nEnvironment=LOG_LEVEL=trace\n",
+            "name": "log_trace.conf"
+          }
+        ],
+        "name": "fdo-client-linuxapp.service"
+      }
+    ]
+  }
+}
+----
++
+After you run the `Butane Config YAML` file to check and generate the
+`Ignition Config JSON` file, you might get warnings when using unsupported
+fields, like partitions, for example. You can fix those fields and rerun
+the check.
+
+You have now an Ignition JSON configuration file that you can use to customize
+your installation.
+
+.Additional resources
+* link:https://coreos.github.io/butane/config-fiot-v1_0/[Fedora IOT Specification v1.0.0].
+

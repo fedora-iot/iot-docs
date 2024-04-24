@@ -1,15 +1,15 @@
 include::_attributes.adoc[]
 
-= Boot the Simplified Installer
+= Boot the Simplified Provisioner
 :toc:
 
-== Boot from the Simplified Installer ISO
+== Boot from the Simplified Provisioner ISO
 
 * If you are using physical devices with a CD-ROM unit:
-** Burn the downloaded Simplified Installer ISO to a CD-ROM
+** Burn the downloaded Simplified Provisioner ISO to a CD-ROM
 ** Use the CD-ROM to boot the IoT device from it.
 * If you are using Virtual Machines, you can use the `virt-install`
-command to boot from the Simplified installer ISO.
+command to boot from the Simplified Provisioner ISO.
 +
 [subs="attributes"]
 ....
@@ -20,24 +20,24 @@ command to boot from the Simplified installer ISO.
                --vcpus {VMCPUs} --memory {VMMemory} \
                --network network=default,model=virtio \
                --disk pool=default,size=30 \
-               --cdrom {FedoraSimplifiedInstallerISO}
+               --cdrom {FedoraSimplifiedProvisionerISO}
 ....
 
-== Boot the Simplified Installer from an USB Flash Drive
+== Boot the Simplified Provisioner from an USB Flash Drive
 
 * Copy the ISO image file to a USB flash drive (You will need a 8 GB USB flash drive at least)
 * Connect the USB flash drive to the port of the computer you want to boot.
 * Boot the device from the USB flash drive.
 
-== Boot the Simplified Installer from UEFI HTTP Boot
+== Boot the Simplified Provisioner from UEFI HTTP Boot
 
-* Copy the contents of the Simplified Installer ISO to a directory
+* Copy the contents of the Simplified Provisioner ISO to a directory
 +
 [subs="attributes"]
 ....
-mount {FedoraSimplifiedInstallerISO} /mnt
-cp -r /mnt Fedora-{FedoraVersion}-IoT-Simplified-Installer
-cd Fedora-{FedoraVersion}-IoT-Simplified-Installer
+mount {FedoraSimplifiedProvisionerISO} /mnt
+cp -r /mnt Fedora-{FedoraVersion}-IoT-Simplified-Provisioner
+cd Fedora-{FedoraVersion}-IoT-Simplified-Provisioner
 ....
 * Modify the `grub.cfg` file in `EFI/BOOT` directory and replace all the
 instances of `linux` and `initrd` with `linuxefi` and `initrdefi` respectively.

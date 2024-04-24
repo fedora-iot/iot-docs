@@ -131,7 +131,7 @@ fdo-manufacturing-server.service disabled disabled
 # ss -ltn
 ----
 
-. Install Fedora IoT onto your system using the simplified installer. See xref:fdo-device-setup.adoc[Setting up a Device with FDO].
+. Install Fedora IoT onto your system using the Simplified Provisioner. See xref:fdo-device-setup.adoc[Setting up a Device with FDO].
 
 .Additional resources
 * The link:https://github.com/fedora-iot/fido-device-onboard-rs/blob/main/examples/config/manufacturing-server.yml[manufacturing-server.yml example]

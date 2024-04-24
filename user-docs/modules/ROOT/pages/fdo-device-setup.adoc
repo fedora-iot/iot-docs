@@ -1,6 +1,6 @@
 include::_attributes.adoc[]
 
-= Setup a device by using FDO and the Simplified Installer
+= Setup a device by using FDO and the Simplified Provisioner
 :toc:
 
 == Prerequisites
@@ -20,13 +20,13 @@ include::_attributes.adoc[]
                --permanent
 # systemctl restart firewalld
 ....
-* You have downloaded the link:http://iot.fedoraproject.org[Simplified Installer ISO image] and booted the device from it by
-using one of the methods described in xref:booting-the-simplified-installer.adoc[Booting the Simplified Installer].
+* You have downloaded the link:http://iot.fedoraproject.org[Simplified Provisioner ISO image] and booted the device from it by
+using one of the methods described in xref:booting-the-simplified-provisioner.adoc[Booting the Simplified Provisioner].
 
 
 == Edit the boot parameters
 
-Once device has been booted from the Simplified Installer the boot menu shows the
+Once device has been booted from the Simplified Provisioner the boot menu shows the
 following options:
 [subs="attributes"]
 ....
