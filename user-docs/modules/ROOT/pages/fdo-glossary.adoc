@@ -10,7 +10,7 @@ Learn more about the FIDO device onboarding terminology.
 | FDO                    | FIDO Device Onboarding.
 | Device                 | Any hardware, device, or computer.
 | Device Credential (DC) | Key credential and rendezvous stored in the device at manufacture.
-| Keys                   | Keys to configure the manufacturing server
+| Keys                   a| Keys to configure the manufacturing server
 
 * key_path
 
@@ -26,7 +26,7 @@ Learn more about the FIDO device onboarding terminology.
 | Manufacturer server    | Creates the device credentials for the device.
 | Manufacturer client    | Informs the location of the manufacturing server.
 | Owner                  | The final owner of the device - a company or an IT department.
-| Ownership Voucher (OV) | Record of ownership of an individual device.
+| Ownership Voucher (OV) a| Record of ownership of an individual device.
 
 Contains the following information:
 

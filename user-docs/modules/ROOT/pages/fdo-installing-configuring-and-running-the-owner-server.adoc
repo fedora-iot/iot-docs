@@ -1,3 +1,5 @@
+include::_attributes.adoc[]
+
 = Installing, configuring, and running the Owner server
 
 Install the `fdo-owner-cli` and `fdo-owner-onboarding-server` RPM package to
@@ -6,7 +8,7 @@ during the first device boot. The Rendezvous server then matches the device
 UUID with the target platform or cloud and informs the device about which Owner
 server endpoint the device must use.
 
-==Prerequisites
+.Prerequisites
 
 * The device where the server will be deployed has a Trusted Platform Module
 (TPM) device to encrypt the disk. If not, you will get an error when booting
@@ -14,10 +16,11 @@ the Fedora IoT device.
 * You created the `device_ca_cert.pem`, `owner_key.der`, and `owner_cert.pem`
 with keys and certificates and copied them into the `/etc/fdo/keys` directory.
 
-==Procedure
+.Procedure
 
 . Install the required RPMs in this server:
 +
+[subs="attributes"]
 ----
 # dnf install -y fdo-owner-cli fdo-owner-onboarding-server
 ----
@@ -31,6 +34,7 @@ The following is an example available in
 `/usr/share/doc/fdo/owner-onboarding-server.yml`. You can find references to
 the Service Info API, such as the URL or the authentication token.
 +
+[subs="attributes"]
 ----
 ---
 ownership_voucher_store_driver:
@@ -42,16 +46,16 @@ session_store_driver:
 trusted_device_keys_path: /etc/fdo/keys/device_ca_cert.pem
 owner_private_key_path: /etc/fdo/keys/owner_key.der
 owner_public_key_path: /etc/fdo/keys/owner_cert.pem
-bind: "0.0.0.0:8081"
-service_info_api_url: "http://192.168.122.1:8083/device_info"
+bind: "0.0.0.0:{OwnerOnboardingServerPort}"
+service_info_api_url: "http://{ServiceInfoServerIP}:{ServiceInfoServerPort}/device_info"
 service_info_api_authentication:
   BearerToken:
     token: Kpt5P/5flBkaiNSvDYS3cEdBQXJn2Zv9n1D50431/lo=
 owner_addresses:
   - transport: http
     addresses:
-      - ip_address: 192.168.122.1
-    port: 8081
+      - ip_address: {OwnerOnboardingServerIP}
+    port: {OwnerOnboardingServerPort}
 ----
 
 . Create and configure the Service Info API.
@@ -61,6 +65,7 @@ on. Use the Service Info API configuration file example in
 `/usr/share/doc/fdo/serviceinfo-api-server.yml` as a template to create the
 configuration file under `/etc/fdo/`.
 +
+[subs="attributes"]
 ----
 ---
 service_info:
@@ -74,7 +79,7 @@ service_info:
         pin: tpm2
         config: "{}"
       reencrypt: true
-bind: "0.0.0.0:8083"
+bind: "0.0.0.0:{ServiceInfoServerPort}"
 device_specific_store_driver:
   Directory:
     path: /etc/fdo/stores/serviceinfo_api_devices
@@ -84,6 +89,7 @@ admin_auth_token: zJNoErq7aa0RusJ1w0tkTjdITdMCWYkndzVv7F0V42Q=
 
 . Check the status of the systemd units:
 +
+[subs="attributes"]
 ----
 # systemctl list-unit-files | grep fdo
 fdo-owner-onboarding-server.service        disabled        disabled
@@ -92,6 +98,7 @@ fdo-serviceinfo-api-server.service         disabled        disabled
 
 ..  If the service is stopped and disabled, enable and start it:
 +
+[subs="attributes"]
 ----
 # systemctl enable --now fdo-owner-onboarding-server.service
 # systemctl enable --now fdo-serviceinfo-api-server.service
@@ -101,15 +108,17 @@ NOTE: You must restart the `systemd` services every time you change the configur
 
 . Check that the server is listening on the default configured port 8083:
 +
+[subs="attributes"]
 ----
 # ss -ltn
 ----
 
 . Open the port if you have a firewall configured on this server:
 +
+[subs="attributes"]
 ----
-# firewall-cmd --add-port=8081/tcp --permanent
-# firewall-cmd --add-port=8083/tcp --permanent
+# firewall-cmd --add-port={OwnerOnboardingServerPort}/tcp --permanent
+# firewall-cmd --add-port={ServiceInfoServerPort}/tcp --permanent
 # systemctl restart firewalld
 ----
 
