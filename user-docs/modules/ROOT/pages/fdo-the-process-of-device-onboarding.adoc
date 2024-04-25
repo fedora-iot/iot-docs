@@ -38,13 +38,13 @@ data to be shared over a secure FDO channel.
 enrolling and passing the configuration and other secrets to the system. That
 enables non-technical users to power-on the system.
 
-To build a Fedora IoT Simplified Installer image and automatically onboard it,
+To build a Fedora IoT Simplified Provisioner image and automatically onboard it,
 provide an existing OSTree commit. The resulting simplified image contains a
 raw image that has the OSTree commit deployed. After you boot the Simplified
 installer ISO image, it provisions a Fedora IoT system that you can use on a
 hard disk or as a boot image in a virtual machine.
 
-The Fedora IoT Simplified Installer image is optimized for unattended
+The Fedora IoT Simplified Provisioner image is optimized for unattended
 installation to a device and supports both network-based deployment and
 non-network-based deployments. However, for network-based deployment, it
 supports only UEFI HTTP boot.
