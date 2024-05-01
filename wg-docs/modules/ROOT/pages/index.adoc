@@ -1,5 +1,4 @@
 = Fedora IoT Working Group
-:url-irc: https://web.libera.chat/?channel=#fedora-iot
 :url-matrix: https://matrix.to/#/#iot:fedoraproject.org
 
 The Fedora IoT Working Group develops and maintains the xref:iot::index.adoc[Fedora IoT Edition].
@@ -7,7 +6,7 @@ If you'd like to join us, introduce yourself and pitch in!
 
 == Communications
 
-We primarily communicate by the https://lists.fedoraproject.org/admin/lists/iot.lists.fedoraproject.org/[Fedora IoT mailing list] and the {url-irc}[#fedora-iot IRC channel on Libera.Chat] (bridged to {url-matrix}[#iot on chat.fedoraproject.org]).
+We primarily communicate by the https://lists.fedoraproject.org/admin/lists/iot.lists.fedoraproject.org/[Fedora IoT mailing list] and the https://matrix.to/#/#iot:fedoraproject.org[Fedora IoT channel on Matrix].
 Check the https://calendar.fedoraproject.org/IoT/[IoT calendar] for meeting times and locations.
 
 == Contributing to Fedora IoT
