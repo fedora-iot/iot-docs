@@ -1,0 +1,91 @@
+= Fedora IoT Working Group Weekly Meeting	SOP
+ 
+The Fedora IoT Working Group hosts a weekly meeting on Wednesdays at 1400UTC in the https://matrix.to/#/#meeting:fedoraproject.org[Fedora Meeting channel on Matrix]. See the https://calendar.fedoraproject.org/IoT/#_[IoT Working Group calendar] to find the next meeting. The following information is presented to show how to run an IoT WG meeting.
+
+== IoT WG Meeting Outline
+
+Fedora uses Meetbot for running text-based meetings from our Matrix meeting rooms. Meetbot recognizes several commands to start a logged meeting that will generate meeting minutes once the meeting ends. The following is an outline of the Meetbot commands executed sequentially that the meeting moderator would use to run a meeting:
+
+----
+!startmeeting Fedora IoT Working Group Meeting
+!chair pwhalen coremodule miabbot
+
+!topic 1) Roll Call
+!topic 2) Working Group
+!topic 3) Fedora XX - Stable
+!topic 4) Fedora XX - Rawhide
+!topic 5) General Bugs
+!topic 6) Open Floor
+
+!endmeeting
+----
+TIP: Since Fedora switched to using Matrix as our primary messaging system in late-2023, Meetbot no longer recognizes the !chair command. However, it can still be useful to !chair those who are integral to the meeting, as it will notify a user that they have been mentioned in a meeting, acting as a form of a ping.
+
+
+== Meeting Invites
+An invite to the meeting is sent out to the IoT email list one day before each meeting. If you would like this weekly reminder, you can subscribe to the https://lists.fedoraproject.org/admin/lists/iot.lists.fedoraproject.org/[IoT mailing list].
+
+
+== Agenda
+Each meeting follows a basic agenda as follows:
+----
+!topic 1) Roll Call
+!topic 2) Working Group
+!topic 3) Fedora XX - Stable
+!topic 4) Fedora XX - Rawhide
+!topic 5) General Bugs
+!topic 6) Open Floor
+----
+If an additional topic is suggested, the meeting agenda will be amended accordingly to include it.
+
+=== !topic 1) Roll Call
+The Roll Call section of the meeting is usually the first ~5 minutes of a meeting, used to say hello and introduce any new meeting attendees.
+
+=== !topic 2) Working Group
+This is where Working Group issues are discussed. Usual examples are process changes and documentation updates.
+
+=== !topic 3) Fedora XX - Stable
+Any information pertaining to the current Stable release of Fedora is discussed here. Often, we review the results of the https://openqa.fedoraproject.org/[openQA automated testing] and look for any issues.
+
+=== !topic 4) Fedora XX - Rawhide
+Similarly to the Stable release topic, this is where we discuss general information pertinent to the current Fedora Rawhide release, including https://openqa.fedoraproject.org/[openQA automated testing results]. Once Fedora branches (and until the Final milestone is released), we change this topic to *Fedora XX - Branched*, and add a *Fedora XX - Rawhide* topic after this one, incrementing each topic following by one to reflect the additional topic.
+
+=== !topic 5) General Bugs
+Here is a place to discuss bugs that affect Fedora IoT as a whole, not specific to a particular release or milestone.
+
+=== !topic 6) Open Floor
+This topic serves to cover any other area that should be discussed, but doesn't necessarily fall under one of the previous topics.
+
+== Meeting Minutes
+After each meeting, Meetbot will compile text and HTML format logs and summary minutes. These minutes are then sent out to the https://lists.fedoraproject.org/admin/lists/iot.lists.fedoraproject.org/[IoT mailing list], as well as compiled and stored https://lists.fedorahosted.org/archives/list/iot@lists.fedoraproject.org/[here]. It is useful to access the stored meeting minutes if you were unable to attend a meeting, but want a summary of what was discussed. The moderator of each meeting should review the previous meeting's minutes to bring up any !action items that should be discussed.
+
+== Meetbot Commands
+
+Curious what else Meetbot is capable of?
+Below are the full commands you can use with Meetbot after a meeting has started.
+
+* `!meetingname <a new name>`:
+  Rename the meeting.
+* `!topic <a topic name>`:
+  Change the agenda topic of the meeting.
+* `!endmeeting`:
+  End the meeting and generate the meeting summary.
+
+There are also several handy tags that you can use to tag a message to highlight it in the minutes (and add an emoji reaction here):
+
+* 🚩 `!action`:
+  An action item that needs follow-up.
+  All action items will be listed separately in the meeting summary generated after the meeting ends.
+* ✏️ `!info`:
+  Information or details that summarize the discussion or context about the topic.
+* 👍 `!agreed`:
+  A statement that the team has agreed to as a final decision.
+* 👎 `!rejected`:
+  A statement that the team has rejected as an outcome or a decision.
+* 💭 `!idea`:
+  A new idea or approach to a challenge or opportunity.
+* 🛟 `!halp`:
+  Help!
+  Call attention for action items or work that needs help from other team members.
+* 🔗 `!link`:
+  URLs to additional reading material or deliverables related to the topic.
