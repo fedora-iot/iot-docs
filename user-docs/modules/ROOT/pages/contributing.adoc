@@ -27,4 +27,4 @@ We primarily communicate by the https://lists.fedoraproject.org/admin/lists/iot.
 
 == Weekly meetings
 
-We meet every Wednesday (11:00EST) in the {url-matrix-meeting}[Fedora meeting room on Matrix]. Feel free to hop in and join the discussion!
+We meet every Wednesday 14:00UTC (10:00EST) in the {url-matrix-meeting}[Fedora meeting room on Matrix]. Feel free to hop in and join the discussion!
