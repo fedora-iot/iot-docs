@@ -5,3 +5,4 @@ This page documents the Standard Operating Procedures for the IoT working group 
 == Standard Operating Procedures
 
 * xref:sop-branching-fedora-iot.adoc[Branching Fedora IoT]
+* xref:iot-weekly-meetings-sop.adoc[Attending/Running IoT WG Weekly Meetings]
