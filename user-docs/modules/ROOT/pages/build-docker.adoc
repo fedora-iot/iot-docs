@@ -144,13 +144,16 @@ More information on the `firewall-cmd` command can be found at https://firewalld
 
 == Example: Interaction with GPIO interface
 
-The Fedora IoT image includes utilities for interacting with any GPIO interfaces:
+To interact with the GPIO interface, layer the `libgpiod-utils` package on the existing image or use with a container.
+
+To layer the package:
 
 ----
+$ sudo rpm-ostree install libgpiod-utils python3-libgpiod
 $ sudo gpiodetect
 ----
 
-Since the command requires privilege, create a container for an application that works with the GPIO interface in the root namespace.
+To create a container for an application that works with the GPIO interface in the root namespace.
 
 Start the Dockerfile with a FROM command to indicate the base image:
 
