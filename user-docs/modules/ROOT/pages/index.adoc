@@ -17,7 +17,7 @@ If you are looking for a traditional dnf based operating system for your device,
 
 If you are looking for a lightweight yet powerful and scalable core OS for your Internet of Things project, you came to the right place! xref:getting-started.adoc[Get Started with Fedora IoT]!
 
-If you are after an OS for Kubernetes there is https://getfedora.org/en/coreos/[Fedora CoreOS]
+If you are after an OS for Kubernetes there is https://fedoraproject.org/en/coreos/[Fedora CoreOS]
 
 == Contribute to Fedora IoT Edition
 For communication and contributing please see the xref:contributing.adoc[Contributing and Reporting Bugs] section.
