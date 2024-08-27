@@ -58,9 +58,9 @@ firewall-cmd --add-port={UEFIHTTPBootServerPort}/tcp
 
 * The correct URL to perform UEFI HTTPBoot depends on the ISO architecture (`x86_64` or `aarch64`)
 ** For `x86_64` hardware the corresponding HTTP URL of
-`EFI/BOOT/BOOTX86.efi` file will be used to boot (e.g. `http://{UEFIHTTPBootServerIP}:{UEFIHTTPBootServerPort}/EFI/BOOT/BOOTX86.efi`)
+`EFI/BOOT/BOOTX86.EFI` file will be used to boot (e.g. `http://{UEFIHTTPBootServerIP}:{UEFIHTTPBootServerPort}/EFI/BOOT/BOOTX86.EFI`)
 ** For `aarch64` hardware the corresponding HTTP URL of
-`EFI/BOOT/BOOTAA64.efi` file will be used to boot (e.g. `http://{UEFIHTTPBootServerIP}:{UEFIHTTPBootServerPort}/EFI/BOOT/BOOTAA64.efi`)
+`EFI/BOOT/BOOTAA64.EFI` file will be used to boot (e.g. `http://{UEFIHTTPBootServerIP}:{UEFIHTTPBootServerPort}/EFI/BOOT/BOOTAA64.EFI`)
 
 === Booting Physical Servers
 
@@ -90,7 +90,7 @@ virt-install --connect qemu:///system \
 * Select the MAC address corresponding to the interface you wan to use to perform UEFI HTTPBoot and press *"[Enter]"*
 * Select *"HTTP Boot Configuration"* and press *"[Enter]"*
 * Select *"Boot URI"* and press *"[Enter]"*
-* Enter the HTTPBoot URL (see above) (e.g.: *http://{UEFIHTTPBootServerIP}:{UEFIHTTPBootServerPort}/EFI/BOOT/BOOTX86.efi*) and press *"[Enter]"*
+* Enter the HTTPBoot URL (see above) (e.g.: *http://{UEFIHTTPBootServerIP}:{UEFIHTTPBootServerPort}/EFI/BOOT/BOOTX86.EFI*) and press *"[Enter]"*
 * Press *"[F10]"* key to save the changes and then press *"[Y]"* to confirm the action
 * Press *"[Esc]"* four times until you return to the main screen
 * Select *"Boot Manager"*
