@@ -34,6 +34,8 @@ Log into the Fedora IoT compose host and run the compose for the pending release
 
 == Once the release has been declared `Go!`
 
+=== Beta
+
 When the release is signed off on Thursday after the Go/No-Go meeting. Open a ticket with https://pagure.io/releng/issues[Release Engineering] to sign the deliverables. A request https://pagure.io/releng/issue/11677[example] from Fedora 39.
 
 Once the release is signed, from the compose host create the directory and run the script to copy the release so it can be sync'd to the Fedora mirrors. 
@@ -41,14 +43,58 @@ Once the release is signed, from the compose host create the directory and run t
 For the Beta release, note the destintation is the `test` directory:
 
 ----
-mkdir /pub/alt/iot/test/f[release_version]
+mkdir /pub/alt/iot/test/[release_version]
 ./sync-release.sh
 ----
 
-For final:
+=== Final 
+
+The final release requires an additional compose moving the `development` release to `stable`.
+
+==== Update the signing key
+
+Open a pull request to update the signing key for the specified release. Example from https://pagure.io/fedora-infra/ansible/pull-request/2325[Fedora 41 GA].
+
+==== Update Pungi configuration
+
+Create a local fork of the Fedora https://pagure.io/fedora-iot/pungi-iot.git[IoT Pungi repository] to make changes to the configuration files used to build Fedora IoT.
+
+Update the the URL used for the compose, moving from `latest` to the compose declared Gold in the Go/NoGo meeting. This example uses the Fedora 41 GA compose:
 
 ----
-mkdir /pub/alt/iot/test/f[release_version]
+sed -i 's|branched/latest-Fedora-41/|41/Fedora-41-20241024.0/|g' fedora-iot.conf
+----
+
+Next update the branch from `devel` to `stable`:
+
+----
+sed -i 's|fedora/devel/|fedora/stable/|g' fedora-iot.conf
+----
+
+Review changes and open a pull request for peer review.
+
+==== Update the ostree repository
+
+Update the https://pagure.io/fedora-iot/pungi-iot.git[Fedora IoT ostree repository] for the final compose. Update the branch from `devel` to `stable` and the release URL from branched to the release directory. The examples below were used for Fedora 41 GA. 
+
+----
+sed -i 's|s/devel/%(arch)s/|s/stable/%(arch)s/|g' config.ini
+sed -i 's|fedora/devel/|fedora/stable/|g' *.yaml 
+sed -i 's|fedora/linux/development/41|fedora/linux/releases/41|g' config.ini
+----
+
+Review changes and open a pull request for peer review.
+
+==== Release compose
+
+After the changes have been merged, complete the GA compose. Once completed, open a ticket with https://pagure.io/releng/issues[Release Engineering] to sign the deliverables. A request https://pagure.io/releng/issue/11677[example] from Fedora 39.
+
+==== Sync the Release 
+
+Once the release is signed, from the compose host create the directory and run the script to copy the release so it can be sync'd to the Fedora mirrors.
+
+----
+mkdir /pub/alt/iot/[release_version]
 ./sync-release.sh
 ----
 
