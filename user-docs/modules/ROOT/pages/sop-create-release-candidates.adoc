@@ -71,6 +71,13 @@ Next update the branch from `devel` to `stable`:
 sed -i 's|fedora/devel/|fedora/stable/|g' fedora-iot.conf
 ----
 
+Update the `sync-bootc-base-containers.sh` script, moving the development release to stable.
+
+----
+sed -i 's|current_stable="40"|current_stable="41"|g' sync-bootc-base-containers.sh
+sed -i 's|current_devel="41"|#current_devel="41"|g' sync-bootc-base-containers.sh
+----
+
 Review changes and open a pull request for peer review.
 
 ==== Update the ostree repository
