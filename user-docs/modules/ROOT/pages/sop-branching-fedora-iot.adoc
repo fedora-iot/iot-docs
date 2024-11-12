@@ -183,6 +183,27 @@ Review the changes and if satisfied, push to your fork and open a pull request f
 * check to make sure the Fedora IoT tag has been created in koji. To verify you will need to install the `koji` package in Fedora
 ** Verify the tags are listed for the new branches `koji list-tags|grep f*-iot`
 
-* ensure the signing key has been updated in ansible (look for the iot portion)
+* ensure the signing key has been updated in Ansible (look for the iot portion)
 ** https://pagure.io/fedora-infra/ansible
 ** As of Fedora 40 you can find the relevant section https://pagure.io/fedora-infra/ansible/blob/main/f/roles/robosignatory/templates/robosignatory.toml.j2=_434[here].
+* Make sure to update Ansible and create a cron job for the development (devel) release. You can find cron jobs https://pagure.io/fedora-infra/ansible/blob/main/f/roles/releng/files[here]. 
+
+You will need to create the file as it gets removed at Final. Example for `devel-iot` (IMPORTANT - Make sure to update the branched used, in the example it's `f41`):
+
+----
+# IoT devel compose
+MAILTO=releng-cron@lists.fedoraproject.org
+00 14 * * * root touch /tmp/fedora-compose-devel-iot && TMPDIR=`mktemp -d /tmp/devel.XXXXXX` && cd $TMPDIR && git clone https://pagure.io/fedora-iot/pungi-iot.git && cd pungi-iot && git checkout f41 && ./twoweek-nightly.sh RC-$(date "+\%Y\%m\%d").0 && rm /tmp/fedora-compose-devel-iot
+----
+
+Add it to the IoT section of main.yml found https://pagure.io/fedora-infra/ansible/blob/main/f/roles/releng/tasks/main.yml[here]:
+
+----
+# put cron job in for IoT devel compose
+- name: IoT devel compose cron
+  ansible.builtin.copy:
+    src: devel-iot
+    dest: /etc/cron.d/devel-iot
+    mode: "644"
+  when: inventory_hostname.startswith('compose-iot01.iad2')
+----

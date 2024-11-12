@@ -92,6 +92,10 @@ sed -i 's|fedora/linux/development/41|fedora/linux/releases/41|g' config.ini
 
 Review changes and open a pull request for peer review.
 
+==== Update Automated compose
+
+Ensure the cron job used to automate the compose for `stable-iot` is updated to point to the correct https://pagure.io/fedora-infra/ansible/blob/main/f/roles/releng/files/stable-iot[branch] for the new stable release and delete the cronjob used for the development release, `devel-iot`. 
+
 ==== Release compose
 
 After the changes have been merged, complete the GA compose. Once completed, open a ticket with https://pagure.io/releng/issues[Release Engineering] to sign the deliverables. A request https://pagure.io/releng/issue/11677[example] from Fedora 39.
