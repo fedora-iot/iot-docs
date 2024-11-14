@@ -1,17 +1,17 @@
-= Build a Container with a Dockerfile
+= Build a Container with a Containerfile
 :toc:
 
-== Creating the Dockerfile
+== Creating the Containerfile
 If a container does not already exist for your application, one can be built for your device. 
 
-It is common to create images from a working directory which holds the Dockerfile and any supporting files. This may be a version controlled directory to facilitate sharing.
+It is common to create images from a working directory which holds the Containerfile and any supporting files. This may be a version controlled directory to facilitate sharing.
 
 ----
-$ mkdir demo-docker && cd demo-docker
+$ mkdir container-demo && cd container-demo
 ----
 
-There are many examples of building containers using a Dockerfile.
-A simple Dockerfile will contain some of the following elements:
+There are many examples of building containers using a Containerfile.
+A simple Containerfile will contain some of the following elements:
 
 * The FROM line indicates the base, or starting, container, such as a latest Fedora image. 
   This image will be pulled if it is not already available locally.
@@ -33,16 +33,16 @@ Create a working directory with some content for a web server:
 $ mkdir demo-httpd && cd demo-httpd && echo 'sample container' > index.html
 ----
 
-Start the Dockerfile with a FROM command to indicate the base image:
+Start the Containerfile with a FROM command to indicate the base image:
 
 ----
-$ echo 'FROM fedora:latest' >> Dockerfile
+$ echo 'FROM fedora:latest' >> Containerfile
 ----
 
 Add a RUN command to update the image and add any application and utilities:
 
 ----
-$ echo 'RUN dnf -y update && dnf -y install httpd git  && dnf clean all' >> Dockerfile
+$ echo 'RUN dnf -y update && dnf -y install httpd git  && dnf clean all' >> Containerfile
 ----
 
 The above example installs git.
@@ -52,7 +52,7 @@ If your content is available in the build working directory, you can use the COP
 Copy to the sample index.html file into the container:
 
 ----
-$ echo 'COPY index.html /var/www/html/index.html' >> Dockerfile
+$ echo 'COPY index.html /var/www/html/index.html' >> Containerfile
 ----
 
 The EXPOSE line specifies that the container listens on specified network ports. 
@@ -61,13 +61,13 @@ It is used by the `--publish-all` option on the `podman run` command.
 Document what ports are available to publish:
 
 ----
-$ echo 'EXPOSE 80' >> Dockerfile
+$ echo 'EXPOSE 80' >> Containerfile
 ----
 
 Specify the command to run when the container starts:
 
 ----
-$ echo 'ENTRYPOINT /usr/sbin/httpd -DFOREGROUND' >> Dockerfile
+$ echo 'ENTRYPOINT /usr/sbin/httpd -DFOREGROUND' >> Containerfile
 ----
 
 NOTE: Port bindings are not yet supported by rootless containers.
@@ -78,7 +78,7 @@ Port bindings for rootless containers is available in upstream testing for podma
 Build the image with a descriptive tag:
 
 ----
-$ sudo podman build --tag fedora:myhttpd -f ./Dockerfile
+$ sudo podman build --tag fedora:myhttpd -f ./Containerfile
 ----
 
 The image will appear in the local registry:
@@ -155,16 +155,16 @@ $ sudo gpiodetect
 
 To create a container for an application that works with the GPIO interface in the root namespace.
 
-Start the Dockerfile with a FROM command to indicate the base image:
+Start the Containerfile with a FROM command to indicate the base image:
 
 ----
-$ echo 'FROM fedora:latest' >> Dockerfile
+$ echo 'FROM fedora:latest' >> Containerfile
 ----
 
 Add a RUN command to update the image and add any application and utilities:
 
 ----
-$ echo 'RUN dnf -y update && dnf -y install git libgpiod-utils python3-libgpiod && dnf clean all' >> Dockerfile
+$ echo 'RUN dnf -y update && dnf -y install git libgpiod-utils python3-libgpiod && dnf clean all' >> Containerfile
 ----
 
 The fedora:latest image includes bash so we can go ahead and build the container without any specific applications to start or ports to expose. The command can be specified when we run the container.
@@ -172,7 +172,7 @@ The fedora:latest image includes bash so we can go ahead and build the container
 Build the image with a descriptive tag:
 
 ----
-$ sudo podman build --tag fedora:gpio -f ./Dockerfile
+$ sudo podman build --tag fedora:gpio -f ./Containerfile
 ----
 
 The image will appear in the localhost registry for the root namespace:
@@ -202,13 +202,13 @@ Now that the device is available from the container, continue to use the install
 Examples for using `gpioset` can be found in a 2018 Fedora Magazine article:  
 https://fedoramagazine.org/turnon-led-fedora-iot/[How to turn on an LED with Fedora IoT]
 
-Automate additional steps by modifying the Dockerfile and building a new container. 
+Automate additional steps by modifying the Containerfile and building a new container. 
 
 The images do not have to be built from a Fedora container. 
-This Dockerfile uses a raspbian image and clones the http://lightshowpi.org/[lightshowpi] project: 
+This Containerfile uses a raspbian image and clones the http://lightshowpi.org/[lightshowpi] project: 
 
 ----
-$ cat Dockerfile
+$ cat Containerfile
 FROM raspbian/stretch:latest
 RUN apt-get -y update && apt-get -y install git-core && apt-get -y clean
 WORKDIR /
@@ -216,7 +216,7 @@ RUN git clone https://togiles@bitbucket.org/togiles/lightshowpi.git && \
   cd lightshowpi && git fetch && git checkout stable
 ----
 
-The Docker documentation includes https://docs.docker.com/develop/develop-images/dockerfile_best-practices/[Dockerfile best practices].
+The Docker documentation includes https://docs.docker.com/develop/develop-images/dockerfile_best-practices/[Containerfile best practices].
 
 == Reusing and Sharing the Containers
 
@@ -252,6 +252,4 @@ $ podman push quay.io/testuser/fedora-myhttpd dir:/tmp/fedora-myhttpd
 ----
 
 For more exporting options, see the https://github.com/containers/libpod/blob/main/docs/source/markdown/podman-push.1.md[podman-push] man page.
-
-
 
