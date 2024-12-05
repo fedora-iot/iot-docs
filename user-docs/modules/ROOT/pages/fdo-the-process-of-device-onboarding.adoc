@@ -95,6 +95,7 @@ be executed.
 
 The following diagram represents the FIDO device onboarding workflow:
 .Deploying Fedora IoT in non-network environment
+
 image::FDO_Process.png[FDO device onboarding]
 
 At the *Device Initialization*, the device contacts the Manufacturing server to
