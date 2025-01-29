@@ -1,5 +1,4 @@
 = Setting up a Physical Device
-:toc:
 
 == Gather the Physical Components
 

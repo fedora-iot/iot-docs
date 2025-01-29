@@ -1,5 +1,4 @@
 = Administration Tasks
-:toc:
 
 Additional tasks mimic any other Linux administration tasks and use available utilities included in the Fedora distribution.
 Some tasks are described below with specific links to other Fedora Documentation or upstream documentation.
