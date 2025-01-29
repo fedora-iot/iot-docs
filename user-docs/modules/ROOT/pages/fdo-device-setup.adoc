@@ -20,7 +20,7 @@ include::_attributes.adoc[]
                --permanent
 # systemctl restart firewalld
 ....
-* You have downloaded the link:http://iot.fedoraproject.org[Simplified Provisioner ISO image] and booted the device from it by
+* You have downloaded the link:https://fedoraproject.org/iot/download[Simplified Provisioner ISO image] and booted the device from it by
 using one of the methods described in xref:booting-the-simplified-provisioner.adoc[Booting the Simplified Provisioner].
 
 

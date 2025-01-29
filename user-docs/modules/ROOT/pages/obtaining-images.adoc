@@ -1,6 +1,6 @@
 = Obtaining Images
 
-Available images for download are described on the IoT https://iot.fedoraproject.org[landing page].
+Available images for download are described on the https://fedoraproject.org/iot/download[Download Fedora IoT page].
 
 == Why the Fedora IoT Image
 
@@ -23,4 +23,4 @@ If you are looking for a graphical desktop environment based on OSTree and desig
 
 If you are looking for a traditional dnf based operating system for your ARM device, visit https://fedoraproject.org/[Fedora].
 
-If you are looking for a lightweight yet powerful and scalable core OS for your Internet of Things project, you came to the right place! https://iot.fedoraproject.org/[Download the images now]!
+If you are looking for a lightweight yet powerful and scalable core OS for your Internet of Things project, you came to the right place! https://fedoraproject.org/iot/download[Download the images now]!

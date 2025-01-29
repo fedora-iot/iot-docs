@@ -22,7 +22,7 @@ The Fedora IoT base image should be able to run with less resources, but of cour
 
 == Download Image
 
-Fedora IoT images are available for download at the https://getfedora.org/en/iot/[landing page]. There are three options available to install IoT on your device:
+Fedora IoT images are available for download at the https://fedoraproject.org/iot/download[Download Fedora IoT page]. There are three options available to install IoT on your device:
 
 * Anaconda installer ISO (Fedora-IoT-ostree-XX.XX.iso ) - The traditional Fedora installer, offers an interactive graphical installation tool to configure most aspects of the system including filesystem, users and passwords.
 * Disk image (Fedora-IoT-raw-XX.XX.raw.xz) - A pre-built disk image suitable for single board computers (SBC's) like the Raspberry Pi 4.
