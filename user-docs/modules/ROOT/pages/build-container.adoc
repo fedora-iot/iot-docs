@@ -1,5 +1,4 @@
 = Build a Container with a Containerfile
-:toc:
 
 == Creating the Containerfile
 If a container does not already exist for your application, one can be built for your device. 

@@ -1,5 +1,4 @@
 = Rebasing to New Versions
-:toc:
 
 The `rpm-ostree rebase` command allows you to switch between multiple branches.
 The `ostree remote` command allows you to view and change repository options.

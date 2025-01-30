@@ -1,7 +1,6 @@
 include::_attributes.adoc[]
 
 = Boot the Simplified Provisioner
-:toc:
 
 == Boot from the Simplified Provisioner ISO
 

@@ -1,5 +1,4 @@
 = Updates and Rollbacks
-:toc:
 
 NOTE: The latest image builds are available https://download.fedoraproject.org/pub/alt/iot/[here].
 

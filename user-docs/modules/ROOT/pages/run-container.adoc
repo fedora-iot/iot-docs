@@ -1,5 +1,4 @@
 = Images and Containers
-:toc:
 
 == Finding Images
 

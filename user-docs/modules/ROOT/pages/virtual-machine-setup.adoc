@@ -1,5 +1,4 @@
 = Setting up a Virtual Machine
-:toc:
 
 == Enable UEFI support for KVM virtual machines
 Fedora IoT requires UEFI, take a look at this wiki page on how to make it available for your VM: https://docs.fedoraproject.org/en-US/quick-docs/uefi-with-qemu/

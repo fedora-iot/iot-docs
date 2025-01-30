@@ -1,7 +1,6 @@
 include::_attributes.adoc[]
 
 = Setup a device by using FDO and the Simplified Provisioner
-:toc:
 
 == Prerequisites
 
