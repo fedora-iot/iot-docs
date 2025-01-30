@@ -5,7 +5,7 @@ include::_attributes.adoc[]
 == Prerequisites
 
 * You have xref:creating-an-ignition-configuration-file.adoc[created an Ignition configuration file] and is accessible via HTTP/HTTPS.
-* You have downloaded the link:http://iot.fedoraproject.org[Simplified Provisioner ISO image] and booted the device from it by
+* You have downloaded the link:https://fedoraproject.org/iot/download[Simplified Provisioner ISO image] and booted the device from it by
 using one of the methods described in xref:booting-the-simplified-provisioner.adoc[Booting the Simplified Provisioner].
 
 
