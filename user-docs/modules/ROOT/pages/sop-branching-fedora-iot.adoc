@@ -101,7 +101,7 @@ Update instances of 'main' to the release:
 ----
 sed -i 's|main|f40|g' fedora-iot.conf
 ----
-IMPORTANT: You will need to manually change the comps repo back to main. There are no branches in comps. (comps files are XML files used by various Fedora tools to perform grouping of packages into functional groups. For more information visit https://pagure.io/fedora-comps[click here].
+IMPORTANT: You will need to manually change the comps and bootc `base-images` repos back to main. There are no branches in comps or `base-images`. (comps files are XML files used by various Fedora tools to perform grouping of packages into functional groups. For more information visit https://pagure.io/fedora-comps[click here].
 
 Update the 'global_ksurl': 
 
@@ -187,6 +187,7 @@ Review the changes and if satisfied, push to your fork and open a pull request f
 ** https://pagure.io/fedora-infra/ansible
 ** As of Fedora 40 you can find the relevant section https://pagure.io/fedora-infra/ansible/blob/main/f/roles/robosignatory/templates/robosignatory.toml.j2=_434[here].
 * Make sure to update Ansible and create a cron job for the development (devel) release. You can find cron jobs https://pagure.io/fedora-infra/ansible/blob/main/f/roles/releng/files[here]. 
+* Create a treefile in the `base-images` and `fedora-iot-bootc` repositories pointing to the newly branched release. This may be obsolete with the move to Konflux. An example of the treefile used for Fedora 41 composes can be found https://gitlab.com/fedora/bootc/base-images/-/blob/main/fedora-41.yaml?ref_type=heads[here]. Branched composes use `fedora-devel`.
 
 You will need to create the file as it gets removed at Final. Example for `devel-iot` (IMPORTANT - Make sure to update the branched used, in the example it's `f41`):
 
