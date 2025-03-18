@@ -1,5 +1,7 @@
 = Setting up a Device with Zezere
 
+IMPORTANT: Zezere has been retired as of Fedora 42, for device configuration in Fedora 42+ use xref:creating-an-ignition-configuration-file.adoc[Ignition], xref:fdo-the-process-of-device-onboarding[FDO] or copy your SSH key using xref:arm-image-installer[arm-image-installer]. 
+
 The disk images do not have a pre-configured user or any passwords set for security reasons. To use the deployment you will need to add your SSH key to the root account using the provisioning service - Zezere.
 
 == Using the Zezere Provisioning Server

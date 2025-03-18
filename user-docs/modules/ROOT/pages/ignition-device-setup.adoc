@@ -1,4 +1,13 @@
 include::_attributes.adoc[]
+= Setup a device by using Ignition and a Raw disk image
+
+== Prerequisites
+
+* You have xref:creating-an-ignition-configuration-file.adoc[created an Ignition configuration file] and is accessible via HTTP/HTTPS.
+* You have downloaded a link:https://fedoraproject.org/iot/download[Raw disk image] and copied to media for your device.
+
+== Edit the boot parameters
+As the device boots, edit the kernel args and add the url to your ignition config, for example: `ignition.config.url=http://192.168.122.1/fiot.ign`
 
 = Setup a device by using Ignition and the Simplified Provisioner
 
@@ -35,7 +44,7 @@ menuentry 'Install Fedora {FedoraVersion}' --class fedora --class gnu-linux --cl
 ....
 * Boot the menu entry by pressing *"[Ctrl-x]"* to boot and install the IoT device
 
-== Verifying the installation
+= Verifying the installation
 
 Once the installation has finished and the device has rebooted you should be able to login with the user
 configured within the ignition file:

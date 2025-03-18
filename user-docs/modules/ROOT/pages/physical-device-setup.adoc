@@ -59,7 +59,7 @@ $ dmesg -w
 ----
 
 === Scripted image transfer with `arm-image-installer` 
-
+<<arm-image-installer>>
 Install the `arm-image-installer` package:
 
 ----
