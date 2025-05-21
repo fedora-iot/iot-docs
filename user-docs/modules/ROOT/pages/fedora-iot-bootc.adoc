@@ -1,0 +1,72 @@
+= Fedora IoT Bootc Images
+
+== Getting Familiar with Bootc
+
+As part of Fedora's initiative towards bootable containers, you can now create Fedora IoT bootc images. These images use standard
+OCI/Docker containers as transport but contain all components needed to boot a Fedora IoT system. This allows you to ship updates to 
+your Fedora IoT system using container images.
+
+Essentially, Fedora IoT bootc images retain all the functionality you're used to in Fedora IoT, while leveraging the flexibility 
+and ease of maintenance provided by bootc. 
+
+For more information, please check out the https://docs.fedoraproject.org/en-US/bootc/[official bootc documentation], as well as the 
+https://gitlab.com/fedora/bootc/base-images[Fedora Bootc Base Images Git repository].
+
+== Fedora IoT Bootc Image Example
+
+This example walks through building and booting a Fedora IoT bootc image in a Podman machine. 
+
+To start, create a clone of the https://gitlab.com/fedora/bootc/base-images[Fedora Bootc Base Images] Git repository. This includes the Fedora
+IoT package manifest we will use to create out Fedora IoT bootc image.
+
+Within this clone, create a `Containerfile.custom` with the following contents:
+----
+FROM localhost/fedora-bootc as builder
+RUN /usr/libexec/bootc-base-imagectl build-rootfs --manifest=fedora-iot /target-rootfs
+
+FROM scratch
+COPY --from=builder /target-rootfs/ /
+LABEL containers.bootc 1
+ENV container=oci
+STOPSIGNAL SIGRTMIN+3
+CMD ["/sbin/init"]
+----
+
+Initialize your Podman machine using the following command. You may skip this step if you already have a podman machine.
+----
+podman machine init
+----
+
+Grant your Podman machine the permissions necessary to run your Fedora IoT bootc image using:
+----
+podman machine set --rootful
+----
+
+Start your Podman machine using
+----
+podman machine start
+----
+
+Next, create a `localhost/fedora-bootc` image using the command below. This is required for building your Fedora IoT bootc image, as the 
+containerfile you created uses `localhost/fedora-bootc` as builder:
+----
+podman -c podman-machine-default-root build --cap-add=all --security-opt=label=disable \
+--device /dev/fuse -t localhost/fedora-bootc .
+----
+
+You've now created a `localhost/fedora-bootc` image and have all the tools to build your `fedora-iot` image. Use the following command to do so:
+----
+podman -c podman-machine-default-root build --cap-add=all --security-opt=label=disable \
+--device /dev/fuse -t localhost/fedora-iot -f Containerfile.custom
+----
+
+After building the `localhost/fedora-iot` image, you should be able to see it in your Podman machine's list of images. Use the following command to check:
+----
+podman -c podman-machine-default-root images
+----
+
+You're now ready to boot a virtual machine using your new Fedora IoT bootc image. The command below will boot a VM in your current terminal window, 
+allowing you to test everything that Fedora IoT bootc images have to offer:
+----
+podman-bootc run --filesystem=xfs localhost/fedora-iot
+----
