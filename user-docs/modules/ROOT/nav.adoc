@@ -28,6 +28,7 @@
 ** xref:update-applications.adoc[Updating Applications]
 ** xref:rebasing.adoc[Rebasing to New Versions]
 ** xref:admin-tasks.adoc[Administration Tasks]
+** xref:fedora-iot-bootc.adoc[Fedora IoT Bootc]
 * xref:contributing.adoc[Contributing & Reporting Bugs]
 * xref:reference-platforms.adoc[Reference Platforms]
 * xref:prd.adoc[Product Requirement Document]
