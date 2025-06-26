@@ -1,0 +1,56 @@
+include::_attributes.adoc[]
+
+== Customizing the Simplified Provisioner ISO
+
+Fedora IoT provides a generic Simplified Provisioning ISO that is by default configured to install to a virtual disk (`/dev/vda`). This can be customized for your device depending on what hardware you have (nvme0, sda, mmcblk0) and configuration option you would like to leverage - FDO or Ignition.
+
+=== Prerequisites
+
+* Recent simplified-provisioning ISO
+* Fedora system with `lorax` installed, which provides the `mkksiso` tool (sudo dnf install lorax).
+* To use FDO, you have installed and configured the FDO services as described in:
+** xref:fdo-installing-the-manufacturing-server-package.adoc[Installing and configuring the Manufacturing server]
+** xref:fdo-installing-configuring-and-running-the-rendezvous-server.adoc[Installing and configuring the Rendezvous Server]
+** xref:fdo-installing-configuring-and-running-the-owner-server.adoc[Installing and configuring the Owner's Onboarding Server]
+* To use Ignition, you have created a configuration file as described in:
+** xref:creating-an-ignition-configuration-file.adoc[Creating an Ignition configuration file]
+
+== Creating a custom Simplified Provisioner
+
+With use of the `mkksiso` tool its possible to create a customized installer that can be used to install and configure most devices.
+
+=== Example with FIDO Device Onboard
+
+This example:
+
+* Uses the `--cmdline` option to add the `fdo.manufacturing_server_url` to specify the FDO Manufacturing server to be used during the installation. NOTE: Replace the URL with that of your FDO Manufacturing server url.
+* Uses the `--replace` option to update the installation device and remove the `quiet` option from the kernel arguments so boot message are shown on screen
+* Uses the generic ISO - `Fedora-IoT-provisioner-42-20250618.0.x86_64.iso` creating a new ISO named `Fedora-IoT-provisioner-FDO-42-20250618.0.x86_64.iso`
+[subs="attributes"]
+
+....
+sudo mkksiso --cmdline "fdo.manufacturing_server_url=http://192.168.1.26:8080 fdo.diun_pub_key_insecure=true" \
+	--replace quiet "" \
+	--replace vda sda \
+Fedora-IoT-provisioner-42-20250618.0.x86_64.iso Fedora-IoT-provisioner-FDO-42-20250618.0.x86_64.iso
+....
+
+=== Example with Ignition
+
+This example:
+
+* Uses the `--cmdline` option to add the `ignition.config.url` to specify the location of the Ignition configuration file. NOTE: Replace the URL with that of your Ignition file. 
+* Uses the `--replace` option to update the installation device to use `nvme0`
+* Uses the generic ISO - `Fedora-IoT-provisioner-42-20250618.0.x86_64.iso` creating a new ISO named `Fedora-IoT-provisioner-IGN-42-20250618.0.x86_64.iso`
+[subs="attributes"]
+
+....
+sudo mkksiso --cmdline "coreos.inst.append=ignition.config.url=http://192.168.1.25/configs/ignition/config.ign" \
+	--replace vda nvme0 \
+Fedora-IoT-provisioner-42-20250618.0.x86_64.iso Fedora-IoT-provisioner-IGN-42-20250618.0.x86_64.iso
+....
+
+== Troubleshooting issues
+[subs="attributes"]
+
+When troubleshooting issues with the Simplified-Provisioner it may be helpful to use the `coreos.inst.skip_reboot` option to prevent automatic reboot after installation completes.
