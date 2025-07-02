@@ -11,7 +11,7 @@ General Resources:
 
 == User Management
 
-The initial image includes a locked root account without a password, a ssh key is provisioned via the provisioning service using xref:ignition.adoc[ignition].
+The initial image includes a locked root account without a password, ssh keys can be added using xref:ignition-device-setup.adoc[ignition].
 
 ----
 $ id testuser
