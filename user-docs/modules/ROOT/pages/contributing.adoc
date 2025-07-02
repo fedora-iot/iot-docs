@@ -18,9 +18,6 @@ Set the bug to block the https://bugzilla.redhat.com/show_bug.cgi?id=IoT[IoT Bug
 
 If you don't know which component to use or would to request a new package or feature be added to Fedora IoT,  you can file an issue in the https://github.com/fedora-iot/iot-distro/issues/new/choose[IoT Distro] Issue tracker in Github.
 
-The provisioning portal is a project called Zezere.
-You can report bugs and file feature requests on the https://github.com/fedora-iot/zezere[Zezere project page].
-
 == Getting IoT help
 
 We primarily communicate by the https://lists.fedoraproject.org/admin/lists/iot.lists.fedoraproject.org/[Fedora IoT mailing list] and the {url-irc}[#fedora-iot IRC channel on Libera.Chat] (bridged to {url-matrix}[#iot on chat.fedoraproject.org]).

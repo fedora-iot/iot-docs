@@ -26,7 +26,7 @@ Fedora IoT images are available for download at the https://fedoraproject.org/io
 
 * Anaconda installer ISO (Fedora-IoT-ostree-XX.XX.iso ) - The traditional Fedora installer, offers an interactive graphical installation tool to configure most aspects of the system including filesystem, users and passwords.
 * Disk image (Fedora-IoT-raw-XX.XX.raw.xz) - A pre-built disk image suitable for single board computers (SBC's) like the Raspberry Pi 4.
-* Simplified Provisioning ISO (Fedora-IoT-provisioner-XX.iso) - A new tool offering zero touch installation leveraging xref:fdo-device-setup.adoc[FIDO Device Onboarding] or xref:ignition.adoc[Ignition] for configuration.
+* Simplified Provisioning ISO (Fedora-IoT-provisioner-XX.iso) - A new tool offering zero touch installation leveraging xref:fdo-device-setup.adoc[FIDO Device Onboarding] or xref:ignition-device-setup.adoc[Ignition] for configuration.
 
 == Setup VM or Physical Device
 
@@ -35,4 +35,4 @@ Fedora IoT images are available for download at the https://fedoraproject.org/io
 - Follow these steps to xref:physical-device-setup.adoc[setup physical device]
 
 
-Follow the setup instructions from xref:ignition.adoc[ignition]
+Follow the setup instructions from xref:ignition-device-setup.adoc[ignition]

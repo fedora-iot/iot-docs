@@ -3,7 +3,6 @@
 ** xref:obtaining-images.adoc[Obtaining Images]
 ** xref:virtual-machine-setup.adoc[Setting up a Virtual Machine]
 ** xref:physical-device-setup.adoc[Setting up a Physical Device]
-** xref:ignition.adoc[Setting up a Device with Zezere]
 ** xref:ignition-device-setup.adoc[Setting up a Device with Ignition]
 ** xref:fdo-device-setup.adoc[Setting up a Device with FDO]
 ** xref:fdo-the-process-of-device-onboarding.adoc[FIDO Device Onboarding]
