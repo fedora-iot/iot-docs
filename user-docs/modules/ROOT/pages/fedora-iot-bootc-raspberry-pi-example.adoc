@@ -1,0 +1,76 @@
+= Fedora IoT Bootc Example with Raspberry Pi
+
+== Installing Fedora IoT on a SD Card
+
+To install Fedora IoT on a SD Card use the arm-image-installer. See xref:physical-device-setup.adoc[Physical Device Setup] for details.
+
+For the Raspberry Pi 3 the command to create the SD Card is the following:
+
+----
+sudo arm-image-installer --image=Fedora-IoT-raw-42-20250724.1.aarch64.raw.xz --media=/dev/sda --target=rpi3 --resizefs --addkey=id_rsa.pub
+----
+
+This command expects, that your ssh key and the Fedora IoT image is present in the local directory.
+
+After completion you can put the SD Card in the Raspberry Pi, boot and connect via SSH.
+
+== Build a custom Fedora Bootc image and push it to GitLab
+
+To build your own image on your host you can create a Containerfile. This example just copies a file to /etc.
+
+----
+FROM quay.io/fedora/fedora-bootc:latest
+
+COPY files/secret /etc
+----
+
+To build and push the image with podman run the following on the host:
+
+----
+podman build --platform linux/arm64 -t gitlab.internal.net:5005/software/bootc/test-image:latest .
+podman login gitlab.internal.net:5005
+podman push gitlab.internal.net:5005/software/bootc/test-image:latest
+----
+
+== Switch the Raspberry Pi to your custom image
+
+On the Raspberry Pi you can now switch to your custom image.
+To access GitLab you need a Project Access Token with Role Developer and Permission `read_registry`. 
+
+To create a authentication file encode the GitLab token using an arbitrary user name to base64:
+
+----
+echo -n "no_user:glpat-thisisthegitlabprojectaccesstoken" | base64
+----
+
+use the base64 string to create a image pull secret on the Raspberry Pi:
+
+----
+cat << EOF > /etc/ostree/auth.json 
+{
+	"auths": {
+		"gitlab.internal.net:5005": {
+			"auth": "bm9fdXNlcjpnbHBhdC10aGlzaXN0aGVnaXRsYWJwcm9qZWN0YWNjZXNzdG9rZW4="
+		}
+	}
+}
+EOF
+----
+
+To switch the bootc image you can now run on the Raspberry Pi:
+
+----
+bootc switch gitlab.internal.net:5005/software/bootc/test-image:latest
+----
+
+After rebooting:
+
+----
+reboot
+----
+
+The file should be present in the filesystem:
+
+----
+cat /etc/secret
+----
