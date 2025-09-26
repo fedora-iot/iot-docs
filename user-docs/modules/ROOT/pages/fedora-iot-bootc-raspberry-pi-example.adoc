@@ -1,76 +1,45 @@
 = Fedora IoT Bootc Example with Raspberry Pi
 
-== Installing Fedora IoT on a SD Card
+Using `bootc` with Fedora IoT currently requires that you have already provisioned a device with Fedora IoT.
 
-To install Fedora IoT on a SD Card use the arm-image-installer. See xref:physical-device-setup.adoc[Physical Device Setup] for details.
+Follow the instructions in xref:physical-device-setup.adoc[Physical Device Setup] to provision Fedora IoT to your Raspberry Pi.
 
-For the Raspberry Pi 3 the command to create the SD Card is the following:
+Once the Raspberry Pi is provisioned successfully, you can create a custom Fedora `bootc` image.
 
-----
-sudo arm-image-installer --image=Fedora-IoT-raw-42-20250724.1.aarch64.raw.xz --media=/dev/sda --target=rpi3 --resizefs --addkey=id_rsa.pub
-----
+== Build a custom Fedora Bootc image and push it to a registry
 
-This command expects, that your ssh key and the Fedora IoT image is present in the local directory.
+To build your own image on your host you can create a Containerfile. This example just copies a file to `/etc`.
 
-After completion you can put the SD Card in the Raspberry Pi, boot and connect via SSH.
+NOTE: this example uses the Fedora `bootc` base image and does not include all of the RPMs included as part of Fedora IoT.
 
-== Build a custom Fedora Bootc image and push it to GitLab
-
-To build your own image on your host you can create a Containerfile. This example just copies a file to /etc.
-
+[source,dockerfile]
 ----
 FROM quay.io/fedora/fedora-bootc:latest
-
 COPY files/secret /etc
 ----
 
-To build and push the image with podman run the following on the host:
+To build and push the image with `podman` run the following on the host:
 
+[source,bash]
 ----
-podman build --platform linux/arm64 -t gitlab.internal.net:5005/software/bootc/test-image:latest .
-podman login gitlab.internal.net:5005
-podman push gitlab.internal.net:5005/software/bootc/test-image:latest
+podman build --platform linux/arm64 -t quay.io/username/bootc-test-image:latest
+podman push quay.io/username/bootc-test-image:latest
 ----
+
+This example uses https://quay.io/[Quay.io] as the registry; you may need additional configuration to push to the registry you are using.
 
 == Switch the Raspberry Pi to your custom image
 
-On the Raspberry Pi you can now switch to your custom image.
-To access GitLab you need a Project Access Token with Role Developer and Permission `read_registry`. 
+On the Raspberry Pi you can now switch to your custom image with the `bootc switch` command.
 
-To create a authentication file encode the GitLab token using an arbitrary user name to base64:
-
+[source,bash]
 ----
-echo -n "no_user:glpat-thisisthegitlabprojectaccesstoken" | base64
+bootc switch quay.io/username/bootc-test-image:latest
 ----
 
-use the base64 string to create a image pull secret on the Raspberry Pi:
+After rebooting the Raspberry Pi, the file copied as part of the Containerfile should be present in the filesystem:
 
-----
-cat << EOF > /etc/ostree/auth.json 
-{
-	"auths": {
-		"gitlab.internal.net:5005": {
-			"auth": "bm9fdXNlcjpnbHBhdC10aGlzaXN0aGVnaXRsYWJwcm9qZWN0YWNjZXNzdG9rZW4="
-		}
-	}
-}
-EOF
-----
-
-To switch the bootc image you can now run on the Raspberry Pi:
-
-----
-bootc switch gitlab.internal.net:5005/software/bootc/test-image:latest
-----
-
-After rebooting:
-
-----
-reboot
-----
-
-The file should be present in the filesystem:
-
+[source,bash]
 ----
 cat /etc/secret
 ----
