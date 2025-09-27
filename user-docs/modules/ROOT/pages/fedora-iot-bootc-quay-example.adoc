@@ -2,15 +2,17 @@
 
 == Building and Booting a Fedora IoT Bootc Image
 
-This example walks through building and booting a Fedora IoT bootc image using Quay.io, as well as pushing an update to a booted 
+This example walks through building and booting a Fedora IoT `bootc` image using Quay.io, as well as pushing an update to a booted
 Fedora IoT system.
 
-NOTE: This example is based on the Fedora bootc documentation about building scratch images; reference the upstream docs 
+NOTE: This example is based on the Fedora `bootc` documentation about building scratch images; reference the upstream docs
 https://docs.fedoraproject.org/en-US/bootc/building-from-scratch/#_using_bootc_base_imagectl_build_rootfs[here] for the latest version/information.
 
 NOTE: This example assumes the user has a Quay account with the ability to create custom repositories.
 
 To start, create a `Containerfile.custom` with the following contents:
+
+[source,dockerfile]
 ----
 FROM quay.io/fedora-testing/fedora-bootc:rawhide-standard as builder
 RUN /usr/libexec/bootc-base-imagectl build-rootfs --manifest=fedora-iot /target-rootfs
@@ -23,99 +25,127 @@ STOPSIGNAL SIGRTMIN+3
 CMD ["/sbin/init"]
 ----
 
-You're now ready to build a Fedora IoT bootc image using the custom containerfile you made earlier. Use this command:
+You're now ready to build a Fedora IoT `bootc` image using the custom Containerfile you made earlier. Use this command:
+
+[source,bash]
 ----
 podman build --cap-add=all --security-opt=label=type:container_runtime_t \
 --device /dev/fuse -t localhost/fedora-iot -f Containerfile.custom .
 ----
 
-Then, tag your Fedora IoT bootc image:
-----
-podman tag localhost/fedora-iot:latest quay.io/[quay repository name]:fedora-iot
-----
+Then, tag your Fedora IoT `bootc` image:
 
-Before pushing to Quay.io, you may need to log in:  
-----  
-podman login quay.io  
----- 
-
-Push your new Fedora IoT bootc image to Quay.io using the following command. Note that you may need to log in again:
-----
-podman push quay.io/[quay repository name]:fedora-iot
-----
-
-NOTE: The next step uses `podman-bootc`. If you need to install `podman-bootc`, please follow the instructions in the 
-https://github.com/containers/podman-bootc[podman-bootc repository]
-
-Now, boot your Fedora IoT bootc image. Open a new terminal window and run:
-----
-podman-bootc run --filesystem=ext4 quay.io/[quay repository name]:fedora-iot
-----
-
-`podman-bootc` will pull your image and boot it inside a VM in the terminal window, 
-allowing you to test everything Fedora IoT bootc images have to offer.
-
-== Pushing an Update to your Fedora IoT bootc system
-
-After completing the tutorial above, you now have a functional Fedora IoT bootc system! But what if you need to make a change?
-Updating a bootc system is remarkably simple -- just follow the steps below. 
-
-NOTE: This tutorial assumes you have just completed the above tutorial, and have access to a booted Fedora IoT bootc system.
-
-First, navigate to your cloned Fedora Bootc Base Images repository and create a containerfile named `Containerfile.fix` with your desired changes. 
-
-Next, rebuild your `localhost/fedora-iot` image using the new containerfile:
-----
-podman build --cap-add=all --security-opt=label=type:container_runtime_t \
---device /dev/fuse -t localhost/fedora-iot -f Containerfile.fix .
-----
-
-Tag your updated Fedora IoT bootc image:
+[source,bash]
 ----
 podman tag localhost/fedora-iot:latest quay.io/[quay repository name]:fedora-iot
 ----
 
 Before pushing to Quay.io, you may need to log in:
+
+[source,bash]
 ----
 podman login quay.io
 ----
 
-Push your updated Fedora IoT bootc image to Quay.io, using the command below:
+Push your new Fedora IoT `bootc` image to Quay.io using the following command. Note that you may need to log in again:
+
+[source,bash]
 ----
 podman push quay.io/[quay repository name]:fedora-iot
 ----
 
-After successfully pushing, switch back to your virtual machine running your Fedora IoT bootc image. 
+NOTE: The next step uses `podman-bootc`. If you need to install `podman-bootc`, please follow the instructions in the
+https://github.com/containers/podman-bootc[podman-bootc repository]
+
+Now, boot your Fedora IoT `bootc` image. Open a new terminal window and run:
+
+[source,bash]
+----
+podman-bootc run --filesystem=ext4 quay.io/[quay repository name]:fedora-iot
+----
+
+`podman-bootc` will pull your image and boot it inside a VM in the terminal window,
+allowing you to test everything Fedora IoT `bootc` images have to offer.
+
+== Pushing an Update to your Fedora IoT bootc system
+
+After completing the tutorial above, you now have a functional Fedora IoT `bootc` system! But what if you need to make a change?
+Updating a `bootc` system is remarkably simple -- just follow the steps below.
+
+NOTE: This tutorial assumes you have just completed the above tutorial, and have access to a booted Fedora IoT `bootc` system.
+
+First, navigate to your cloned Fedora Bootc Base Images repository and create a Containerfile named `Containerfile.fix` with your desired changes.
+
+Next, rebuild your `localhost/fedora-iot` image using the new Containerfile:
+
+[source,bash]
+----
+podman build --cap-add=all --security-opt=label=type:container_runtime_t \
+--device /dev/fuse -t localhost/fedora-iot -f Containerfile.fix .
+----
+
+Tag your updated Fedora IoT `bootc` image:
+
+[source,bash]
+----
+podman tag localhost/fedora-iot:latest quay.io/[quay repository name]:fedora-iot
+----
+
+Before pushing to Quay.io, you may need to log in:
+
+[source,bash]
+----
+podman login quay.io
+----
+
+Push your updated Fedora IoT `bootc` image to Quay.io, using the command below:
+
+[source,bash]
+----
+podman push quay.io/[quay repository name]:fedora-iot
+----
+
+After successfully pushing, switch back to your virtual machine running your Fedora IoT `bootc` image.
 Download and queue the updated image for your next reboot:
+
+[source,bash]
 ----
 bootc upgrade
 ----
 
 Run the following command to see your updated image staged for the next reboot:
+
+[source,bash]
 ----
 bootc status
 ----
 
-Reboot your Fedora IoT bootc system and use your new updated image:
+Reboot your Fedora IoT `bootc` system and use your new updated image:
+
+[source,bash]
 ----
 reboot
 ----
 
-After rebooting, you may need to ssh back into your Fedora IoT bootc system. To do so, first list all podman-bootc
-VMs: 
+After rebooting, you may need to SSH back into your Fedora IoT `bootc` system. To do so, first list all `podman-bootc` VMs:
+
+[source,bash]
 ----
 podman-bootc list
 ----
 
 Then find the ID of your desired machine and run the following:
+
+[source,bash]
 ----
 podman-bootc ssh [ID]
 ----
 
 After reconnecting, run check the status again:
+
+[source,bash]
 ----
 bootc status
 ----
 
-Your updated image should now show up 
-as `Booted`, and the previous image as `Rollback`. You have successfully updated your Fedora IoT bootc system!
+Your updated image should now show up as `Booted`, and the previous image as `Rollback`. You have successfully updated your Fedora IoT bootc system!

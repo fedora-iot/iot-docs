@@ -1,14 +1,14 @@
 = Fedora IoT Bootc Images
 
-As part of Fedora's initiative towards bootable containers, you can now create Fedora IoT bootc images. These images use standard
-OCI/Docker containers as transport but contain all components needed to boot a Fedora IoT system. This allows you to ship updates to 
+As part of Fedora's initiative towards bootable containers, you can now create Fedora IoT `bootc` images. These images use standard
+OCI/Docker containers as transport but contain all components needed to boot a Fedora IoT system. This allows you to ship updates to
 your Fedora IoT system using container images.
 
-Bootc is part of the standard Fedora IoT distribution. After xref:physical-device-setup.adoc[setting up a Physical Device] 
-you can use the Bootc tools to update the system.
+`bootc` is part of the standard Fedora IoT distribution. After xref:physical-device-setup.adoc[setting up a Physical Device]
+you can use the `bootc` tools to update the system.
 
-Essentially, Fedora IoT bootc images retain all the functionality you're used to in Fedora IoT, while leveraging the flexibility 
-and ease of maintenance provided by bootc. 
+Essentially, Fedora IoT `bootc` images retain all the functionality you're used to in Fedora IoT, while leveraging the flexibility
+and ease of maintenance provided by `bootc`.
 
-For more information, please check out the https://docs.fedoraproject.org/en-US/bootc/[official bootc documentation], as well as the 
+For more information, please check out the https://docs.fedoraproject.org/en-US/bootc/[official bootc documentation], as well as the
 https://gitlab.com/fedora/bootc/base-images[Fedora Bootc Base Images Git repository].

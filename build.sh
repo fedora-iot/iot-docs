@@ -15,14 +15,14 @@ if uname | grep -iwq darwin; then
 elif uname | grep -iq linux; then
     # Running on Linux.
     # there isn't an antora/aarch64 container, antora can be installed locally
-    # Check whether podman is available, else faill back to docker
+    # Check whether podman is available, else fall back to docker
     # which requires root.
 
     if [ -f /usr/local/bin/antora ]; then
         /usr/local/bin/antora "${cmd}"
     elif uname -m | grep -iwq aarch64; then
         echo "no antora/aarch64 container try just \`npm install -g @antora/cli @antora/site-generator-default\`"
-    elif [ -f /usr/bin/podman ]; then
+    elif command -v podman > /dev/null; then
         echo ""
         echo "This build script is using Podman to run the build in an isolated environment."
         echo ""
