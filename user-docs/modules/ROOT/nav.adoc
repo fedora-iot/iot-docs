@@ -1,6 +1,7 @@
 * xref:index.adoc[Welcome]
 * xref:getting-started.adoc[Getting Started]
 ** xref:obtaining-images.adoc[Obtaining Images]
+** xref:using-image-builder.adoc[Building Custom Images]
 ** xref:virtual-machine-setup.adoc[Setting up a Virtual Machine]
 ** xref:physical-device-setup.adoc[Setting up a Physical Device]
 ** xref:ignition-device-setup.adoc[Setting up a Device with Ignition]

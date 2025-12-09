@@ -1,0 +1,347 @@
+= Building Custom Fedora IoT Images with image-builder
+
+https://github.com/osbuild/image-builder-cli[image-builder] is a command-line tool for building custom operating system images for Fedora, CentOS, and RHEL. This guide explains how to use image-builder to create customized Fedora IoT images with your own package selections, user configurations, and settings.
+
+NOTE: For pre-built Fedora IoT images without customization, see xref:obtaining-images.adoc[Obtaining Images].
+
+== Installing image-builder
+
+To install image-builder on Fedora:
+
+----
+$ sudo dnf install image-builder ostree
+----
+
+== Available Fedora IoT Image Types
+
+image-builder supports several IoT-specific image types for x86_64 and aarch64 architectures:
+
+* `iot-commit` - OSTree commit tarball (the foundation for custom images)
+* `iot-installer` - Anaconda installer ISO for interactive installation
+* `iot-simplified-installer` - Zero-touch installer using FDO or Ignition
+* `iot-raw-xz` - Compressed raw disk image for physical devices (e.g., Raspberry Pi)
+* `iot-qcow2` - QCOW2 disk image for virtual machines
+* `iot-container` - OCI container with OSTree commit
+* `iot-bootable-container` - Bootable container image
+
+To list all available IoT image types:
+
+----
+$ image-builder list | grep iot
+----
+
+== Building Custom Fedora IoT Images
+
+The typical workflow for creating custom Fedora IoT images is:
+
+1. Create a blueprint describing your customizations
+2. Build a custom OSTree commit with your changes
+3. Serve the OSTree commit locally
+4. Build installation media or disk images from your custom commit
+
+=== Step 1: Creating a Blueprint
+
+Blueprints are TOML files that describe customizations for your image. They allow you to:
+
+* Add or remove packages
+* Configure users and groups
+* Set up SSH keys
+* Configure system settings
+
+Create a blueprint file (example: `iot-custom.toml`):
+
+----
+name = "iot-custom"
+description = "Custom Fedora IoT Image"
+version = "0.0.1"
+
+[[packages]]
+name = "vim-enhanced"
+
+[[packages]]
+name = "htop"
+
+[[packages]]
+name = "tmux"
+
+[[customizations.user]]
+name = "admin"
+description = "Admin User"
+password = "$6$rounds=4096$saltsalt$encrypted_password_hash"
+groups = ["wheel"]
+
+[[customizations.sshkey]]
+user = "admin"
+key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIExample admin@workstation"
+----
+
+NOTE: Generate encrypted passwords with `openssl passwd -6` (will prompt for password interactively)
+
+=== Step 2: Building a Custom OSTree Commit
+
+Build an OSTree commit tarball with your customizations. Use the official ref naming pattern (`fedora/stable`, `fedora/devel`, or `fedora/rawhide`):
+
+----
+$ sudo image-builder build iot-commit \
+  --distro fedora-43 \
+  --blueprint iot-custom.toml \
+  --ostree-ref fedora/stable/x86_64/iot \
+  --output-dir ./iot-commit-output
+
+# Note For aarch64 use `fedora/stable/aarch64/iot`
+----
+
+This creates a tarball containing your customized OSTree commit.
+
+=== Step 3: Setting Up a Local OSTree Repository
+
+Extract the commit tarball and serve the OSTree repository:
+
+----
+$ tar -xf ./iot-commit-output/*.tar
+$ mv repo ostree-repo
+$ cd ostree-repo
+$ python3 -m http.server 8000
+----
+
+The tarball contains a `repo/` directory with the complete OSTree repository. To run the HTTP server in the background, add `&` at the end:
+
+----
+$ python3 -m http.server 8000 &
+----
+
+Your custom OSTree repository is now available at `http://localhost:8000`
+
+To verify the repository is properly set up:
+
+----
+$ ostree --repo=./ostree-repo refs
+$ curl http://localhost:8000/refs/heads/fedora/stable/x86_64/iot
+----
+
+== Building Images from Your Custom OSTree
+
+With your custom OSTree commit served locally, you can now build various image types.
+
+=== Building an Installer ISO
+
+Create an Anaconda installer ISO that will install your customized Fedora IoT:
+
+----
+$ sudo image-builder build iot-installer \
+  --distro fedora-43 \
+  --ostree-url http://localhost:8000 \
+  --ostree-ref fedora/stable/x86_64/iot \
+  --output-dir ./images
+----
+
+=== Building a Simplified Installer
+
+The simplified installer provides zero-touch provisioning using FDO or Ignition:
+
+----
+$ sudo image-builder build iot-simplified-installer \
+  --distro fedora-43 \
+  --ostree-url http://localhost:8000 \
+  --ostree-ref fedora/stable/x86_64/iot \
+  --output-dir ./images
+----
+
+See xref:booting-the-simplified-provisioner.adoc[Booting the Simplified Provisioner] for more details.
+
+=== Building Raw Disk Images
+
+For single-board computers like Raspberry Pi, create a compressed raw disk image:
+
+----
+$ sudo image-builder build iot-raw-xz \
+  --distro fedora-43 \
+  --arch aarch64 \
+  --ostree-url http://localhost:8000 \
+  --ostree-ref fedora/stable/aarch64/iot \
+  --output-dir ./images
+----
+
+These images can be written directly to SD cards or other storage media.
+
+=== Building QCOW2 Images for VMs
+
+For testing in virtual machines:
+
+----
+$ sudo image-builder build iot-qcow2 \
+  --distro fedora-43 \
+  --ostree-url http://localhost:8000 \
+  --ostree-ref fedora/stable/x86_64/iot \
+  --output-dir ./images
+----
+
+=== Building Container Images
+
+Create an OCI container with your OSTree commit:
+
+----
+$ sudo image-builder build iot-container \
+  --distro fedora-43 \
+  --ostree-url http://localhost:8000 \
+  --ostree-ref fedora/stable/x86_64/iot \
+  --output-dir ./images
+----
+
+Create a bootable container image for modern container-native workflows:
+
+----
+$ sudo image-builder build iot-bootable-container \
+  --distro fedora-43 \
+  --ostree-url http://localhost:8000 \
+  --ostree-ref fedora/stable/x86_64/iot \
+  --output-dir ./images
+----
+
+See xref:fedora-iot-bootc.adoc[Fedora IoT Bootc] for more information on bootable containers.
+
+== Serving Your OSTree Repository to Other Machines
+
+To make your custom OSTree repository available to other machines on your network:
+
+----
+$ cd ostree-repo
+$ python3 -m http.server 8000 --bind 0.0.0.0 &
+----
+
+NOTE: The `&` runs the server in background. To stop it later, use `pkill -f "http.server 8000"`
+
+Then use your machine's IP address when building images on other systems:
+
+----
+$ sudo image-builder build iot-installer \
+  --distro fedora-43 \
+  --ostree-url http://192.168.1.100:8000 \
+  --ostree-ref fedora/stable/x86_64/iot \
+  --output-dir ./images
+----
+
+== Advanced Options
+
+=== Adding Extra Repositories
+
+Add additional package repositories during the OSTree commit build (not included in final image):
+
+----
+$ sudo image-builder build iot-commit \
+  --distro fedora-43 \
+  --blueprint iot-custom.toml \
+  --ostree-ref fedora/stable/x86_64/iot \
+  --extra-repo "https://example.com/repo/fedora/43/x86_64" \
+  --output-dir ./iot-commit-output
+----
+
+WARNING: Extra repositories are not GPG checked and only used during the commit build.
+
+=== Customizing Output Names
+
+Customize the output filename for your images:
+
+----
+$ sudo image-builder build iot-installer \
+  --distro fedora-43 \
+  --ostree-url http://localhost:8000 \
+  --ostree-ref fedora/stable/x86_64/iot \
+  --output-name my-custom-installer \
+  --output-dir ./images
+----
+
+=== Verbose Output for Debugging
+
+Enable verbose mode to see detailed build information:
+
+----
+$ sudo image-builder build iot-commit \
+  --distro fedora-43 \
+  --blueprint iot-custom.toml \
+  --ostree-ref fedora/stable/x86_64/iot \
+  --verbose \
+  --output-dir ./iot-commit-output
+----
+
+=== Exporting Build Artifacts
+
+Export the OSBuild manifest and build log for troubleshooting:
+
+----
+$ sudo image-builder build iot-commit \
+  --distro fedora-43 \
+  --blueprint iot-custom.toml \
+  --ostree-ref fedora/stable/x86_64/iot \
+  --with-manifest \
+  --with-buildlog \
+  --output-dir ./iot-commit-output
+----
+
+== Describing Image Types
+
+To see detailed information about any IoT image type:
+
+----
+$ image-builder describe iot-installer --distro fedora-43
+$ image-builder describe iot-qcow2 --distro fedora-43 --arch aarch64
+$ image-builder describe iot-simplified-installer --distro fedora-43
+----
+
+This shows the packages, pipelines, and configuration options for each image type.
+
+== Best Practices
+
+1. *Test with QCOW2 First* - Build and test iot-qcow2 images in VMs before creating installation media
+2. *Use Version Control for Blueprints* - Keep blueprint files in git to track customizations
+3. *Minimize Package Additions* - Only add essential packages; use containers for applications
+4. *Use Encrypted Passwords* - Never use plain text passwords in blueprints
+5. *Enable Verbose Mode for Troubleshooting* - Use `--verbose` when debugging build issues
+
+== Troubleshooting
+
+=== Build Fails with OSTree Errors
+
+Verify your local OSTree repository is properly set up and the ref exists:
+
+----
+$ ostree --repo=./ostree-repo refs
+$ ostree --repo=./ostree-repo show fedora/stable/x86_64/iot
+----
+
+Ensure your HTTP server is running and accessible:
+
+----
+$ curl http://localhost:8000/config
+$ curl http://localhost:8000/refs/heads/fedora/stable/x86_64/iot
+----
+
+=== Permission Denied Errors
+
+Most image-builder operations require root privileges:
+
+----
+$ sudo image-builder build iot-installer ...
+----
+
+=== Insufficient Disk Space
+
+Building images requires significant disk space. Ensure at least 10GB free in:
+
+* `/var/cache/image-builder/` (build cache)
+* Output directory
+
+Clear cache if needed:
+
+----
+$ sudo rm -rf /var/cache/image-builder/store/*
+----
+
+== Additional Resources
+
+* xref:obtaining-images.adoc[Obtaining Images] - Download pre-built Fedora IoT images
+* xref:booting-the-simplified-provisioner.adoc[Booting the Simplified Provisioner] - Using simplified installer
+* xref:fedora-iot-bootc.adoc[Fedora IoT Bootc] - Bootable container workflows
+* https://github.com/osbuild/image-builder-cli[image-builder CLI] - Source code, documentation, and issue tracker
+* https://www.osbuild.org/[OSBuild Project Documentation]
+* https://ostreedev.github.io/ostree/[OSTree Documentation]
