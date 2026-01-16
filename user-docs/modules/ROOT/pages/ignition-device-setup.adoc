@@ -50,6 +50,6 @@ Once the installation has finished and the device has rebooted you should be abl
 configured within the ignition file:
 [subs="attributes"]
 ....
-ssh core@${DefaultIoTDeviceIP}
+ssh core@{DefaultIoTDeviceIP}
 ....
 
