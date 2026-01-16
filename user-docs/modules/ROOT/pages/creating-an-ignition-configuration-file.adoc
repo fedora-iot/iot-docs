@@ -80,7 +80,7 @@ generate an Ignition Config in the JSON format:
 +
 [subs="attributes"]
 ----
-$ podman run -i --rm quay.io/coreos/butane --pretty --strict < fiot.bn | tee fiot.ign
+$ podman run -i --rm quay.io/coreos/butane --pretty --strict < fiot.bu | tee fiot.ign
 {
   "ignition": {
     "config": {
