@@ -1,0 +1,505 @@
+= Fedora IoT Bootable Containers
+:toc:
+:toclevels: 1
+
+Fedora IoT provides official bootable container images that enable a container-native workflow for operating system management. These images use standard OCI/Docker containers as transport but contain all components needed to boot a complete Fedora IoT system, allowing you to ship updates using familiar container tooling.
+
+== Overview
+
+Bootable containers represent an evolution in how operating systems are deployed and managed. Instead of traditional package-based updates, you can now treat your entire IoT operating system as a container image, leveraging the same workflows and tools you use for application containers.
+
+=== Key Benefits
+
+* **Container-native workflow**: Use `podman`, `docker`, and standard Containerfiles to build and customize your OS
+* **Atomic updates**: Updates are applied as complete image replacements with automatic rollback capability
+* **Registry-based distribution**: Store and distribute OS images using any OCI-compatible container registry
+* **Version control**: Track your OS configuration in git alongside your Containerfiles
+* **Reproducible builds**: Create bit-identical images from the same Containerfile
+
+== Available Images
+
+Fedora IoT bootable container images are available from the following registries:
+
+* **Quay.io**: `quay.io/fedora/fedora-iot`
+* **Fedora Registry**: `registry.fedoraproject.org/fedora-iot`
+
+=== Supported Versions
+
+Images are available for each supported Fedora release:
+
+* **Latest stable** (Fedora IoT 43): `quay.io/fedora/fedora-iot:latest`
+* **Rawhide** (Fedora IoT 44): `quay.io/fedora/fedora-iot:rawhide`
+
+You can also use specific version tags if needed:
+
+* `quay.io/fedora/fedora-iot:43` (same as :latest)
+* `quay.io/fedora/fedora-iot:44` (same as :rawhide)
+
+IMPORTANT: For most use cases, use `:latest` for stable releases or `:rawhide` for development. These tags automatically point to the current stable and development versions.
+
+NOTE: You can view all available tags at https://quay.io/repository/fedora/fedora-iot?tab=tags
+
+To list available tags using the command line:
+
+[source,bash]
+----
+skopeo list-tags docker://quay.io/fedora/fedora-iot
+----
+
+NOTE: All examples in this documentation use `podman` for container operations. While `docker` can also be used, `podman` is the recommended tool for working with Fedora IoT bootable containers.
+
+== Getting Started
+
+=== Pulling Images
+
+To pull a Fedora IoT bootable container image:
+
+[source,bash]
+----
+podman pull quay.io/fedora/fedora-iot:latest
+----
+
+Or from the Fedora registry:
+
+[source,bash]
+----
+podman pull registry.fedoraproject.org/fedora-iot:latest
+----
+
+=== Inspecting Images
+
+View installed packages in the image:
+
+[source,bash]
+----
+podman run --rm quay.io/fedora/fedora-iot:latest rpm -qa
+----
+
+Check bootc configuration:
+
+[source,bash]
+----
+podman run --rm quay.io/fedora/fedora-iot:latest bootc status
+----
+
+Inspect image metadata:
+
+[source,bash]
+----
+podman inspect quay.io/fedora/fedora-iot:latest
+----
+
+== Building Custom Images
+
+=== Basic Example
+
+Create a `Containerfile` that derives from the official Fedora IoT image:
+
+[source,dockerfile]
+----
+FROM quay.io/fedora/fedora-iot:latest
+
+# Install additional packages
+RUN dnf install -y \
+    vim \
+    tmux \
+    htop \
+    python3-pip \
+    && dnf clean all
+
+# Copy configuration files
+COPY files/network-config /etc/NetworkManager/conf.d/
+COPY files/custom.conf /etc/myapp/
+
+# Install and enable a custom systemd service
+COPY files/myapp.service /etc/systemd/system/
+RUN systemctl enable myapp.service
+
+# Run bootc linter to validate the image
+RUN bootc container lint
+----
+
+Build your custom image:
+
+[source,bash]
+----
+podman build -t quay.io/username/my-iot-device:1.0.0 .
+----
+
+=== Building for Multiple Architectures
+
+For ARM64 devices, build with the appropriate platform:
+
+[source,bash]
+----
+# Build for ARM64
+podman build --platform linux/arm64 -t quay.io/username/my-iot-device:1.0.0 .
+----
+
+If building on a different architecture than your target, enable multi-arch support:
+
+[source,bash]
+----
+sudo dnf install -y qemu-user-static
+----
+
+IMPORTANT: Raspberry Pi is not currently supported by bootc-image-builder due to partition table and firmware requirements. See xref:fedora-iot-bootc-raspberry-pi-example.adoc[Bootc Raspberry Pi Example] for the recommended approach using `bootc switch` on an already-provisioned device.
+
+=== Publishing Images
+
+Push your image to a container registry:
+
+[source,bash]
+----
+# Log in to your registry
+podman login quay.io
+
+# Push the image
+podman push quay.io/username/my-iot-device:1.0.0
+
+# Tag and push latest
+podman tag quay.io/username/my-iot-device:1.0.0 \
+    quay.io/username/my-iot-device:latest
+podman push quay.io/username/my-iot-device:latest
+----
+
+== Creating Bootable Devices
+
+There are two primary methods for deploying Fedora IoT bootable containers to devices:
+
+. **bootc-image-builder**: Create bootable disk images from container images for initial device provisioning
+. **bootc switch/upgrade**: Update existing Fedora IoT devices to use bootable containers
+
+=== Using bootc-image-builder
+
+The `bootc-image-builder` tool converts a bootable container image into a disk image that can be written to physical media or used for bare metal, cloud, or VM deployments.
+
+==== Installing bootc-image-builder
+
+The `bootc-image-builder` tool runs as a container. Since it runs with elevated privileges and accesses the root account's container storage, you need to pull both the builder and your target Fedora IoT image using sudo:
+
+[source,bash]
+----
+# Pull the bootc-image-builder tool
+sudo podman pull quay.io/centos-bootc/bootc-image-builder:latest
+
+# Pull the Fedora IoT image to the root account's storage
+sudo podman pull quay.io/fedora/fedora-iot:latest
+----
+
+==== Configuring User Access
+
+IMPORTANT: Before creating a bootable disk image, you must configure a user account. Without this, you won't be able to log in to the system after it boots.
+
+Create a configuration file `config.toml` to set up a user with SSH access:
+
+[source,toml]
+----
+# User configuration - create a user with sudo access
+[[customizations.user]]
+name = "iotadmin"
+password = "$6$rounds=4096$..."  # Generate with: openssl passwd -6
+key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAI... user@host"
+groups = ["wheel"]
+----
+
+TIP: Generate a hashed password with `openssl passwd -6`. For production systems, use SSH keys instead of passwords for better security.
+
+==== Creating a Raw Disk Image
+
+Generate a raw disk image from a Fedora IoT bootable container with your user configuration:
+
+[source,bash]
+----
+sudo podman run \
+    --rm \
+    -it \
+    --privileged \
+    --pull=newer \
+    --security-opt label=type:unconfined_t \
+    -v /var/lib/containers/storage:/var/lib/containers/storage \
+    -v $(pwd)/output:/output \
+    -v $(pwd)/config.toml:/config.toml:ro \
+    quay.io/centos-bootc/bootc-image-builder:latest \
+    --type raw \
+    --rootfs ext4 \
+    --config /config.toml \
+    quay.io/fedora/fedora-iot:latest
+----
+
+For a custom image:
+
+[source,bash]
+----
+# Pull your custom image with sudo
+sudo podman pull quay.io/username/my-iot-device:1.0.0
+
+# Generate the bootable disk image with user config
+sudo podman run \
+    --rm \
+    -it \
+    --privileged \
+    --pull=newer \
+    --security-opt label=type:unconfined_t \
+    -v /var/lib/containers/storage:/var/lib/containers/storage \
+    -v $(pwd)/output:/output \
+    -v $(pwd)/config.toml:/config.toml:ro \
+    quay.io/centos-bootc/bootc-image-builder:latest \
+    --type raw \
+    --rootfs ext4 \
+    --config /config.toml \
+    quay.io/username/my-iot-device:1.0.0
+----
+
+This creates a `.raw` file in the `./output` directory.
+
+==== Creating Architecture-Specific Images
+
+To build an image for ARM64 devices from an x86_64 host, you need QEMU for cross-architecture support and must pull the architecture-specific container image:
+
+[source,bash]
+----
+# Install QEMU user-mode emulation for cross-architecture support
+sudo dnf install -y qemu-user-static
+
+# Pull the ARM64 variant of the Fedora IoT image
+sudo podman pull --arch aarch64 quay.io/fedora/fedora-iot:latest
+----
+
+Then build the ARM64 disk image:
+
+[source,bash]
+----
+sudo podman run \
+    --rm \
+    -it \
+    --privileged \
+    --pull=newer \
+    --security-opt label=type:unconfined_t \
+    -v /var/lib/containers/storage:/var/lib/containers/storage \
+    -v $(pwd)/output:/output \
+    -v $(pwd)/config.toml:/config.toml:ro \
+    quay.io/centos-bootc/bootc-image-builder:latest \
+    --type raw \
+    --rootfs ext4 \
+    --config /config.toml \
+    --target-arch aarch64 \
+    quay.io/fedora/fedora-iot:latest
+----
+
+WARNING: Cross-architecture image building using `--target-arch` is experimental.
+
+NOTE: This creates a generic ARM64 image. Specific ARM devices like Raspberry Pi may require additional firmware and are not currently supported by bootc-image-builder.
+
+==== Creating Different Image Types
+
+The bootc-image-builder supports multiple output formats. Use the `--type` flag to specify the desired format:
+
+* **raw**: Raw disk image (default, shown in examples above)
+* **qcow2**: QCOW2 image for virtual machines (QEMU/KVM)
+* **iso**: ISO installer image
+* **ami**: Amazon Machine Image for AWS
+* **vmdk**: VMware virtual disk
+* **vhd**: Virtual Hard Disk for Azure/Hyper-V
+
+To create a different image type, simply change the `--type` parameter in the bootc-image-builder command. For example, to create a QCOW2 image for use with QEMU:
+
+[source,bash]
+----
+sudo podman run \
+    --rm \
+    -it \
+    --privileged \
+    --pull=newer \
+    --security-opt label=type:unconfined_t \
+    -v /var/lib/containers/storage:/var/lib/containers/storage \
+    -v $(pwd)/output:/output \
+    -v $(pwd)/config.toml:/config.toml:ro \
+    quay.io/centos-bootc/bootc-image-builder:latest \
+    --type qcow2 \
+    --rootfs ext4 \
+    --config /config.toml \
+    quay.io/fedora/fedora-iot:latest
+----
+
+==== Advanced Configuration Options
+
+Beyond basic user configuration, you can customize filesystem sizes and kernel parameters in your `config.toml`:
+
+[source,toml]
+----
+# User configuration - create a user with sudo access
+[[customizations.user]]
+name = "iotadmin"
+password = "$6$rounds=4096$..."  # Generate with: openssl passwd -6
+key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAI... user@host"
+groups = ["wheel"]
+
+# Filesystem customization - adjust partition sizes
+[[customizations.filesystem]]
+mountpoint = "/"
+minsize = "10 GiB"
+
+[[customizations.filesystem]]
+mountpoint = "/var"
+minsize = "5 GiB"
+
+# Kernel arguments - useful for serial console access
+[customizations.kernel]
+append = "console=ttyS0,115200"
+----
+
+IMPORTANT: Use config.toml for disk image customization (users, partitions, boot config). Use Containerfile for OS customization (packages, services, configurations). The config.toml applies when building the bootable disk image, while Containerfile changes are baked into the container image itself.
+
+==== Writing the Image to a Device
+
+After creating the disk image, write it to your target device:
+
+For an SD card or USB drive:
+
+[source,bash]
+----
+# Find your device (be careful!)
+lsblk
+
+# Write the image (replace /dev/sdX with your device)
+sudo dd if=./output/image/disk.raw of=/dev/sdX bs=4M status=progress conv=fsync
+
+# Sync to ensure all data is written
+sync
+----
+
+WARNING: Double-check the device path before using `dd`. Using the wrong device path can destroy data on other drives.
+
+==== Testing with QEMU
+
+Test your generated image in QEMU before deploying to hardware:
+
+[source,bash]
+----
+# Create a QCOW2 image with user config
+sudo podman run \
+    --rm \
+    -it \
+    --privileged \
+    --pull=newer \
+    --security-opt label=type:unconfined_t \
+    -v /var/lib/containers/storage:/var/lib/containers/storage \
+    -v $(pwd)/output:/output \
+    -v $(pwd)/config.toml:/config.toml:ro \
+    quay.io/centos-bootc/bootc-image-builder:latest \
+    --type qcow2 \
+    --rootfs ext4 \
+    --config /config.toml \
+    quay.io/fedora/fedora-iot:latest
+
+# Boot with QEMU
+qemu-system-x86_64 \
+    -m 4096 \
+    -cpu host \
+    -enable-kvm \
+    -drive file=./output/qcow2/disk.qcow2,format=qcow2 \
+    -net nic -net user
+----
+
+== Deploying to Existing Devices
+
+=== Switching to Official Images
+
+On an existing Fedora IoT device, switch to an official bootable container image:
+
+[source,bash]
+----
+bootc switch quay.io/fedora/fedora-iot:latest
+systemctl reboot
+----
+
+After reboot, verify the switch:
+
+[source,bash]
+----
+bootc status
+----
+
+=== Switching to Custom Images
+
+Deploy your custom image to a device:
+
+[source,bash]
+----
+# For public images
+bootc switch quay.io/username/my-iot-device:1.0.0
+
+# For private registries, authenticate first
+podman login quay.io
+bootc switch quay.io/username/private-image:1.0.0
+
+# Reboot to apply
+systemctl reboot
+----
+
+=== Upgrading Systems
+
+To update to a newer version of your image:
+
+[source,bash]
+----
+# Check for updates
+bootc upgrade --check
+
+# Download and stage the update
+bootc upgrade
+
+# View staged changes
+bootc status
+
+# Apply the update
+systemctl reboot
+----
+
+=== Rolling Back
+
+If an update causes issues, roll back to the previous image:
+
+[source,bash]
+----
+bootc rollback
+systemctl reboot
+----
+
+View available deployments:
+
+[source,bash]
+----
+bootc status
+----
+
+=== Getting Help
+
+If you encounter issues not covered in this guide:
+
+* **Official bootc documentation**: https://docs.fedoraproject.org/en-US/bootc/
+* **Fedora IoT discussion forum**: https://discussion.fedoraproject.org/tag/iot
+* **File issues**: https://github.com/fedora-iot/fedora-iot-bootc/issues
+* **Ask on IRC**: `#fedora-iot` on Libera.Chat
+* **Mailing list**: https://lists.fedoraproject.org/admin/lists/iot.lists.fedoraproject.org/
+
+When reporting issues, include:
+
+* Output of `bootc status`
+* Output of `podman version`
+* Output of `rpm-ostree status` (if applicable)
+* Relevant logs from `journalctl`
+* Your Containerfile (if building custom images)
+
+== Additional Resources
+
+* https://docs.fedoraproject.org/en-US/bootc/[Official bootc documentation]
+* https://github.com/fedora-iot/fedora-iot-bootc[Fedora IoT bootc repository]
+* https://quay.io/repository/fedora/fedora-iot[Fedora IoT container registry]
+* https://github.com/containers/bootc[bootc project on GitHub]
+* https://github.com/osbuild/bootc-image-builder[bootc-image-builder repository]
+* xref:fedora-iot-bootc.adoc[Fedora IoT Bootc Overview]
+* xref:fedora-iot-bootc-quay-example.adoc[Bootc Quay Example]
+* xref:fedora-iot-bootc-raspberry-pi-example.adoc[Bootc Raspberry Pi Example]
+* xref:fedora-iot-bootc-pmachine-example.adoc[Bootc Podman Machine Example]
