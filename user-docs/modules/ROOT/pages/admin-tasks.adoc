@@ -5,7 +5,6 @@ Some tasks are described below with specific links to other Fedora Documentation
 
 General Resources:
 
-* https://docs.fedoraproject.org/en-US/fedora/latest/system-administrators-guide/[Fedora System Administrator’s Guide]
 * https://docs.fedoraproject.org/en-US/quick-docs/[Fedora Quick Docs]
 * Man pages
 
@@ -45,9 +44,6 @@ appuser:x:992:981::/var/home/appuser:/sbin/nologin
 Centralized users accounts (LDAP, Kerberos) can be configured with `authconfig` after the client packages, including `sssd`, have been installed.
 The `/etc/nsswitch.conf` file is already configured to look for sss as well as files and altfiles for account information.
 
-* Fedora Administration Guide:
-  https://docs.fedoraproject.org/en-US/fedora/latest/system-administrators-guide/basic-system-configuration/Managing_Users_and_Groups/[Managing Users and Groups]
-
 User accounts which are members of the wheel group automatically have full privileges with the `sudo` command.
 This is from the following lines in the sudo configuration file:
 
@@ -61,8 +57,8 @@ $ sudo grep wheel /etc/sudoers
 Edits to this configuration file should be made with the `visudo` command so that syntax is checked on exit.
 Instead of editing the main configuration file, grant other users the ability to issue specific commands as a different user by adding a configuration file to the `/etc/sudoers.d/` directory.
 
-* Fedora Administration Guide:
-  https://docs.fedoraproject.org/en-US/fedora/latest/system-administrators-guide/basic-system-configuration/Gaining_Privileges/[Gaining Privileges]
+* Fedora Quick Docs:
+  https://docs.fedoraproject.org/en-US/quick-docs/performing-administration-tasks-using-sudo/[Performing administration tasks using sudo]
 
 Use `ssh-keygen` to generate an ssh key pair then add the public key to the user account on your Fedora IoT device:
 
@@ -73,9 +69,6 @@ $ ssh-copy-id testuser@10.11.12.13
 Replace the username and IP address with that of your device.
 Use the `-i` option to specify a key file other than the default of the most recently modified `~/.ssh/id_*pub` file.
 The `ssh-copy-id` command will append the public key to the user's authorized keys file on the device. It will create the `~/.ssh` directory if it does not already exist and ensure the permission on the files are correct.
-
-* Fedora Administration Guide:
-  https://docs.fedoraproject.org/en-US/fedora/latest/system-administrators-guide/infrastructure-services/OpenSSH/#s3-ssh-configuration-keypairs-generating[Generating Key Pairs]
 
 == Group Management
 
@@ -182,9 +175,6 @@ To disable password authentication for all users, edit `/etc/ssh/sshd_config` fi
 PasswordAuthentication no
 ----
 
-* For additional information, visit the Fedora Administration Guide:
-  https://docs.fedoraproject.org/en-US/fedora/latest/system-administrators-guide/infrastructure-services/OpenSSH/[OpenSSH]
-
 View the default firewall configuration:
 
 ----
@@ -251,26 +241,16 @@ $ sudo systemctl enable httpd --now
 Created symlink /etc/systemd/system/multi-user.target.wants/httpd.service → /usr/lib/systemd/system/httpd.service.
 ----
 
-* Fedora Administration Guide:
-  https://docs.fedoraproject.org/en-US/fedora/latest/system-administrators-guide/infrastructure-services/Services_and_Daemons/[Services and Daemons]
+* Fedora Quick Docs:
+  https://docs.fedoraproject.org/en-US/quick-docs/systemd-understanding-and-administering/[Understanding and administering systemd]
 
 == Viewing Logs
 
 Log files are generally located in the `/var/log` directory.
 System logs can be viewed and searched with `journalctl`.
 
-
-* Fedora Administration Guide:
-  https://docs.fedoraproject.org/en-US/fedora/latest/system-administrators-guide/monitoring-and-automation/Viewing_and_Managing_Log_Files/[Viewing and Managing Log Files]
 * Fedora Quick Docs:
   https://docs.fedoraproject.org/en-US/quick-docs/viewing-logs/[Viewing logs in Fedora]
-
-Accurate time and date stamps help find the correct event when troubleshooting or auditing.
-
-* Fedora Administration Guide:
-  https://docs.fedoraproject.org/en-US/fedora/latest/system-administrators-guide/basic-system-configuration/Configuring_the_Date_and_Time/[Configuring the Date and Time]
-* Fedora Administration Guide:
-  https://docs.fedoraproject.org/en-US/fedora/latest/system-administrators-guide/servers/Configuring_NTP_Using_the_chrony_Suite/[Configuring NTP Using the chrony Suite]
 
 == Editing Kernel Command Line Arguments
 
