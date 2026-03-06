@@ -44,7 +44,7 @@ mmcblk0         179:0    0  14.9G  0 disk
 └─mmcblk0p3     179:3    0   2.9G  0 part /run/media/user/cce2e189-9aee-4b3e-b031-aac9bdc632c9
 ...output omitted...
 ----
-* If you have the `udisks2` package installed you may find the `udisksctl` command helpful in determining the media device name. It will show the model and only the device name without the extra partition information. In this example, a 16GB SanDisk Ultra shows as 'SL16G':
+* If you have the `udisks2` package installed, you may find the `udisksctl` command helpful in determining the media device name. It will show the model and the device name without the extra partition information. In this example, a 16GB SanDisk Ultra shows as 'SL16G':
 ----
 $ udisksctl status 
 MODEL                     REVISION  SERIAL               DEVICE
@@ -52,7 +52,7 @@ MODEL                     REVISION  SERIAL               DEVICE
 SAMSUNG MZSLW1T0HMLH-000L1           S308NAAH501124       nvme0n1 
 SL16G                               0x51821336           mmcblk0 
 ----
-* Finally, the kernel messages will show the addition of a device. In a terminal window before inserting the device run:
+* Finally, the kernel messages will show the addition of a device. In a terminal window before inserting the device, run:
 ----
 $ dmesg -w
 ----
