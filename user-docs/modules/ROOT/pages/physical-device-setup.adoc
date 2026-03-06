@@ -7,7 +7,7 @@ A list of currently tested devices is maintained in the xref:reference-platforms
 Always reference the documentation of the board you have selected for assembly instructions and requirements. At a minimum you will need the board, a power source, and a microSD card. 
 
 === Network connection
-If support for your wireless network devices is not available in the Fedora image, it will have to be added after installation. 
+If the Fedora image lacks support for your wireless network devices, you must add it after installation. 
 You will need a wired connection to complete the installation of the xref:add-layered.adoc[layered package].
 
 For the Fedora disk images:
