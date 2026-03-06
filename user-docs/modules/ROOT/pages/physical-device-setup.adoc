@@ -16,8 +16,7 @@ For the Fedora disk images:
 
 === SD Card
 The Fedora IoT image is currently 4GB in size.
-The best speed class depends on the usage. 
-A faster speed class is better for writes but the trade off is slower read speed.
+The best speed class depends on the usage; a faster speed class is better for writes, but the trade-off is slower read speed.
 
 Documentation for your board may also recommend specific SD Card choices as well as required physical sizes for each device.
 
