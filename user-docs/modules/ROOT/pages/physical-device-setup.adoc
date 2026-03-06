@@ -4,7 +4,7 @@
 
 A list of currently tested devices is maintained in the xref:reference-platforms.adoc[Reference Platforms] page.
 
-Always reference the documentation of the board you have selected for assembly instructions and requirements. At a minimum you will need the board, a power source, and a microSD card. 
+Always reference the documentation of the board you have selected for assembly instructions and requirements. You will need the board, a power source, and a microSD card at a minimum. 
 
 === Network connection
 If the Fedora image lacks support for your wireless network devices, you must add it after installation. 
