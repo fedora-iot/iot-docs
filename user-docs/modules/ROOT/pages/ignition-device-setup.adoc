@@ -3,24 +3,23 @@ include::_attributes.adoc[]
 
 === Prerequisites
 
-* You have xref:creating-an-ignition-configuration-file.adoc[created an Ignition configuration file] and is accessible via HTTP/HTTPS.
-* You have downloaded a link:https://fedoraproject.org/iot/download[Raw disk image] and copied to media for your device.
+* You have xref:creating-an-ignition-configuration-file.adoc[created an Ignition configuration file] that is accessible via HTTP/HTTPS.
+* You have downloaded a link:https://fedoraproject.org/iot/download[Raw disk image] and copied it to your device's storage medium.
 
 === Edit the boot parameters
-As the device boots, edit the kernel args and add the url to your ignition config, for example: `ignition.config.url=http://192.168.122.1/fiot.ign`
+As the device boots, edit the kernel args and add the url to your ignition config. For example: `ignition.config.url=http://192.168.122.1/fiot.ign`
 
-== Setup a device by using Ignition and the Simplified Provisioner
+== Set up a device using Ignition and the Simplified Provisioner.
 
 === Prerequisites
 
-* You have xref:creating-an-ignition-configuration-file.adoc[created an Ignition configuration file] and is accessible via HTTP/HTTPS.
-* You have downloaded the link:https://fedoraproject.org/iot/download[Simplified Provisioner ISO image] and booted the device from it by
-using one of the methods described in xref:booting-the-simplified-provisioner.adoc[Booting the Simplified Provisioner].
+* You have xref:creating-an-ignition-configuration-file.adoc[created an Ignition configuration file] that is accessible via HTTP/HTTPS.
+* You have downloaded the link:https://fedoraproject.org/iot/download[Simplified Provisioner ISO image] and booted the device using it through one of the methods described in xref:booting-the-simplified-provisioner.adoc[Booting the Simplified Provisioner].
 
 
 === Edit the boot parameters
 
-Once device has been booted from the Simplified Provisioner the boot menu shows the
+Once the device has been booted from the Simplified Provisioner, the boot menu shows the
 following options:
 [subs="attributes"]
 ....
@@ -46,7 +45,7 @@ menuentry 'Install Fedora {FedoraVersion}' --class fedora --class gnu-linux --cl
 
 == Verifying the installation
 
-Once the installation has finished and the device has rebooted you should be able to login with the user
+Once the installation has finished and the device has rebooted, you should be able to log in with the user
 configured within the ignition file:
 [subs="attributes"]
 ....
