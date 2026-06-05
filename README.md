@@ -30,3 +30,6 @@ The result will be in a `./public/` directory.
 $ ./preview.sh
 ```
 
+## License
+
+This documentation is licensed under the [Creative Commons Attribution-ShareAlike 4.0 International](LICENSE) (CC-BY-SA-4.0) license.
