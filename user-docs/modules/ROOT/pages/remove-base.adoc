@@ -1,0 +1,23 @@
+== Remove Base Packages
+`rpm-ostree` also you allows to remove base packages which are preinstalled by using the `override` command combined with `remove`:
+
+----
+$ sudo rpm-ostree override remove `foo`
+----
+
+Other options of override:
+---- 
+$rpm-ostree override --help 
+Aufruf:
+  rpm-ostree override [OPTION …] COMMAND
+Manage base package overrides
+Builtin "override" Commands:
+  remove                 Remove packages from the base layer
+  replace                Replace packages in the base layer
+  reset                  Reset currently active package overrides
+Hilfeoptionen:
+  -h, --help       Hilfeoptionen anzeigen
+Anwendungsoptionen:
+  --version        Print version information and exit
+  -q, --quiet      Avoid printing most informational messages
+----
