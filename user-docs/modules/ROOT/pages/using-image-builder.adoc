@@ -141,11 +141,14 @@ The simplified installer provides zero-touch provisioning using FDO or Ignition:
 
 ----
 $ sudo image-builder build iot-simplified-installer \
-  --distro fedora-43 \
-  --ostree-url http://localhost:8000 \
-  --ostree-ref fedora/stable/x86_64/iot \
-  --output-dir ./images
+    --distro fedora-43 \
+    --ostree-url http://localhost:8000 \
+    --ostree-ref fedora/stable/x86_64/iot \
+    --ignition-config ./config.ign # <--- Adding this prevents the Nil Pointer crash
 ----
+[IMPORTANT]
+_.Mandatory Ignition Config File_
+The --ignition-config flag is required. You must have a valid .ign file in your current directory before running this command.
 
 See xref:booting-the-simplified-provisioner.adoc[Booting the Simplified Provisioner] for more details.
 
