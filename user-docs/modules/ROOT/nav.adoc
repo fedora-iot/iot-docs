@@ -30,6 +30,7 @@
 ** xref:rebasing.adoc[Rebasing to New Versions]
 ** xref:admin-tasks.adoc[Administration Tasks]
 ** xref:fedora-iot-bootc.adoc[Fedora IoT Bootc]
+*** xref:bootable-containers.adoc[Using Bootable Containers]
 *** xref:fedora-iot-bootc-pmachine-example.adoc[Bootc Podman Machine Example]
 *** xref:fedora-iot-bootc-quay-example.adoc[Bootc Quay Example]
 *** xref:fedora-iot-bootc-raspberry-pi-example.adoc[Bootc Raspberry Pi Example]
