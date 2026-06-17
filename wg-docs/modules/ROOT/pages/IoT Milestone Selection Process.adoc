@@ -1,0 +1,35 @@
+---
+title: IoT Milestone Selection Process
+category: Working Group
+status: Draft
+---
+= Fedora IoT Milestone Selection and Validation
+:last-updated: 2026-03-27
+:toc:
+
+== Introduction
+This document outlines the process for selecting and validating Fedora IoT composes for official milestones (Beta and Final releases). It ensures consistent quality and transparency in how builds transition from development to stable.
+
+== The Two-Compose Lifecycle
+The current release process involves a candidate build for sign-off and a final build for distribution.
+
+
+
+=== 1. The Go/No-Go Candidate
+* **Selection:** The Working Group identifies the most recent completed daily compose prior to the Go/No-Go meeting.
+* **Content:** This build includes all current stable packages plus any specific overrides tagged for the release.
+* **Validation:** This is the primary target for functional testing by the Working Group.
+
+=== 2. The Milestone Compose
+* **Trigger:** Following a "Go" vote at the Go/No-Go meeting, a second "official" compose is initiated.
+* **Purpose:** This build facilitates the infrastructure move of the content stream from `devel` to `stable`.
+* **Integrity:** Due to the "Freeze" state, no package versions change between the Candidate and the Milestone composes.
+
+== Testing and Verification Requirements
+To ensure a successful release, contributors should perform the following:
+
+1. **Pre-Sign-off Testing:** Verify the Candidate Compose on Tier 1 hardware to identify blocker bugs.
+2. **Post-Sign-off Smoke Test:** Conduct a basic boot test on the Milestone Compose to ensure the stream transition (devel -> stable) was successful and no infrastructure regressions occurred.
+
+== Future Improvements
+The Working Group is investigating infrastructure enhancements to allow for a single-compose sign-off, which will eventually eliminate the need for the second Milestone Compose.
