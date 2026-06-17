@@ -8,7 +8,7 @@ during the first device boot. The Rendezvous server then matches the device
 UUID with the target platform or cloud and informs the device about which Owner
 server endpoint the device must use.
 
-.Prerequisites
+== Prerequisites
 
 * The device where the server will be deployed has a Trusted Platform Module
 (TPM) device to encrypt the disk. If not, you will get an error when booting
@@ -16,7 +16,7 @@ the Fedora IoT device.
 * You created the `device_ca_cert.pem`, `owner_key.der`, and `owner_cert.pem`
 with keys and certificates and copied them into the `/etc/fdo/keys` directory.
 
-.Procedure
+== Procedure
 
 . Install the required RPMs in this server:
 +

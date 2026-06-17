@@ -1,13 +1,23 @@
 include::_attributes.adoc[]
 
-= Boot the Simplified Provisioner
+= Quick firmware update with the Coreos Installer
 
-== Boot from the Simplified Provisioner ISO
+== Overview 
+The Coreos Installer tool, run from the simplified provisioner ISO file, allows technicians to update the firmware on a controller device for immediate use.
 
-* If you are using physical devices with a CD-ROM unit:
-** Burn the downloaded Simplified Provisioner ISO to a CD-ROM
-** Use the CD-ROM to boot the IoT device from it.
-* If you are using Virtual Machines, you can use the `virt-install`
+It does this by bypassing the usual user setup process and jumping to a direct install of a preconfigured OS "snapshot".
+
+To initiate this process for physical hardware, first either save the ISO file to a flash drive and then insert it into the controller or edge device you'd like to update, Alternatively for virtual machine server setups, simply run an install command from the Linux command prompt.
+
+== Installing with a USB flash drive
+
+1. Copy the ISO file to a USB flash drive with no less than 8 GB of storage capacity.
+2. Connect the USB flash drive to the port of the controller you wish to update the firmware on.
+
+
+== Installing on virtual machines for server
+
+1. Use the `virt-install`
 command to boot from the Simplified Provisioner ISO.
 +
 [subs="attributes"]
@@ -21,16 +31,10 @@ command to boot from the Simplified Provisioner ISO.
                --disk pool=default,size=30 \
                --cdrom {FedoraSimplifiedProvisionerISO}
 ....
-
-== Boot the Simplified Provisioner from an USB Flash Drive
-
-* Copy the ISO image file to a USB flash drive (You will need a 8 GB USB flash drive at least)
-* Connect the USB flash drive to the port of the computer you want to boot.
-* Boot the device from the USB flash drive.
-
+ 
 == Boot the Simplified Provisioner from UEFI HTTP Boot
 
-* Copy the contents of the Simplified Provisioner ISO to a directory
+1. Copy the contents of the Simplified Provisioner ISO to a directory
 +
 [subs="attributes"]
 ....

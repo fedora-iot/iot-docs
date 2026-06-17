@@ -4,29 +4,28 @@
 
 A list of currently tested devices is maintained in the xref:reference-platforms.adoc[Reference Platforms] page.
 
-Always reference the documentation of the board you have selected for assembly instructions and requirements. At a minimum you will need the board, a power source, and a microSD card. 
+Always reference the documentation of the board you have selected for assembly instructions and requirements. You will need the board, a power source, and a microSD card at a minimum. 
 
 === Network connection
-If support for your wireless network devices are not available in the Fedora image, it will have to be added after installation. 
-You will need a wired connection to complete the install of the xref:add-layered.adoc[layered package].
+If the Fedora image lacks support for your wireless network devices, you must add it after installation. 
+You will need a wired connection to complete the installation of the xref:add-layered.adoc[layered package].
 
 For the Fedora disk images:
 
 * The Raspberry Pi WiFi is supported in the base image.
 
 === SD Card
-The Fedora IoT image is currently 4GB in size.
-The best speed class depends on the usage. 
-A faster speed class is better for writes but the trade off is slower read speed.
+The Fedora IoT image is currently 4GB.
+The best speed class depends on the usage; a faster speed class is better for writes, but the trade-off is slower read speed.
 
-Documentation for your board may also recommend specific SD Card choices as well as required physical sizes for each device.
+Documentation for your board may also recommend specific SD Card choices and mandate physical sizes for each device.
 
 * Raspberry Pi discusses card size and speed class in their https://www.raspberrypi.org/documentation/installation/sd-cards.md[SD Card Documentation].
 
-WARNING: The following procedures will overwrite everything on the micro SD card. Be sure to backup any data before continuing!
+WARNING: The following procedures will overwrite everything on the micro SD card. Be sure to back up any data before continuing!
 
 == Create a Bootable SD Card
-If you have not already xref:obtaining-images.adoc[downloaded the image], do so now and make a note of the download location and filename.
+If you have not already xref:obtaining-images.adoc[downloaded the image], do so now and note the download location and filename.
 
 === Determine the SD Card Device name
 
@@ -45,7 +44,7 @@ mmcblk0         179:0    0  14.9G  0 disk
 └─mmcblk0p3     179:3    0   2.9G  0 part /run/media/user/cce2e189-9aee-4b3e-b031-aac9bdc632c9
 ...output omitted...
 ----
-* If you have the `udisks2` package installed you may find the `udisksctl` command helpful in determining the media device name. It will show the model and only the device name without the extra partition information. In this example, a 16GB SanDisk Ultra shows as 'SL16G':
+* If you have the `udisks2` package installed, you may find the `udisksctl` command helpful in determining the media device name. It will show the model and the device name without the extra partition information. In this example, a 16GB SanDisk Ultra shows as 'SL16G':
 ----
 $ udisksctl status 
 MODEL                     REVISION  SERIAL               DEVICE
@@ -53,7 +52,7 @@ MODEL                     REVISION  SERIAL               DEVICE
 SAMSUNG MZSLW1T0HMLH-000L1           S308NAAH501124       nvme0n1 
 SL16G                               0x51821336           mmcblk0 
 ----
-* Finally, the kernel messages will show the addition of a device. In a terminal window before inserting the device run:
+* Finally, the kernel messages will show the addition of a device. In a terminal window before inserting the device, run:
 ----
 $ dmesg -w
 ----
