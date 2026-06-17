@@ -1,0 +1,72 @@
+= Getting Started with IoT Bootable Containers (bootc)
+
+Since the launch of Fedora 41, Fedora IoT has supported bootable containers (bootc).
+Bootable containers are similar in function to other containers (like Podman), but allow the user to boot into the container as an immutable system.
+Any updates or package installs are then layered on top of the base bootc image, allowing rollbacks in the event of an issue.
+Each bootc image ships with a kernel, bootloader, drivers, etc, rendering them fully bootable and not requiring a container manager (Podman, Kubernetes, etc).
+
+For more information about bootable containers and how the Fedora Project plans to integrate them into the larger Fedora ecosystem, check out the https://docs.fedoraproject.org/en-US/bootc/getting-started/#_what_is_a_bootable_container[offical Fedora docs page] on bootc.
+
+== Booting into a Bootable Container from an Existing IoT System
+
+On an existing Fedora IoT install, a user can download and boot into a containerized image via the following:
+
+At the Fedora IoT command line, the following will download, setup, and configure the bootloader to boot into the latest bootc image on next boot:
+
+----
+sudo bootc switch quay.io/fedora/fedora-iot:latest
+----
+
+You can also use the Fedora Project registry to install a bootable container:
+
+----
+sudo bootc switch registry.fedoraproject.com/fedora-iot:latest
+----
+
+The following can be used to ensure the image has been downloaded and set for boot.
+Look for the `image:` and `version:` fields under `rollback:`.
+These will show where the image was downloaded from and the version.
+Also, check that the `rollbackQueued:` field shows `true`.
+
+----
+sudo bootc status
+----
+
+Then, reboot into the image:
+
+----
+sudo reboot
+----
+
+When the system reboots, it will automatically reboot into the newly installed bootable container.
+You can still manually choose to boot into the original ostree image by selecting the image with the arrow keys at the grub menu.
+Once the bootable container image is booted, you will have to change into the terminal window using Ctrl-Alt-F2.
+At the login, enter your username and password.
+From here, you can again run `sudo bootc status` to ensure that the system is now booted into the bootable container.
+
+== Updating the Bootable Container Image
+
+You can update the current bootable container to the latest by running the following:
+
+----
+sudo bootc upgrade
+----
+
+== Rolling Back to a Previous Bootable Container
+In the event of an issue with a bootable container, you can easily rollback to a previously installed image.
+
+----
+sudo bootc rollback
+----
+
+The system will now automatically boot into the previous bootable conatiner on next boot.
+
+== Installing/Layering Packages onto the Bootable Container
+
+Installing packages is the same as on an ostree Fedora IoT image and retains the same rpm-ostree functionality:
+
+----
+sudo rpm-ostree install htop
+----
+
+
