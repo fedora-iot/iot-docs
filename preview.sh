@@ -10,6 +10,11 @@ if uname | grep -iwq darwin; then
 elif uname | grep -iq linux; then
     # Running on Linux.
     # Fedora Workstation has python3 installed as a default, so using that
+    if [ ! -f ./public/index.html ]; then
+        echo "Error: ./public/index.html was not found. Run ./build.sh first."
+        exit 1
+    fi
+
     echo ""
     echo "The preview is available at http://localhost:8080"
     echo ""
