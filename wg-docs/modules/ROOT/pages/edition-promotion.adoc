@@ -1,9 +1,9 @@
-== Requirements to promote Fedora IoT to an official edition
+= Requirements to promote Fedora IoT to an official edition
 
 This is based on the https://fedoraproject.org/wiki/Editions/Promotion_Process[Edition promotion process] pending approval from the Fedora Council.
 Historical information is included below for reference, although it is now incredibly out of date.
 
-=== Prerequisites
+== Prerequisites
 
 [cols="8,2,8",options="header"]
 |=====
@@ -13,9 +13,9 @@ Historical information is included below for reference, although it is now incre
 | The candidate Edition must have a product requirements document | https://docs.fedoraproject.org/en-US/iot/prd/[DONE] |
 |=====
 
-=== Process
+== Process
 
-==== Pre-submission steps
+=== Pre-submission steps
 
 [cols="8,2,8",options="header"]
 |====
@@ -25,7 +25,7 @@ Historical information is included below for reference, although it is now incre
 |====
 
 
-==== Post-submission steps
+=== Post-submission steps
 
 [cols="8,2,8",options="header"]
 |====
@@ -86,4 +86,3 @@ Historical information is included below for reference, although it is now incre
 ** Also handed by IoT team
 * Publish “devel” image with toolbox container, and “production” image without toolbox
 ** This is a rel-eng change, but PT from IoT team, because we’re adding additional deliverables
-

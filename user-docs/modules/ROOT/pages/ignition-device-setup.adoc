@@ -1,4 +1,7 @@
 include::_attributes.adoc[]
+
+= Setting up a Device with Ignition
+
 == Setup a device by using Ignition and a Raw disk image
 
 === Prerequisites
