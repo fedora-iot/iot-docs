@@ -1,3 +1,4 @@
+---
 site:
   title: Local Preview
   start_page: iot:ROOT:index.adoc
@@ -11,7 +12,8 @@ content:
       start_path: wg-docs
 ui:
   bundle:
-    url: https://gitlab.com/fedora/docs/docs-website/ui-bundle/-/jobs/artifacts/HEAD/raw/build/ui-bundle.zip?job=bundle-stable
+    url: >-
+      https://gitlab.com/fedora/docs/docs-website/ui-bundle/-/jobs/artifacts/HEAD/raw/build/ui-bundle.zip?job=bundle-stable
     snapshot: true
   default_layout: with_menu
 output:
