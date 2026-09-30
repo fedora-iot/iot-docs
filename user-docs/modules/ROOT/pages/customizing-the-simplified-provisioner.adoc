@@ -1,10 +1,10 @@
 include::_attributes.adoc[]
 
-== Customizing the Simplified Provisioner ISO
+= Customizing the Simplified Provisioner ISO
 
 Fedora IoT provides a generic Simplified Provisioning ISO that is by default configured to install to a virtual disk (`/dev/vda`). This can be customized for your device depending on what hardware you have (nvme0, sda, mmcblk0) and configuration option you would like to leverage - FDO or Ignition.
 
-=== Prerequisites
+== Prerequisites
 
 * Recent simplified-provisioning ISO
 * Fedora system with `lorax` installed, which provides the `mkksiso` tool (sudo dnf install lorax).
